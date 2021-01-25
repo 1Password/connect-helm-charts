@@ -1,0 +1,44 @@
+{{- if .Values.operator.create -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.operator.applicationName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: {{ .Values.connect.applicationName }}
+  template:
+    metadata:
+      labels:
+        name: {{ .Values.connect.applicationName }}
+    spec:
+      serviceAccountName: {{ .Values.operator.serviceAccount.name }}
+      containers:
+        - name: {{ .Values.connect.applicationName }}
+          image: {{ .Values.operator.imageRepository }}:{{ .Values.operator.version | default "latest" }}
+          imagePullPolicy: {{ .Values.connect.imagePullPolicy }}
+          command: ["/manager"]
+          env:
+            - name: WATCH_NAMESPACE
+              value: {{ include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace }}
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: OPERATOR_NAME
+              value: "{{ .Values.operator.applicationName }}"
+            - name: OP_CONNECT_HOST
+              value: "http://{{ .Values.connect.applicationName }}:8080"
+            - name: POLLING_INTERVAL
+              value: "{{ .Values.operator.pollingInterval }}"
+            - name: OP_CONNECT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.operator.tokenName }}
+                  key: {{ .Values.operator.tokenKey }}
+            - name: AUTO_RESTART
+              value: "{{ .Values.operator.autoRestart }}"
+{{- end }}
+

@@ -1,0 +1,51 @@
+connect:
+  applicationName: onepassword-connect
+  api:
+    name: connect-api
+    imageRepository: 1password/connect-api
+    resources: {}
+  sync:
+    name: connect-sync
+    imageRepository: 1password/connect-sync
+    resources: {}
+  credentialsName: op-credentials
+  credentialsKey: op-session
+  dataVolume:
+    name: shared-data
+    type: emptyDir
+    value: {}
+  imagePullPolicy: Always
+  version: "0.3"
+
+namespace: default 
+
+operator:
+  create: true
+  autoRestart: true
+  applicationName: onepassword-connect-operator
+  imagePullPolicy: Always
+  imageRepository: 1password/onepassword-operator
+  pollingInterval: 10
+  tokenName: onepassword-token
+  tokenKey: token
+  version: "0.0.1"
+  watchNamespace:
+   - "default"
+
+  serviceAccount:
+    create: true
+    annotations: {}
+    name: onepassword-connect-operator
+
+  roleBinding:
+    create: true
+    name: onepassword-connect-operator
+
+  clusterRole:
+    create: true
+    name: onepassword-connect-operator
+
+service:
+  type: Nodeport
+  port: 8080
+
