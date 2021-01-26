@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.connect.applicationName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.connect.applicationName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.connect.applicationName }}
+        version: "{{ .Values.connect.version }}"
+    spec:
+      volumes:
+        - name: {{ .Values.connect.dataVolume.name }}
+          {{ .Values.connect.dataVolume.type }}: {{- toYaml .Values.connect.dataVolume.values | nindent 12 }}
+        - name: credentials
+          secret:
+            secretName: {{ .Values.connect.credentialsName }}
+      initContainers:
+        - name: sqlite-permissions
+          image: alpine:3.12
+          command:
+            - "/bin/sh"
+            - "-c"
+          args:
+            - "mkdir -p /home/opuser/.op/data && chown -R 999 /home/opuser && chmod -R 700 /home/opuser && chmod -f -R 600 /home/opuser/.op/config || :"
+          volumeMounts:
+            - mountPath: /home/opuser/.op/data
+              name: {{ .Values.connect.dataVolume.name }}
+      containers:
+        - name: {{ .Values.connect.api.name }}
+          image: {{ .Values.connect.api.imageRepository }}:{{ .Values.connect.version | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.connect.imagePullPolicy }}
+          resources:
+            {{- toYaml .Values.connect.sync.resources | nindent 12 }}
+          ports:
+            - containerPort: 8080
+          env:
+            - name: OP_SESSION
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.connect.credentialsName }}
+                  key: {{ .Values.connect.credentialsKey }}
+          volumeMounts:
+            - mountPath: /home/opuser/.op/data
+              name: {{ .Values.connect.dataVolume.name }}
+        - name: connect-sync
+          image: {{ .Values.connect.sync.imageRepository }}:{{ .Values.connect.version | default .Chart.AppVersion }}
+          imagePullPolicy: {{ .Values.connect.imagePullPolicy }}
+          resources:
+            {{- toYaml .Values.connect.sync.resources | nindent 12 }}
+          ports:
+            - containerPort: 8081
+          env:
+            - name: OP_HTTP_PORT
+              value: "8081"
+            - name: OP_SESSION
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.connect.credentialsName }}
+                  key: {{ .Values.connect.credentialsKey }}
+          volumeMounts:
+            - mountPath: /home/opuser/.op/data
+              name: {{ .Values.connect.dataVolume.name }}

@@ -1,0 +1,62 @@
+{{- $credentialsName := .Values.connect.credentialsName -}}
+{{- $namespace := .Values.namespace -}}
+{{- $tokenName := .Values.operator.tokenName -}}
+
+{{- if not (lookup "v1" "Secret" ( $namespace ) ( $credentialsName )) }}
+---------------------------------------------------------------------------------------------
+ WARNING
+
+    Using 1Password Connect in Kubernetes requires that a 1password-credentials.json file
+    be stored as a Kubernetes Secret. This credentials file can be saved as a Kubernetes 
+    secret using the following commands:
+
+    Because 1Password Connect expects Base64URL encoded credentials when provided as an 
+    Environment variable, the contents of the 1password-credentials.json file must be 
+    Base64URL encoded before saving as a Kubernetes Secret. This can be done with the 
+    following command (Note this encoding will be in addition to the Base64 encoding that 
+    Kubernetes will apply when creating the secret):
+
+        $ cat 1password-credentials.json | base64 | \
+          tr '/+' '_-' | tr -d '=' | tr -d '\n' > {{ .Values.connect.credentialsKey }}
+        
+    Save the credentials as a Kubernetes Secret:
+
+        $ kubectl create secret generic {{ $credentialsName }} --from-file={{ .Values.connect.credentialsKey }} \
+        --dry-run=client -o yaml | kubectl apply -f -
+
+    More information about 1Password Connect and how to generate a 1password-credentials.json 
+    file can be found at https://support.1password.com/cs/connect/.
+
+---------------------------------------------------------------------------------------------
+{{- end }}
+
+{{- if (and (.Values.operator.create) ( not (lookup "v1" "Secret" ( $namespace ) ( $tokenName )))) }}
+---------------------------------------------------------------------------------------------
+ WARNING
+
+    By specifying "operator.create=true", a 1Password Connect Kuberator Operates will be 
+    deployed. This operator expects that a secret containing an API token for 1Password Connect 
+    is saved to the configured namespace {{ $namespace }}. This token can be saved as a 
+    Kubernetes secret using the following command:
+
+        kubectl create secret generic {{ $tokenName }} --from-literal=token=<OP_CONNECT_TOKEN> \
+         --namespace={{ $namespace }}
+
+    More information about 1Password Connect and how to generate a 1Password Connect API token
+    can be found at https://support.1password.com/cs/connect/.
+
+---------------------------------------------------------------------------------------------
+{{- end }}
+
+** Please be patient while the chart is being deployed **
+
+1Password Connect is being deployed to Kubernetes. More information about 1Password Connect can 
+be found at https://support.1password.com/cs/connect/
+
+{{- if  .Values.operator.create }}
+
+The 1Password Connect Kubernetes Operator is also being deployed. More information about the 
+1Password Connect Operator can be found at https://github.com/1Password/onepassword-operator
+
+{{- end }}
+

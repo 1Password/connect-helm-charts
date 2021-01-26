@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.connect.applicationName }}
+  namespace: {{ .Values.namespace }}
+spec:
+  type: NodePort
+  selector:
+    app: {{ .Values.connect.applicationName }}
+  ports:
+    - port: 8080
+      name: {{ .Values.connect.api.name }}
+      nodePort: 31080
+    - port: 8081
+      name: {{ .Values.connect.sync.name }}
+      nodePort: 31081
