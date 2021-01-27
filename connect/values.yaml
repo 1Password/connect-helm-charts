@@ -14,16 +14,16 @@ connect:
     name: shared-data
     type: emptyDir
     values: {}
-  imagePullPolicy: Always
+  imagePullPolicy: IfNotPresent
   version: "0.3"
 
 namespace: default 
 
 operator:
-  create: true
-  autoRestart: true
+  create: false
+  autoRestart: false
   applicationName: onepassword-connect-operator
-  imagePullPolicy: Always
+  imagePullPolicy: IfNotPresent
   imageRepository: 1password/onepassword-operator
   pollingInterval: 10
   tokenName: onepassword-token
@@ -33,16 +33,16 @@ operator:
    - "default"
 
   serviceAccount:
-    create: true
+    create: false
     annotations: {}
     name: onepassword-connect-operator
 
   roleBinding:
-    create: true
+    create: false
     name: onepassword-connect-operator
 
   clusterRole:
-    create: true
+    create: false
     name: onepassword-connect-operator
 
 service:
