@@ -13,7 +13,7 @@ connect:
   dataVolume:
     name: shared-data
     type: emptyDir
-    value: {}
+    values: {}
   imagePullPolicy: Always
   version: "0.3"
 
