@@ -36,3 +36,17 @@ This repository define the helm chart for the 1Password Connect Application and 
 | operator.tokenKey | string | `"token"` | The key for the 1Password Connect token stored in the 1Password token secret |
 | operator.tokenName | string | `"onepassword-token"` | The name of Kubernetes Secret containing the 1Password Connect API token |
 | operator.watchNamespace | {} | `"-default"` | A list of Namespaces for the 1Password Connect Operator to watch and manage |
+
+## Preparing a Release
+
+1. Create tgz file with chart in current directory:
+```bash
+helm package connect
+```
+
+2. Create the index.yaml file which references the connect chart
+```bash
+helm repo index .
+```
+
+3. Push tgz and updated index.yaml file to Github repo.
