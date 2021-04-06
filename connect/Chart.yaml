@@ -11,4 +11,4 @@ maintainers: # (optional)
   - name: 1Password Secrets Integrations Team
     email: support+business@1password.com
 icon: https://1password.com/img/logo-v1.svg
-appVersion: "0.3"
+appVersion: "0.5"

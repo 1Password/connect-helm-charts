@@ -9,6 +9,7 @@ This repository define the helm chart for the 1Password Connect Application and 
 | connect.api.imageRepository | string | `"1password/connect-api` | The 1Password Connect API repository |
 | connect.api.name | string | `"connect-api"` | The name of the 1Password Connect API container |
 | connect.api.resources | object | `{}` | The resources requests/limits for the 1Password Connect API pod |
+| connect.credentials | jsonString |  | Contents of the 1password-credentials.json file for Connect. Can be set be adding `--set-file connect.credentials={path/to/1password-credentials.json}` to your helm install command |
 | connect.credentialsKey | string | `"op-session"` | The key for the 1Password Connect Credentials stored in the credentials secret |
 | connect.credentialsName | string | `"op-credentials"` | The name of Kubernetes Secret containing the 1Password Connect credentials |
 | connect.dataVolume.name | string | `"shared-data"` | The name of the shared volume used between 1Password Connect Containers |
@@ -33,8 +34,9 @@ This repository define the helm chart for the 1Password Connect Application and 
 | operator.serviceAccount.create | boolean | `false` | Denotes whether or not a service account will be created for the 1Password Connect Operator |
 | operator.serviceAccount.name | string | `"onepassword-connect-operator"` | The name of the 1Password Conenct Operator |
 | operator.version | string | `"0.0.1"` | T 1Password Connect Operator version to pull |
-| operator.tokenKey | string | `"token"` | The key for the 1Password Connect token stored in the 1Password token secret |
-| operator.tokenName | string | `"onepassword-token"` | The name of Kubernetes Secret containing the 1Password Connect API token |
+| operator.token.key | string | `"token"` | The key for the 1Password Connect token stored in the 1Password token secret |
+| operator.token.name | string | `"onepassword-token"` | The name of Kubernetes Secret containing the 1Password Connect API token |
+| operator.token.value | string | `"onepassword-token"` | An API token generated for 1Password Connect to be used by the Connect Operator |
 | operator.watchNamespace | {} | `"-default"` | A list of Namespaces for the 1Password Connect Operator to watch and manage |
 
 ## Preparing a Release

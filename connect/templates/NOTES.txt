@@ -1,28 +1,21 @@
 {{- $credentialsName := .Values.connect.credentialsName -}}
 {{- $namespace := .Values.namespace -}}
-{{- $tokenName := .Values.operator.tokenName -}}
+{{- $tokenName := .Values.operator.token.name -}}
 
-{{- if not (lookup "v1" "Secret" ( $namespace ) ( $credentialsName )) }}
+{{- if not ( or (lookup "v1" "Secret" ( $namespace ) ( $credentialsName )) (.Values.connect.credentials)) }}
 ---------------------------------------------------------------------------------------------
  WARNING
 
     Using 1Password Connect in Kubernetes requires that a 1password-credentials.json file
     be stored as a Kubernetes Secret. This credentials file can be saved as a Kubernetes 
-    secret using the following commands:
+    secret by using one of two methods:
 
-    Because 1Password Connect expects Base64URL encoded credentials when provided as an 
-    Environment variable, the contents of the 1password-credentials.json file must be 
-    Base64URL encoded before saving as a Kubernetes Secret. This can be done with the 
-    following command (Note this encoding will be in addition to the Base64 encoding that 
-    Kubernetes will apply when creating the secret):
-
-        $ cat 1password-credentials.json | base64 | \
-          tr '/+' '_-' | tr -d '=' | tr -d '\n' > {{ .Values.connect.credentialsKey }}
+    Add the following to your helm install command:
+            
+         --set-file connect.credentials={path/to/1password-credentials.json}
         
-    Save the credentials as a Kubernetes Secret:
-
-        $ kubectl create secret generic {{ $credentialsName }} --from-file={{ .Values.connect.credentialsKey }} \
-        --dry-run=client -o yaml | kubectl apply -f -
+    This will allow for Helm to handle storing 1password-credentials.json as a secret
+    for you.
 
     More information about 1Password Connect and how to generate a 1password-credentials.json 
     file can be found at https://support.1password.com/cs/connect/.
@@ -30,17 +23,21 @@
 ---------------------------------------------------------------------------------------------
 {{- end }}
 
-{{- if (and (.Values.operator.create) ( not (lookup "v1" "Secret" ( $namespace ) ( $tokenName )))) }}
+{{- if (and (.Values.operator.create) ( not (or (lookup "v1" "Secret" ( $namespace ) ( $tokenName )) (.Values.operator.token.value) ))) }}
 ---------------------------------------------------------------------------------------------
  WARNING
 
     By specifying "operator.create=true", a 1Password Connect Kuberator Operates will be 
     deployed. This operator expects that a secret containing an API token for 1Password Connect 
-    is saved to the configured namespace {{ $namespace }}. This token can be saved as a 
-    Kubernetes secret using the following command:
+    is saved to the configured namespace {{ $namespace }}. 
+    
+    This token can be saved as a Kubernetes secret using the following command:
 
         kubectl create secret generic {{ $tokenName }} --from-literal=token=<OP_CONNECT_TOKEN> \
          --namespace={{ $namespace }}
+
+    Creation of a secret for the token can also be automated by the Helm Chart by setting
+    operator.token to the value of your token.
 
     More information about 1Password Connect and how to generate a 1Password Connect API token
     can be found at https://support.1password.com/cs/connect/.
