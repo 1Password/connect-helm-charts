@@ -21,17 +21,18 @@ In order to deploy the 1Password Connect Kubernetes Operator along side 1Passwor
 
 Please note the following:
 
-1. This operator expects that a secret containing an API token for 1Password Connect is saved to the configured namespace {{ $namespace }}. 
-This token can be saved as a Kubernetes secret using the following command:
+1. This operator expects that a secret containing an API token for 1Password Connect is saved to the configured namespace {{ $namespace }}.
+Creation of a secret for the token can be automated by the Helm Chart by setting `operator.token` to your token's value.
+
+If you would prefer to create the token secret manually, the token can be saved as a Kubernetes secret using the following command:
 
 ```bash
 $ kubectl create secret generic {{ $tokenName --from-literal=token=<OP_CONNECT_TOKEN> \ --namespace={{ $namespace }}
 ```
-Creation of a secret for the token can also be automated by the Helm Chart by setting operator.token to the value of your token.
 
 More information about 1Password Connect and how to generate a 1Password Connect API token can be found at https://support.1password.com/cs/connect/.
 
-The Operator also requires setting permissions in Kubernetes in order to allow it to run. By setting `operator.serviceAccount.create`, `operator.roleBinding.create`, and `operator.clusterRole.create` to true, the Helm chart will take care of setting a basic service account, role binding, and cluster role for the opreator. Although this process can be automated please ensure you give the Operator the appropriate permissions for your environment.
+2. The Operator also requires setting permissions in Kubernetes in order to allow it to run. By setting `operator.serviceAccount.create`, `operator.roleBinding.create`, and `operator.clusterRole.create` to true, the Helm chart will take care of setting a basic service account, role binding, and cluster role for the opreator. Although this process can be automated please ensure you give the Operator the appropriate permissions for your environment.
 ### Configuration Values
 The 1Password Connect Helm chart offers many configuration options for deployment. Please refer to the list below for information on what configuration options are available as well as what the default configuration options are.
 
