@@ -9,13 +9,14 @@ connect:
     imageRepository: 1password/connect-sync
     resources: {}
   credentialsName: op-credentials
-  credentialsKey: op-session
+  credentialsKey: 1password-credentials.json
+  credentials: 
   dataVolume:
     name: shared-data
     type: emptyDir
     values: {}
   imagePullPolicy: IfNotPresent
-  version: "0.3"
+  version: "0.5"
 
 namespace: default 
 
@@ -26,11 +27,13 @@ operator:
   imagePullPolicy: IfNotPresent
   imageRepository: 1password/onepassword-operator
   pollingInterval: 10
-  tokenName: onepassword-token
-  tokenKey: token
   version: "0.0.1"
   watchNamespace:
    - "default"
+  token:
+    name: onepassword-token
+    key: token
+    value: 
 
   serviceAccount:
     create: false

@@ -1,4 +1,4 @@
-{{- if .Values.operator.create -}}
+{{- if .Values.operator.create }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -36,8 +36,8 @@ spec:
             - name: OP_CONNECT_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Values.operator.tokenName }}
-                  key: {{ .Values.operator.tokenKey }}
+                  name: {{ .Values.operator.token.name }}
+                  key: {{ .Values.operator.token.key }}
             - name: AUTO_RESTART
               value: "{{ .Values.operator.autoRestart }}"
 {{- end }}
