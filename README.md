@@ -2,16 +2,25 @@
 
 This repository hosts the offical 1Password Helm Charts for deploying 1Password Connect and the 1Password Connect Kubernetes Operator.
 
-## Install Helm
+## Installation Guide
+
+### Install Helm
 
 Get the latest [Helm release](https://github.com/kubernetes/helm#install).
+
+### Add Repository
+The following command allows you to download and install all the charts from this repository:
+
+```
+$ helm repo add 1password https://raw.githubusercontent.com/1Password/connect-helm-charts/main
+```
 ## Configuration Guide
 
 ### Deploying 1Password Connect
-Installing the Helm Chart with default configurations will deploy 1Password Connect in your default Namespace. However, Using 1Password Connect in Kubernetes requires that a 1password-credentials.json file be stored as a Kubernetes Secret. This credentials file can be saved as a Kubernetes secret by adding the following to your helm install command:
+Installing the Helm Chart with default configurations will deploy 1Password Connect in your default Namespace. However, Using 1Password Connect in Kubernetes requires that a 1password-credentials.json file be stored as a Kubernetes Secret. This credentials file can be saved as a Kubernetes secret by setting the file in your helm install command:
             
 ```bash
---set-file connect.credentials={path/to/1password-credentials.json}
+helm install connect  1password/onepassword-connect --set-file connect.credentials=<path/to/1password-credentials.json>
 ```
     
 More information about 1Password Connect and how to generate a 1password-credentials.json file can be found at https://support.1password.com/cs/connect/.
