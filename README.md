@@ -20,7 +20,7 @@ $ helm repo add 1password https://raw.githubusercontent.com/1Password/connect-he
 Installing the Helm Chart with default configurations will deploy 1Password Connect in your default Namespace. However, Using 1Password Connect in Kubernetes requires that a 1password-credentials.json file be stored as a Kubernetes Secret. This credentials file can be saved as a Kubernetes secret by setting the file in your helm install command:
             
 ```bash
-helm install connect  1password/onepassword-connect --set-file connect.credentials=<path/to/1password-credentials.json>
+helm install connect  1password/connect --set-file connect.credentials=<path/to/1password-credentials.json>
 ```
     
 More information about 1Password Connect and how to generate a 1password-credentials.json file can be found at https://support.1password.com/cs/connect/.
@@ -30,13 +30,13 @@ In order to deploy the 1Password Connect Kubernetes Operator along side 1Passwor
 
 Please note the following:
 
-1. This operator expects that a secret containing an API token for 1Password Connect is saved to the configured namespace {{ $namespace }}.
+1. This operator expects that a secret containing an API token for 1Password Connect is saved to the configured namespace.
 Creation of a secret for the token can be automated by the Helm Chart by setting `operator.token` to your token's value.
 
 If you would prefer to create the token secret manually, the token can be saved as a Kubernetes secret using the following command:
 
 ```bash
-$ kubectl create secret generic {{ $tokenName --from-literal=token=<OP_CONNECT_TOKEN> \ --namespace={{ $namespace }}
+$ kubectl create secret generic <token-name> --from-literal=token=<OP_CONNECT_TOKEN> \ --namespace=<namespace>
 ```
 
 More information about 1Password Connect and how to generate a 1Password Connect API token can be found at https://support.1password.com/cs/connect/.
