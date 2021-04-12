@@ -2,8 +2,26 @@ apiVersion: v1
 entries:
   onepassword-connect:
   - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2021-04-12T16:47:29.60312-03:00"
+    description: A Helm chart for deploying 1Password Connect and the 1Password Connect Kubernetes Operator
+    digest: 27358616c4e3c199ef2c3e383a8ea3161aa49afbb31b122adcb8c849dfdf4770
+    home: https://support.1password.com/cs/connect/
+    icon: https://1password.com/img/logo-v1.svg
+    keywords:
+    - 1Password
+    - 1Password Connect
+    - 1Password Operator
+    maintainers:
+    - email: support+business@1password.com
+      name: 1Password Secrets Integrations Team
+    name: onepassword-connect
+    urls:
+    - onepassword-connect-1.0.0.tgz
+    version: 1.0.0
+  - apiVersion: v2
     appVersion: "0.3"
-    created: "2021-01-28T20:52:23.940947-04:00"
+    created: "2021-04-12T16:47:29.60254-03:00"
     description: A Helm chart for deploying 1Password Connect and the 1Password Connect Kubernetes Operator
     digest: f604c1ce3bfaf85095bdc4f46fb64f5c353676b172343c84537f4ae0d0e5442c
     home: https://support.1password.com/cs/connect/
@@ -17,24 +35,6 @@ entries:
       name: 1Password Secrets Integrations Team
     name: onepassword-connect
     urls:
-    - https://raw.githubusercontent.com/1password/connect-helm-charts/main/onepassword-connect-0.0.1.tgz
+    - onepassword-connect-0.0.1.tgz
     version: 0.0.1
-  - apiVersion: v2
-    appVersion: "0.3"
-    created: "2021-01-28T20:52:23.941439-04:00"
-    description: A Helm chart for deploying 1Password Connect and the 1Password Connect Kubernetes Operator
-    digest: 7dfa950b538aed96478590d79fbd5df14dfb32d1ca3ead8e2ee97bc6c7d8a553
-    home: https://support.1password.com/cs/connect/
-    icon: https://1password.com/img/logo-v1.svg
-    keywords:
-    - 1Password
-    - 1Password Connect
-    - 1Password Operator
-    maintainers:
-    - email: support+business@1password.com
-      name: 1Password Secrets Integrations Team
-    name: onepassword-connect
-    urls:
-    - https://raw.githubusercontent.com/1password/connect-helm-charts/main/onepassword-connect-0.0.1.tgz
-    version: 0.0.1
-generated: "2021-01-28T20:52:23.940241-04:00"
+generated: "2021-04-12T16:47:29.601763-03:00"

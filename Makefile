@@ -20,6 +20,10 @@ release/prepare: .check_git_clean	## Updates changelog and creates release branc
 
 	@NEW_VERSION=$(version) $(SCRIPTS_DIR)/prepare-release.sh
 
+	@helm package connect
+
+	@helm repo index .
+
 release/tag: .check_git_clean	## Creates git tag
 	@git pull --ff-only
 	@echo "Applying tag 'v$(curVersion)' to HEAD..."
