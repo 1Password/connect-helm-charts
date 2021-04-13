@@ -18,17 +18,3 @@ $ helm repo add 1password https://raw.githubusercontent.com/1Password/connect-he
 ## Available Charts
 
 * [1Password Connect and Kubernetes Operator](./connect/)
-
-## Preparing a Release
-
-1. Create tgz file with chart in current directory:
-```bash
-helm package connect
-```
-
-2. Create the index.yaml file which references the connect chart
-```bash
-helm repo index .
-```
-
-3. Push tgz and updated index.yaml file to Github repo.
