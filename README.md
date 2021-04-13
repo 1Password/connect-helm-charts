@@ -15,6 +15,10 @@ The following command allows you to download and install all the charts from thi
 $ helm repo add 1password https://raw.githubusercontent.com/1Password/connect-helm-charts/main
 ```
 
+## Available Charts
+
+* [1Password Connect and Kubernetes Operator](./connect/)
+
 ## Preparing a Release
 
 1. Create tgz file with chart in current directory:
