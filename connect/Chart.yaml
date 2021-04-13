@@ -6,7 +6,7 @@ keywords:
   - "1Password"
   - "1Password Connect"
   - "1Password Operator"
-home: https://support.1password.com/cs/connect/
+home: https://1password.com/secrets/
 maintainers: # (optional)
   - name: 1Password Secrets Integrations Team
     email: support+business@1password.com
