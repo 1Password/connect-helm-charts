@@ -22,7 +22,7 @@ spec:
           command: ["/manager"]
           env:
             - name: WATCH_NAMESPACE
-              value: {{ include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace }}
+              value: {{ include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace | default .Release.Namespace }}
             - name: POD_NAME
               valueFrom:
                 fieldRef:
