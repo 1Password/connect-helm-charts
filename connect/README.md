@@ -63,7 +63,6 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.sync.name | string | `"connect-sync"` | The name of the 1Password Connect Sync container |
 | connect.sync.resources | object | `{}` | The resources requests/limits for the 1Password Connect Sync pod |
 | connect.version | string | `"0.3"` | The 1Password Connect version to pull |
-| namespace | string | `"default"` | The namespace in which to deploy 1Password Connect |
 | operator.autoRestart | boolean | `false` | Denotes whether the 1Password Connect Operator will automatically restart deployments based on associated updated secrets. |
 | operator.create | boolean | `false` | Denotes whether the 1Password Connect Operator will be deployed |
 | operator.imagePullPolicy | string | `"IfNotPresent` | The 1Password Connect Operator image pull policy |
