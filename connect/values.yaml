@@ -18,8 +18,6 @@ connect:
   imagePullPolicy: IfNotPresent
   version: "1.0.0"
 
-namespace: default 
-
 operator:
   create: false
   autoRestart: false
@@ -28,8 +26,8 @@ operator:
   imageRepository: 1password/onepassword-operator
   pollingInterval: 10
   version: "1.0.0"
-  watchNamespace:
-   - "default"
+  watchNamespace: 
+    - ""
   token:
     name: onepassword-token
     key: token

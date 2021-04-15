@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.operator.applicationName }}
-  namespace: {{ .Values.namespace }}
+  namespace: {{ .Release.Namespace }}
 spec:
   replicas: 1
   selector:
@@ -22,7 +22,7 @@ spec:
           command: ["/manager"]
           env:
             - name: WATCH_NAMESPACE
-              value: {{ include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace }}
+              value: {{ include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace | default .Release.Namespace }}
             - name: POD_NAME
               valueFrom:
                 fieldRef:
