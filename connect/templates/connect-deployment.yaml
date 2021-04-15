@@ -13,6 +13,10 @@ spec:
         app: {{ .Values.connect.applicationName }}
         version: "{{ .Values.connect.version }}"
     spec:
+{{- with .Values.connect.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+{{- end }}
       volumes:
         - name: {{ .Values.connect.dataVolume.name }}
           {{ .Values.connect.dataVolume.type }}: {{- toYaml .Values.connect.dataVolume.values | nindent 12 }}
