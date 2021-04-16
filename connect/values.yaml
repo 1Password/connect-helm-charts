@@ -17,6 +17,7 @@ connect:
     values: {}
   imagePullPolicy: IfNotPresent
   version: "1.0.0"
+  nodeSelector: {}
 
 operator:
   create: false
@@ -26,6 +27,7 @@ operator:
   imageRepository: 1password/onepassword-operator
   pollingInterval: 10
   version: "1.0.0"
+  nodeSelector: {}
   watchNamespace: 
     - ""
   token:
