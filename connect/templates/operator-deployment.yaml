@@ -4,6 +4,8 @@ kind: Deployment
 metadata:
   name: {{ .Values.operator.applicationName }}
   namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "onepassword-connect.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
