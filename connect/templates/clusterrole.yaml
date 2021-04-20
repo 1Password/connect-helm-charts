@@ -3,6 +3,8 @@ kind: ClusterRole
 metadata:
   creationTimestamp: null
   name: {{ .Values.operator.clusterRole.name }}
+  labels:
+    {{- include "onepassword-connect.labels" . | nindent 4 }}
 rules:
 - apiGroups:
   - ""
