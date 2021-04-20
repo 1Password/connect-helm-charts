@@ -10,12 +10,12 @@ helm install connect 1password/connect --set-file connect.credentials=<path/to/1
 More information about 1Password Connect and how to generate a 1password-credentials.json file can be found at https://support.1password.com/cs/connect/.
 
 ## Deploying 1Password Connect Kubernetes Operator
-In order to deploy the 1Password Connect Kubernetes Operator along side 1Password Connect set "operator.create=true" in your install command.
+In order to deploy the 1Password Connect Kubernetes Operator along side 1Password Connect `--set operator.create=true` in your install command.
 
 Please note the following:
 
 1. This operator expects that a secret containing an API token for 1Password Connect is saved to the configured namespace.
-Creation of a secret for the token can be automated by the Helm Chart by setting `operator.token` to your token's value.
+Creation of a secret for the token can be automated by the Helm Chart by using `--set operator.token.value=<token>`.
 
 If you would prefer to create the token secret manually, the token can be saved as a Kubernetes secret using the following command:
 
