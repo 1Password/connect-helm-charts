@@ -10,7 +10,5 @@ spec:
   ports:
     - port: 8080
       name: {{ .Values.connect.api.name }}
-      nodePort: 31080
     - port: 8081
       name: {{ .Values.connect.sync.name }}
-      nodePort: 31081
