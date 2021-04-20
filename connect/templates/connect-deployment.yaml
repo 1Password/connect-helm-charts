@@ -40,6 +40,14 @@ spec:
         - name: {{ .Values.connect.api.name }}
           image: {{ .Values.connect.api.imageRepository }}:{{ .Values.connect.version | default .Chart.AppVersion }}
           imagePullPolicy: {{ .Values.connect.imagePullPolicy }}
+          securityContext:
+            runAsUser: 999
+            runAsGroup: 999
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+              - "NET_ADMIN"
+              - "NET_BROADCAST"
           resources:
             {{- toYaml .Values.connect.sync.resources | nindent 12 }}
           ports:
@@ -56,6 +64,14 @@ spec:
         - name: connect-sync
           image: {{ .Values.connect.sync.imageRepository }}:{{ .Values.connect.version | default .Chart.AppVersion }}
           imagePullPolicy: {{ .Values.connect.imagePullPolicy }}
+          securityContext:
+            runAsUser: 999
+            runAsGroup: 999
+            allowPrivilegeEscalation: false
+            capabilities:
+              add:
+              - "NET_ADMIN"
+              - "NET_BROADCAST"
           resources:
             {{- toYaml .Values.connect.sync.resources | nindent 12 }}
           ports:
