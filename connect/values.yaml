@@ -10,7 +10,7 @@ connect:
     resources: {}
   credentialsName: op-credentials
   credentialsKey: 1password-credentials.json
-  credentials: 
+  credentials:
   dataVolume:
     name: shared-data
     type: emptyDir
@@ -28,12 +28,11 @@ operator:
   pollingInterval: 10
   version: "1.0.0"
   nodeSelector: {}
-  watchNamespace: 
-    - ""
+  watchNamespace: []
   token:
     name: onepassword-token
     key: token
-    value: 
+    value:
 
   serviceAccount:
     create: false

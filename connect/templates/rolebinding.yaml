@@ -9,7 +9,7 @@ metadata:
   name: {{ $name }}-{{ $namespace }}
   namespace: {{ $namespace }}
   labels:
-    {{- include "onepassword-connect.labels" . | nindent 4 }}
+    {{- include "onepassword-connect.labels" $ | nindent 4 }}
 subjects:
 - kind: ServiceAccount
   name: {{ $serviceAccountName }}
