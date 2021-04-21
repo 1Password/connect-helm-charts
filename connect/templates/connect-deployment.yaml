@@ -45,8 +45,9 @@ spec:
             runAsGroup: 999
             allowPrivilegeEscalation: false
             capabilities:
+              drop:
+              - all
               add:
-              - "NET_ADMIN"
               - "NET_BROADCAST"
           resources:
             {{- toYaml .Values.connect.sync.resources | nindent 12 }}
@@ -69,8 +70,10 @@ spec:
             runAsGroup: 999
             allowPrivilegeEscalation: false
             capabilities:
+            capabilities:
+              drop:
+              - all
               add:
-              - "NET_ADMIN"
               - "NET_BROADCAST"
           resources:
             {{- toYaml .Values.connect.sync.resources | nindent 12 }}
