@@ -25,6 +25,13 @@ spec:
         - name: {{ .Values.connect.applicationName }}
           image: {{ .Values.operator.imageRepository }}:{{ .Values.operator.version | default "latest" }}
           imagePullPolicy: {{ .Values.connect.imagePullPolicy }}
+          securityContext:
+            runAsUser: 65532
+            runAsGroup: 65532
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
           command: ["/manager"]
           env:
             - name: WATCH_NAMESPACE
