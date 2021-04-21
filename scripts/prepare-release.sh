@@ -75,7 +75,7 @@ function _main() {
     # Stash version changes
     git stash push &>/dev/null
 
-    if ! git checkout -b "${RELEASE_BRANCH}" origin/"${MAIN_BRANCH:-main}"; then
+    if ! git checkout -b "${RELEASE_BRANCH}" origin/"${RELEASE_BRANCH}"; then
         echo "[ERROR] Could not check out release branch." >&2
         git stash pop &>/dev/null
         exit 1
