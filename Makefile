@@ -24,6 +24,8 @@ release/prepare: .check_git_clean	## Updates changelog and creates release branc
 
 	@helm repo index .
 
+	git add connect-$(version).tgz
+
 release/tag: .check_git_clean	## Creates git tag
 	@git pull --ff-only
 	@echo "Applying tag 'v$(curVersion)' to HEAD..."
