@@ -26,7 +26,7 @@
  * The fixed port value for the NodePort service has been removed to resolve conflicts with previously initialized services. Kubernetes will now automatically choose a free port. {#22}
 
 ## Security
- * Security Context was added to all containers to limit their default permissions. {issue-number}
+ * Security Context was added to all containers to limit their default permissions. {#25}
 
 ---
 
