@@ -86,6 +86,9 @@ function _main() {
 
     updateChangelog
 
+    # Update version in Chart.yaml
+    sed -i "s/version\:.*/version\: ${NEW_VERSION}/g" connect/Chart.yaml
+
     cat << EOF
 
 [SUCCESS] Changelog updated & release branch created:
