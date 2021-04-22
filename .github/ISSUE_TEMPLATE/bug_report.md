@@ -15,7 +15,7 @@ Chart Version:
 <!-- Version of the Helm you are using -->
 Helm Version:
 
-<!-- What version of Kubernetes is are you deploying the chart to? -->
+<!-- What version of Kubernetes are you deploying the chart to? -->
 Kubernetes Version:
 
 ## What happened?
