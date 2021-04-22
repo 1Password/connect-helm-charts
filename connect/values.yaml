@@ -50,4 +50,3 @@ operator:
 service:
   type: Nodeport
   port: 8080
-
