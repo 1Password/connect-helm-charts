@@ -2,7 +2,7 @@ name: Lint charts
 on: [push, pull_request]
 
 jobs:
-  lint-test:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
