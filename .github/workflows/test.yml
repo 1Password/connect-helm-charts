@@ -41,8 +41,8 @@ jobs:
           acceptanceTests:
             enabled: true
             fixtures:
-              vaultId: dgo4fcbuv3gh2gw6xvdhjvqp6a
-              itemId: ultuydxz3us3mt2trin4bikrvu
+              vaultId: v5pz6venw4roosmkzdq2nhpv6u
+              itemId: hrgkzhrlvscomepxlgafb2m3ca
               secretValue: RGVhciBzZWN1cml0eSByZXNlYXJjaGVyLCB0aGlzIGlzIGp1c3QgYSBkdW1teSBzZWNyZXQuIFBsZWFzZSBkb24ndCByZXBvcnQgaXQu
           EOF
 
