@@ -29,7 +29,7 @@ operator:
   version: "1.0.0"
   nodeSelector: {}
   watchNamespace:
-    - "{{ .Release.Namespace }}" # This will be interpolated in the templates, using the tpl function
+    - "{{ .Release.Namespace }}"  # This will be interpolated in the templates, using the tpl function
   token:
     name: onepassword-token
     key: token
