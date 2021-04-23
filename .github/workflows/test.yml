@@ -32,12 +32,27 @@ jobs:
         run: sudo snap install yq
         if: steps.list-changed.outputs.changed == 'true'
 
-      - name: Add secrets to YAML test cases
+      - name: Add fixtures to YAML test cases
         env:
           OP_CONNECT_CREDENTIALS: ${{ secrets.OP_CONNECT_CREDENTIALS }}
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
         run: |
-          ls -d connect/ci/*.yaml | xargs -I '{}' yq eval '.connect.credentials = strenv(OP_CONNECT_CREDENTIALS) | .operator.token.value = strenv(OP_CONNECT_TOKEN)' -i {}
+          cat > fixtures.yaml << EOF
+          acceptanceTests:
+            enabled: true
+            fixtures:
+              vaultId: dgo4fcbuv3gh2gw6xvdhjvqp6a
+              itemId: ultuydxz3us3mt2trin4bikrvu
+              secretValue: RGVhciBzZWN1cml0eSByZXNlYXJjaGVyLCB0aGlzIGlzIGp1c3QgYSBkdW1teSBzZWNyZXQuIFBsZWFzZSBkb24ndCByZXBvcnQgaXQu
+          EOF
+
+          for values_file in connect/ci/*.yaml; do
+            # Add secrets
+            yq eval '.connect.credentials = strenv(OP_CONNECT_CREDENTIALS) | .operator.token.value = strenv(OP_CONNECT_TOKEN)' -i $values_file
+
+            # Add acceptance test fixtures
+            yq eval-all --inplace 'select(fileIndex == 0) * select(fileIndex == 1)' $values_file fixtures.yaml
+          done
 
       - name: Spin up local Kubernetes cluster
         uses: helm/kind-action@v1.1.0

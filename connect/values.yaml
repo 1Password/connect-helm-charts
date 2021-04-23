@@ -51,3 +51,7 @@ operator:
 service:
   type: Nodeport
   port: 8080
+
+acceptanceTests:
+  enabled: false
+  fixtures: {}
