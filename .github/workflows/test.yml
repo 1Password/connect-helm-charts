@@ -1,0 +1,46 @@
+name: Run acceptance tests
+on: [push, pull_request]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Set up Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.4.1
+
+      - name: Set up ct CLI
+        uses: helm/chart-testing-action@v2.0.1
+        with:
+          version: v3.3.0
+
+      - name: Check if chart has changed
+        id: list-changed
+        run: |
+          changed=$(ct list-changed --config ct.yaml)
+          if [[ -n "$changed" ]]; then
+            echo "::set-output name=changed::true"
+          fi
+
+      - name: Install yq
+        run: sudo snap install yq
+        if: steps.list-changed.outputs.changed == 'true'
+
+      - name: Add secrets to YAML test cases
+        env:
+          OP_CONNECT_CREDENTIALS: ${{ secrets.OP_CONNECT_CREDENTIALS }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
+        run: |
+          ls -d connect/ci/*.yaml | xargs -I '{}' yq eval '.connect.credentials = strenv(OP_CONNECT_CREDENTIALS) | .operator.token.value = strenv(OP_CONNECT_TOKEN)' -i {}
+
+      - name: Spin up local Kubernetes cluster
+        uses: helm/kind-action@v1.1.0
+
+      - name: Deploy and run acceptance tests
+        run: ct install --config ct.yaml

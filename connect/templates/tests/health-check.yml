@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-health-check"
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "onepassword-connect.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: test
+    helm.sh/hook-weight: "1"
+spec:
+  restartPolicy: Never
+  containers:
+    - name: curl
+      image: curlimages/curl
+      command: ["curl", "http://{{ .Values.connect.applicationName }}:8080/health"]

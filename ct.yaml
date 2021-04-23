@@ -1,6 +1,8 @@
 remote: origin
 target-branch: main
 validate-maintainers: false
+debug: true
+helm-extra-args: --timeout 120s
 chart-dirs: ["."]
 charts:
   - connect
