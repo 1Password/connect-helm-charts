@@ -3,6 +3,7 @@
 {{- $clusterRoleName := .Values.operator.clusterRole.name -}}
 {{- $serviceAccountName := .Values.operator.serviceAccount.name -}}
 {{- range $namespace := .Values.operator.watchNamespace }}
+{{- $namespace = tpl $namespace $ -}}
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
