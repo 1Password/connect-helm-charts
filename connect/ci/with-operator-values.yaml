@@ -1,0 +1,10 @@
+operator:
+  create: true
+  serviceAccount:
+    create: true
+  roleBinding:
+    create: true
+  clusterRole:
+    create: true
+  token:
+    name: op-operator-connect-token
