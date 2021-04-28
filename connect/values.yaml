@@ -36,16 +36,16 @@ operator:
     value:
 
   serviceAccount:
-    create: false
+    create: "{{ .Values.operator.create }}"  # This will be interpolated in the templates, using the tpl function
     annotations: {}
     name: onepassword-connect-operator
 
   roleBinding:
-    create: false
+    create: "{{ .Values.operator.create }}"  # This will be interpolated in the templates, using the tpl function
     name: onepassword-connect-operator
 
   clusterRole:
-    create: false
+    create: "{{ .Values.operator.create }}"  # This will be interpolated in the templates, using the tpl function
     name: onepassword-connect-operator
 
 service:

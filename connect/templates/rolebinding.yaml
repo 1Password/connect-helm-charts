@@ -1,4 +1,4 @@
-{{- if .Values.operator.roleBinding.create -}}
+{{- if eq (tpl (.Values.operator.roleBinding.create | toString) .) "true" -}}
 {{- $name := .Values.operator.roleBinding.name -}}
 {{- $clusterRoleName := .Values.operator.clusterRole.name -}}
 {{- $serviceAccountName := .Values.operator.serviceAccount.name -}}
