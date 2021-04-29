@@ -16,7 +16,7 @@ connect:
     type: emptyDir
     values: {}
   imagePullPolicy: IfNotPresent
-  version:
+  version: "{{ .Chart.AppVersion }}"
   nodeSelector: {}
 
 operator:
