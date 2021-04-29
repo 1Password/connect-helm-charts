@@ -1,5 +1,5 @@
-# Note: values.yaml files don't support templating out of the box, so that means 
-# that every value "{{ .Between.Curly.Braces }}" in this file needs to be 
+# Note: values.yaml files don't support templating out of the box, so that means
+# that every value "{{ .Between.Curly.Braces }}" in this file needs to be
 # explicitly interpolated on the template side by using the `tpl` function.
 
 connect:
