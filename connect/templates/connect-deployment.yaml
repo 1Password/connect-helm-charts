@@ -13,7 +13,7 @@ spec:
     metadata:
       labels:
         app: {{ .Values.connect.applicationName }}
-        version: "{{ .Values.connect.version }}"
+        version: "{{ tpl .Values.connect.version . }}"
     spec:
 {{- with .Values.connect.nodeSelector }}
       nodeSelector:
@@ -38,7 +38,7 @@ spec:
               name: {{ .Values.connect.dataVolume.name }}
       containers:
         - name: {{ .Values.connect.api.name }}
-          image: {{ .Values.connect.api.imageRepository }}:{{ .Values.connect.version | default .Chart.AppVersion }}
+          image: {{ .Values.connect.api.imageRepository }}:{{ tpl .Values.connect.version . }}
           imagePullPolicy: {{ .Values.connect.imagePullPolicy }}
           securityContext:
             runAsUser: 999
@@ -63,7 +63,7 @@ spec:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}
         - name: connect-sync
-          image: {{ .Values.connect.sync.imageRepository }}:{{ .Values.connect.version | default .Chart.AppVersion }}
+          image: {{ .Values.connect.sync.imageRepository }}:{{ tpl .Values.connect.version . }}
           imagePullPolicy: {{ .Values.connect.imagePullPolicy }}
           securityContext:
             runAsUser: 999

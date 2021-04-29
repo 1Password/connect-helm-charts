@@ -1,3 +1,7 @@
+# Note: values.yaml files don't support templating out of the box, so that means
+# that every value "{{ .Between.Curly.Braces }}" in this file needs to be
+# explicitly interpolated on the template side by using the `tpl` function.
+
 connect:
   applicationName: onepassword-connect
   api:
@@ -16,7 +20,7 @@ connect:
     type: emptyDir
     values: {}
   imagePullPolicy: IfNotPresent
-  version: "1.0.0"
+  version: "{{ .Chart.AppVersion }}"
   nodeSelector: {}
 
 operator:
@@ -29,23 +33,23 @@ operator:
   version: "1.0.0"
   nodeSelector: {}
   watchNamespace:
-    - "{{ .Release.Namespace }}"  # This will be interpolated in the templates, using the tpl function
+    - "{{ .Release.Namespace }}"
   token:
     name: onepassword-token
     key: token
     value:
 
   serviceAccount:
-    create: "{{ .Values.operator.create }}"  # This will be interpolated in the templates, using the tpl function
+    create: "{{ .Values.operator.create }}"
     annotations: {}
     name: onepassword-connect-operator
 
   roleBinding:
-    create: "{{ .Values.operator.create }}"  # This will be interpolated in the templates, using the tpl function
+    create: "{{ .Values.operator.create }}"
     name: onepassword-connect-operator
 
   clusterRole:
-    create: "{{ .Values.operator.create }}"  # This will be interpolated in the templates, using the tpl function
+    create: "{{ .Values.operator.create }}"
     name: onepassword-connect-operator
 
 service:
