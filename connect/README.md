@@ -80,3 +80,8 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | operator.token.name | string | `"onepassword-token"` | The name of Kubernetes Secret containing the 1Password Connect API token |
 | operator.token.value | string | `"onepassword-token"` | An API token generated for 1Password Connect to be used by the Connect Operator |
 | operator.watchNamespace | {} | [`{{ .Release.Namespace }}`] | A list of Namespaces for the 1Password Connect Operator to watch and manage |
+
+### CRD
+
+By default, the chart will also install the `OnePasswordItem` CRD.
+To disable this, you can run `helm install` with the [`--skip-crds` flag](https://helm.sh/docs/chart_best_practices/custom_resource_definitions/#method-1-let-helm-do-it-for-you).
