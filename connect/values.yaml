@@ -16,7 +16,7 @@ connect:
     type: emptyDir
     values: {}
   imagePullPolicy: IfNotPresent
-  version: "1.0.0"
+  version:
   nodeSelector: {}
 
 operator:
