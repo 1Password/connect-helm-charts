@@ -17,4 +17,4 @@ $ helm repo add 1password https://raw.githubusercontent.com/1Password/connect-he
 
 ## Available Charts
 
-* [1Password Connect and Kubernetes Operator](./connect/)
+* [1Password Connect and Kubernetes Operator](./charts/connect/)
