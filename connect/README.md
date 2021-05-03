@@ -75,7 +75,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | operator.serviceAccount.annotations | object | `{}` | Annotations for the 1Password Connect Service Account |
 | operator.serviceAccount.create | boolean | `{{ .Values.operator.create }}` | Denotes whether or not a service account will be created for the 1Password Connect Operator |
 | operator.serviceAccount.name | string | `"onepassword-connect-operator"` | The name of the 1Password Conenct Operator |
-| operator.version | string | `"1.0.0"` | T 1Password Connect Operator version to pull |
+| operator.version | string | `"1.0.1"` | T 1Password Connect Operator version to pull |
 | operator.token.key | string | `"token"` | The key for the 1Password Connect token stored in the 1Password token secret |
 | operator.token.name | string | `"onepassword-token"` | The name of Kubernetes Secret containing the 1Password Connect API token |
 | operator.token.value | string | `"onepassword-token"` | An API token generated for 1Password Connect to be used by the Connect Operator |
