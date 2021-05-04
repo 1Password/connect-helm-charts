@@ -2,9 +2,29 @@ apiVersion: v1
 entries:
   connect:
   - apiVersion: v2
+    appVersion: 1.1.0
+    created: "2021-05-04T13:04:17.833004076Z"
+    description: A Helm chart for deploying 1Password Connect and the 1Password Connect
+      Kubernetes Operator
+    digest: 5f9560bb6bb15ca7e492467481643a4a5d120f81ef0dcab1c1d2346e617885b2
+    home: https://1password.com/secrets/
+    icon: https://avatars.githubusercontent.com/u/38230737
+    keywords:
+    - 1Password
+    - 1Password Connect
+    - 1Password Operator
+    maintainers:
+    - email: support+business@1password.com
+      name: 1Password Secrets Integrations Team
+    name: connect
+    urls:
+    - https://github.com/1Password/connect-helm-charts/releases/download/connect-1.2.0/connect-1.2.0.tgz
+    version: 1.2.0
+  - apiVersion: v2
     appVersion: 1.0.0
     created: "2021-04-21T16:53:55.720359446+02:00"
-    description: A Helm chart for deploying 1Password Connect and the 1Password Connect Kubernetes Operator
+    description: A Helm chart for deploying 1Password Connect and the 1Password Connect
+      Kubernetes Operator
     digest: b926041a3ba9d05fcdb19ce2610ae8e0064fb82ba29710aa3c57719ed6537632
     home: https://1password.com/secrets/
     icon: https://1password.com/img/logo-v1.svg
@@ -22,7 +42,8 @@ entries:
   - apiVersion: v2
     appVersion: 1.0.0
     created: "2021-04-21T16:53:55.719832813+02:00"
-    description: A Helm chart for deploying 1Password Connect and the 1Password Connect Kubernetes Operator
+    description: A Helm chart for deploying 1Password Connect and the 1Password Connect
+      Kubernetes Operator
     digest: b366d8f3435721ab44153160cad85d35d5f91c02fa0b4fa4860cbc95cda3ce2f
     home: https://support.1password.com/cs/connect/
     icon: https://1password.com/img/logo-v1.svg
@@ -37,4 +58,4 @@ entries:
     urls:
     - https://github.com/1Password/connect-helm-charts/releases/download/v1.0.1/connect-1.0.1.tgz
     version: 1.0.1
-generated: "2021-04-21T16:53:55.719197273+02:00"
+generated: "2021-05-04T13:04:17.833016477Z"
