@@ -1,40 +1,5 @@
+# This file is not needed anymore and will be removed soon.
+# It only still exists in this place to print an error message to users who still use the old repo URL.
+# For the actual index.yaml file, see https://github.com/1Password/connect-helm-charts/blob/gh-pages/index.yaml
 apiVersion: v1
-entries:
-  connect:
-  - apiVersion: v2
-    appVersion: 1.0.0
-    created: "2021-04-21T16:53:55.720359446+02:00"
-    description: A Helm chart for deploying 1Password Connect and the 1Password Connect Kubernetes Operator
-    digest: b926041a3ba9d05fcdb19ce2610ae8e0064fb82ba29710aa3c57719ed6537632
-    home: https://1password.com/secrets/
-    icon: https://1password.com/img/logo-v1.svg
-    keywords:
-    - 1Password
-    - 1Password Connect
-    - 1Password Operator
-    maintainers:
-    - email: support+business@1password.com
-      name: 1Password Secrets Integrations Team
-    name: connect
-    urls:
-    - https://github.com/1Password/connect-helm-charts/releases/download/v1.1.0/connect-1.1.0.tgz
-    version: 1.1.0
-  - apiVersion: v2
-    appVersion: 1.0.0
-    created: "2021-04-21T16:53:55.719832813+02:00"
-    description: A Helm chart for deploying 1Password Connect and the 1Password Connect Kubernetes Operator
-    digest: b366d8f3435721ab44153160cad85d35d5f91c02fa0b4fa4860cbc95cda3ce2f
-    home: https://support.1password.com/cs/connect/
-    icon: https://1password.com/img/logo-v1.svg
-    keywords:
-    - 1Password
-    - 1Password Connect
-    - 1Password Operator
-    maintainers:
-    - email: support+business@1password.com
-      name: 1Password Secrets Integrations Team
-    name: connect
-    urls:
-    - https://github.com/1Password/connect-helm-charts/releases/download/v1.0.1/connect-1.0.1.tgz
-    version: 1.0.1
-generated: "2021-04-21T16:53:55.719197273+02:00"
+"The https://raw.githubusercontent.com/1password/connect-helm-charts/main URL is not supported anymore, please switch to https://1password.github.io/connect-helm-charts":
