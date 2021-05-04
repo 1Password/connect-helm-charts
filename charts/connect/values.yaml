@@ -30,7 +30,7 @@ operator:
   imagePullPolicy: IfNotPresent
   imageRepository: 1password/onepassword-operator
   pollingInterval: 10
-  version: "1.0.0"
+  version: "1.0.1"
   nodeSelector: {}
   watchNamespace:
     - "{{ .Release.Namespace }}"
