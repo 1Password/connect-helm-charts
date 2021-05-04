@@ -12,6 +12,19 @@
 
 ---
 
+[//]: # (START/v1.2.0)
+# v1.2.0
+
+## Features
+  * New Helm repo URL: https://1password.github.io/connect-helm-charts {#41}
+  * Connect server updated to `v1.1.0` {#40}
+  * Operator version updated to `v1.0.1` {#42}
+  * CRD now lives in `crds/` dir, so they can be skipped with the `--skip-crds` flag {#36}
+  * RBAC resources will be created by default when operator is enabled {#37}
+  * `.Release.Namespace` is now watched by the operator by default {#32}
+
+---
+
 [//]: # (START/v1.1.0)
 # v1.1.0
 
