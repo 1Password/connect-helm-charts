@@ -1,9 +1,6 @@
 name: Release charts if needed
 
-on:
-  push:
-    branches:
-      - main
+on: workflow_dispatch
 
 jobs:
   release:
