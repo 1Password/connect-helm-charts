@@ -46,7 +46,7 @@ jobs:
               secretValue: RGVhciBzZWN1cml0eSByZXNlYXJjaGVyLCB0aGlzIGlzIGp1c3QgYSBkdW1teSBzZWNyZXQuIFBsZWFzZSBkb24ndCByZXBvcnQgaXQu
           EOF
 
-          for values_file in connect/ci/*.yaml; do
+          for values_file in charts/connect/ci/*.yaml; do
             # Add secrets
             yq eval '.connect.credentials = strenv(OP_CONNECT_CREDENTIALS) | .operator.token.value = strenv(OP_CONNECT_TOKEN)' -i $values_file
 

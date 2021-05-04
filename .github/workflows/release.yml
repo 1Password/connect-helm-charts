@@ -1,0 +1,32 @@
+name: Release charts if needed
+
+on: workflow_dispatch
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          # Authenticate as the GitHub Actions bot https://api.github.com/users/github-actions%5Bbot%5D
+          git config user.name "GitHub Actions"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: v3.4.1
+
+      - name: Run chart-releaser
+        # Fork of helm/chart-releaser-action to avoid unwanted release attempts.
+        # Upstream PR: https://github.com/helm/chart-releaser-action/pull/80
+        uses: florisvdg/chart-releaser-action@v1.3.0
+        with:
+          charts_dir: charts
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
