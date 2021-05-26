@@ -69,6 +69,11 @@ spec:
               value: /home/opuser/.op/certs/tls.crt
             - name: OP_TLS_KEY_FILE
               value: /home/opuser/.op/certs/tls.key
+            - name: OP_HTTPS_PORT
+              value: "{{ .Values.connect.api.httpsPort }}"
+            {{- else }}
+            - name: OP_HTTP_PORT
+              value: "{{ .Values.connect.api.httpPort }}"
             {{- end }}
           volumeMounts:
             - mountPath: /home/opuser/.op/data
@@ -95,7 +100,7 @@ spec:
             - containerPort: 8081
           env:
             - name: OP_HTTP_PORT
-              value: "8081"
+              value: "{{ .Values.connect.sync.httpPort }}"
             - name: OP_SESSION
               valueFrom:
                 secretKeyRef:
