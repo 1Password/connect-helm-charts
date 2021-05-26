@@ -15,6 +15,9 @@ connect:
   credentialsName: op-credentials
   credentialsKey: 1password-credentials.json
   credentials:
+  tls:
+    enabled: false
+    secret: op-connect-tls
   dataVolume:
     name: shared-data
     type: emptyDir

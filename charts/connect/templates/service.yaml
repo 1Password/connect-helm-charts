@@ -14,3 +14,7 @@ spec:
       name: {{ .Values.connect.api.name }}
     - port: 8081
       name: {{ .Values.connect.sync.name }}
+    {{- if .Values.connect.tls.enabled }}
+    - port: 8443
+      name: {{ .Values.connect.api.name }}-https
+    {{- end }}
