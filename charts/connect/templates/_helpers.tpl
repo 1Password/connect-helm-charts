@@ -38,3 +38,11 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- $local := dict "first" true -}}
 {{- range $k, $v := . -}}{{- if not $local.first -}},{{- end -}}{{- $v -}}{{- $_ := set $local "first" false -}}{{- end -}}
 {{- end -}}
+
+{{- define "onepassword-connect.url" -}}
+{{- if .Values.connect.tls.enabled }}
+https://{{ .Values.connect.applicationName }}:{{ .Values.connect.api.httpsPort  }}
+{{- else }}
+http://{{ .Values.connect.applicationName }}:{{ .Values.connect.api.httpPort  }}
+{{- end }}
+{{- end }}

@@ -43,7 +43,7 @@ spec:
             - name: OPERATOR_NAME
               value: "{{ .Values.operator.applicationName }}"
             - name: OP_CONNECT_HOST
-              value: "http://{{ .Values.connect.applicationName }}:8080"
+              value: "{{- include "onepassword-connect.url" . }}"
             - name: POLLING_INTERVAL
               value: "{{ .Values.operator.pollingInterval }}"
             - name: OP_CONNECT_TOKEN
