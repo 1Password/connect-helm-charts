@@ -32,8 +32,7 @@ operator:
   pollingInterval: 10
   version: "1.0.1"
   nodeSelector: {}
-  watchNamespace:
-    - "{{ .Release.Namespace }}"
+  watchNamespace: []  # Watch all namespaces by default.
   token:
     name: onepassword-token
     key: token
