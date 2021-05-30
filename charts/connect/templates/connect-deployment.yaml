@@ -59,6 +59,20 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.connect.credentialsName }}
                   key: {{ .Values.connect.credentialsKey }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            failureThreshold: 3
+            periodSeconds: 30
+            initialDelaySeconds: 15
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            failureThreshold: 3
+            periodSeconds: 30
+            initialDelaySeconds: 15
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}
@@ -78,6 +92,22 @@ spec:
             {{- toYaml .Values.connect.sync.resources | nindent 12 }}
           ports:
             - containerPort: 8081
+          {{- if .Values.connect.probes.readiness }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 15
+          {{ end }}
+          {{- if .Values.connect.probes.liveness }}
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            failureThreshold: 3
+            periodSeconds: 30
+            initialDelaySeconds: 15
+          {{ end }}
           env:
             - name: OP_HTTP_PORT
               value: "8081"

@@ -22,6 +22,9 @@ connect:
   imagePullPolicy: IfNotPresent
   version: "{{ .Chart.AppVersion }}"
   nodeSelector: {}
+  probes:
+    liveness: true
+    readiness: true
 
 operator:
   create: false

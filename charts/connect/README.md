@@ -58,6 +58,8 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.dataVolume.values | object | `{}` | Desribes the fields and values for configuration of shared volume for 1Password Connect |
 | connect.imagePullPolicy | string | `"IfNotPresent` | The 1Password Connect API image pull policy |
 | connect.nodeSelector | object | `{}` | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the Connect pod |
+| connect.probes.readiness | boolean | `true` | Denotes whether the 1Password Connect API readiness probe will operate and ensure the pod is ready before serving traffic |
+| connect.probes.liveness | boolean | `true` | Denotes whether the 1Password Connect API will be continually checked by Kubernetes for liveness and restarted if the pod becomes unresponsive |
 | connect.sync.imageRepository | string | `"1password/connect-sync` | The 1Password Connect Sync repository |
 | connect.sync.name | string | `"connect-sync"` | The name of the 1Password Connect Sync container |
 | connect.sync.resources | object | `{}` | The resources requests/limits for the 1Password Connect Sync pod |
