@@ -5,6 +5,13 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "onepassword-connect.labels" . | nindent 4 }}
+  {{- with .Values.connect.labels }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+  annotations:
+  {{- with .Values.connect.annotations }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   selector:
     matchLabels:
@@ -14,6 +21,13 @@ spec:
       labels:
         app: {{ .Values.connect.applicationName }}
         version: "{{ tpl .Values.connect.version . }}"
+      {{- with .Values.connect.podLabels }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      annotations:
+      {{- with .Values.connect.podAnnotations }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
 {{- with .Values.connect.nodeSelector }}
       nodeSelector:
