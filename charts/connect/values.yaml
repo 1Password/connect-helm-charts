@@ -34,6 +34,7 @@ operator:
   nodeSelector: {}
   watchNamespace:
     - "{{ .Release.Namespace }}"
+  resources: {}
   token:
     name: onepassword-token
     key: token
