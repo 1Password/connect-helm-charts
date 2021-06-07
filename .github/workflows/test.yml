@@ -2,7 +2,15 @@ name: Run acceptance tests
 on:
   push:
 
-  # Workflow dispatch listener to enable on-demand acceptance test runs on external PRs
+  # Workflow dispatch listener to enable on-demand acceptance test runs on external PRs.
+  # How to use this:
+  # * Do a sanity check on the submitted PR
+  # * Copy the most recent commit hash of the PR branch
+  # * Go to 'Actions' -> 'Run acceptance tests' -> 'Run workflow'
+  # * Fill in the following:
+  #   * `checkout-repo`: `<PR author>/connect-helm-charts`
+  #   * `checkout-ref`: <copied commit hash>
+  #   * `branch`: `acceptance-tests-on-forks`
   workflow_dispatch:
     inputs:
       checkout-repo:
