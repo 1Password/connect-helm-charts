@@ -22,6 +22,10 @@ connect:
   imagePullPolicy: IfNotPresent
   version: "{{ .Chart.AppVersion }}"
   nodeSelector: {}
+  annotations: {}
+  labels: {}
+  podAnnotations: {}
+  podLabels: {}
 
 operator:
   create: false
@@ -32,6 +36,10 @@ operator:
   pollingInterval: 10
   version: "1.0.1"
   nodeSelector: {}
+  annotations: {}
+  labels: {}
+  podAnnotations: {}
+  podLabels: {}
   watchNamespace:
     - "{{ .Release.Namespace }}"
   token:
