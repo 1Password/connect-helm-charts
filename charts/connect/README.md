@@ -60,6 +60,10 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.nodeSelector | object | `{}` | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the Connect pod |
 | connect.probes.readiness | boolean | `true` | Denotes whether the 1Password Connect API readiness probe will operate and ensure the pod is ready before serving traffic |
 | connect.probes.liveness | boolean | `true` | Denotes whether the 1Password Connect API will be continually checked by Kubernetes for liveness and restarted if the pod becomes unresponsive |
+| connect.annotations | object | `{}` | Additional annotations to be added to the Connect API deployment resource. |
+| connect.labels | object | `{}` | Additional labels to be added to the Connect API deployment resource. |
+| connect.podAnnotations | object | `{}` | Additional annotations to be added to the Connect API pods. |
+| connect.podLabels | object | `{}` | Additional labels to be added to the Connect API pods.  |
 | connect.sync.imageRepository | string | `"1password/connect-sync` | The 1Password Connect Sync repository |
 | connect.sync.name | string | `"connect-sync"` | The name of the 1Password Connect Sync container |
 | connect.sync.resources | object | `{}` | The resources requests/limits for the 1Password Connect Sync pod |
@@ -69,6 +73,10 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | operator.imagePullPolicy | string | `"IfNotPresent` | The 1Password Connect Operator image pull policy |
 | operator.imageRepository | string | `"1password/onepassword-operator` | The 1Password Connect Operator repository |
 | operator.nodeSelector | object | `{}` | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the operator pod |
+| operator.annotations | object | `{}` | Additional annotations to be added to the Operator deployment resource. |
+| operator.labels | object | `{}` | Additional labels to be added to the Operator deployment resource. |
+| operator.podAnnotations | object | `{}` | Additional annotations to be added to the Operator pods. |
+| operator.podLabels | object | `{}` | Additional labels to be added to the Operator pods.  |
 | operator.pollingInterval | integer | `600` | How often the 1Password Connect Operator will poll for secrets updates. |
 | operator.clusterRole.create | boolean | `{{.Values.operator.create}}` | Denotes whether or not a cluster role will be created for each for the 1Password Connect Operator |
 | operator.clusterRole.name | string | `"onepassword-connect-operator"` | The name of the 1Password Connect Operator Cluster Role |
@@ -82,6 +90,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | operator.token.name | string | `"onepassword-token"` | The name of Kubernetes Secret containing the 1Password Connect API token |
 | operator.token.value | string | `"onepassword-token"` | An API token generated for 1Password Connect to be used by the Connect Operator |
 | operator.watchNamespace | {} | [`{{.Release.Namespace}}`] | A list of Namespaces for the 1Password Connect Operator to watch and manage |
+| operator.resources | object | `{}` | The resources requests/limits for the 1Password Connect Operator pod |
 
 ### CRD
 

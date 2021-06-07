@@ -6,6 +6,13 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "onepassword-connect.labels" . | nindent 4 }}
+  {{- with .Values.operator.labels }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.operator.annotations }}
+  annotations:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   replicas: 1
   selector:
@@ -15,6 +22,13 @@ spec:
     metadata:
       labels:
         name: {{ .Values.connect.applicationName }}
+      {{- with .Values.operator.podLabels }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.operator.podAnnotations }}
+      annotations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
 {{- with .Values.operator.nodeSelector }}
       nodeSelector:
@@ -53,5 +67,7 @@ spec:
                   key: {{ .Values.operator.token.key }}
             - name: AUTO_RESTART
               value: "{{ .Values.operator.autoRestart }}"
+          resources:
+            {{- toYaml .Values.operator.resources | nindent 12 }}
 {{- end }}
 
