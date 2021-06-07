@@ -8,8 +8,8 @@ metadata:
   {{- with .Values.connect.labels }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
-  annotations:
   {{- with .Values.connect.annotations }}
+  annotations:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
@@ -24,8 +24,8 @@ spec:
       {{- with .Values.connect.podLabels }}
       {{- toYaml . | nindent 8 }}
       {{- end }}
-      annotations:
       {{- with .Values.connect.podAnnotations }}
+      annotations:
       {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
