@@ -67,5 +67,7 @@ spec:
                   key: {{ .Values.operator.token.key }}
             - name: AUTO_RESTART
               value: "{{ .Values.operator.autoRestart }}"
+          resources:
+            {{- toYaml .Values.operator.resources | nindent 12 }}
 {{- end }}
 

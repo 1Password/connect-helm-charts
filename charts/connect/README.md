@@ -88,6 +88,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | operator.token.name | string | `"onepassword-token"` | The name of Kubernetes Secret containing the 1Password Connect API token |
 | operator.token.value | string | `"onepassword-token"` | An API token generated for 1Password Connect to be used by the Connect Operator |
 | operator.watchNamespace | {} | [`{{.Release.Namespace}}`] | A list of Namespaces for the 1Password Connect Operator to watch and manage |
+| operator.resources | object | `{}` | The resources requests/limits for the 1Password Connect Operator pod |
 
 ### CRD
 
