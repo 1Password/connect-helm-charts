@@ -18,7 +18,7 @@
     for you.
 
     More information about 1Password Connect and how to generate a 1password-credentials.json 
-    file can be found at https://support.1password.com/cs/connect/.
+    file can be found at https://support.1password.com/secrets-automation/.
 
 ---------------------------------------------------------------------------------------------
 {{- end }}
@@ -40,7 +40,7 @@
     operator.token to the value of your token.
 
     More information about 1Password Connect and how to generate a 1Password Connect API token
-    can be found at https://support.1password.com/cs/connect/.
+    can be found at https://support.1password.com/secrets-automation/.
 
 ---------------------------------------------------------------------------------------------
 {{- end }}
@@ -48,7 +48,7 @@
 ** Please be patient while the chart is being deployed **
 
 1Password Connect is being deployed to Kubernetes. More information about 1Password Connect can 
-be found at https://support.1password.com/cs/connect/
+be found at https://support.1password.com/secrets-automation/
 
 {{- if  .Values.operator.create }}
 

@@ -7,7 +7,7 @@ Installing the Helm Chart with default configurations will deploy 1Password Conn
 helm install connect 1password/connect --set-file connect.credentials=<path/to/1password-credentials.json>
 ```
     
-More information about 1Password Connect and how to generate a 1password-credentials.json file can be found at https://support.1password.com/cs/connect/.
+More information about 1Password Connect and how to generate a 1password-credentials.json file can be found at https://support.1password.com/secrets-automation/.
 
 ## Deploying 1Password Connect Kubernetes Operator
 In order to deploy the 1Password Connect Kubernetes Operator along side 1Password Connect `--set operator.create=true` in your install command.
@@ -23,7 +23,7 @@ If you would prefer to create the token secret manually, the token can be saved 
 $ kubectl create secret generic <token-name> --from-literal=token=<OP_CONNECT_TOKEN> \ --namespace=<namespace>
 ```
 
-More information about 1Password Connect and how to generate a 1Password Connect API token can be found at https://support.1password.com/cs/connect/.
+More information about 1Password Connect and how to generate a 1Password Connect API token can be found at https://support.1password.com/secrets-automation/.
 
 ## Configuration Values
 The 1Password Connect Helm chart offers many configuration options for deployment. Please refer to the list below for information on what configuration options are available as well as what the default configuration options are.
