@@ -39,6 +39,11 @@ spec:
         - name: credentials
           secret:
             secretName: {{ .Values.connect.credentialsName }}
+        {{- if .Values.connect.tls.enabled }}
+        - name: tls-cert
+          secret:
+            secretName: {{ .Values.connect.tls.secret }}
+        {{- end }}
       initContainers:
         - name: sqlite-permissions
           image: alpine:3.12
@@ -65,17 +70,30 @@ spec:
               - "NET_BROADCAST"
           resources:
             {{- toYaml .Values.connect.sync.resources | nindent 12 }}
-          ports:
-            - containerPort: 8080
           env:
             - name: OP_SESSION
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.connect.credentialsName }}
                   key: {{ .Values.connect.credentialsKey }}
+            {{- if .Values.connect.tls.enabled }}
+            - name: OP_TLS_CERT_FILE
+              value: /home/opuser/.op/certs/tls.crt
+            - name: OP_TLS_KEY_FILE
+              value: /home/opuser/.op/certs/tls.key
+            - name: OP_HTTPS_PORT
+              value: "{{ .Values.connect.api.httpsPort }}"
+            {{- else }}
+            - name: OP_HTTP_PORT
+              value: "{{ .Values.connect.api.httpPort }}"
+            {{- end }}
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}
+            {{- if .Values.connect.tls.enabled }}
+            - name: tls-cert
+              mountPath: /home/opuser/.op/certs
+            {{- end }}
         - name: connect-sync
           image: {{ .Values.connect.sync.imageRepository }}:{{ tpl .Values.connect.version . }}
           imagePullPolicy: {{ .Values.connect.imagePullPolicy }}
@@ -90,11 +108,9 @@ spec:
               - "NET_BROADCAST"
           resources:
             {{- toYaml .Values.connect.sync.resources | nindent 12 }}
-          ports:
-            - containerPort: 8081
           env:
             - name: OP_HTTP_PORT
-              value: "8081"
+              value: "{{ .Values.connect.sync.httpPort }}"
             - name: OP_SESSION
               valueFrom:
                 secretKeyRef:

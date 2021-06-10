@@ -10,7 +10,12 @@ spec:
   selector:
     app: {{ .Values.connect.applicationName }}
   ports:
-    - port: 8080
-      name: {{ .Values.connect.api.name }}
-    - port: 8081
+    - port: {{ .Values.connect.sync.httpPort }}
       name: {{ .Values.connect.sync.name }}
+    {{- if .Values.connect.tls.enabled }}
+    - port: {{ .Values.connect.api.httpsPort }}
+      name: {{ .Values.connect.api.name }}-https
+    {{- else }}
+    - port: {{ .Values.connect.api.httpPort }}
+      name: {{ .Values.connect.api.name }}
+    {{- end }}

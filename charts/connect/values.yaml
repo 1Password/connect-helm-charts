@@ -8,13 +8,19 @@ connect:
     name: connect-api
     imageRepository: 1password/connect-api
     resources: {}
+    httpPort: 8080
+    httpsPort: 8443
   sync:
     name: connect-sync
     imageRepository: 1password/connect-sync
     resources: {}
+    httpPort: 8081
   credentialsName: op-credentials
   credentialsKey: 1password-credentials.json
   credentials:
+  tls:
+    enabled: false
+    secret: op-connect-tls
   dataVolume:
     name: shared-data
     type: emptyDir
