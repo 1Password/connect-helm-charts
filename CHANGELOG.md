@@ -12,6 +12,19 @@
 
 ---
 
+[//]: # (START/v1.3.0)
+# v1.3.0
+
+## Features
+  * Connect server updated to `v1.2.0` {#49}
+  * Resource limits can now be set on the operator {#52}
+  * Additional labels & annotations are set for deployments {#51}
+
+## Security
+  * Follow principle of least privilege for operator permissions {#55}
+
+---
+
 [//]: # (START/v1.2.0)
 # v1.2.0
 

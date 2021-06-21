@@ -7,7 +7,7 @@ Installing the Helm Chart with default configurations will deploy 1Password Conn
 helm install connect 1password/connect --set-file connect.credentials=<path/to/1password-credentials.json>
 ```
     
-More information about 1Password Connect and how to generate a 1password-credentials.json file can be found at https://support.1password.com/cs/connect/.
+More information about 1Password Connect and how to generate a 1password-credentials.json file can be found at https://support.1password.com/secrets-automation/.
 
 ## Deploying 1Password Connect Kubernetes Operator
 In order to deploy the 1Password Connect Kubernetes Operator along side 1Password Connect `--set operator.create=true` in your install command.
@@ -23,7 +23,7 @@ If you would prefer to create the token secret manually, the token can be saved 
 $ kubectl create secret generic <token-name> --from-literal=token=<OP_CONNECT_TOKEN> \ --namespace=<namespace>
 ```
 
-More information about 1Password Connect and how to generate a 1Password Connect API token can be found at https://support.1password.com/cs/connect/.
+More information about 1Password Connect and how to generate a 1Password Connect API token can be found at https://support.1password.com/secrets-automation/.
 
 ## Configuration Values
 The 1Password Connect Helm chart offers many configuration options for deployment. Please refer to the list below for information on what configuration options are available as well as what the default configuration options are.
@@ -50,6 +50,8 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.api.imageRepository | string | `"1password/connect-api` | The 1Password Connect API repository |
 | connect.api.name | string | `"connect-api"` | The name of the 1Password Connect API container |
 | connect.api.resources | object | `{}` | The resources requests/limits for the 1Password Connect API pod |
+| connect.api.httpPort | integer | `8080` | The port the Connect API is served on when TLS is disabled |
+| connect.api.httpsPort | integer | `8443` | The port the Connect API is served on when TLS is enabled |
 | connect.credentials | jsonString |  | Contents of the 1password-credentials.json file for Connect. Can be set be adding `--set-file connect.credentials=<path/to/1password-credentials.json>` to your helm install command |
 | connect.credentialsKey | string | `"op-session"` | The key for the 1Password Connect Credentials stored in the credentials secret |
 | connect.credentialsName | string | `"op-credentials"` | The name of Kubernetes Secret containing the 1Password Connect credentials |
@@ -67,6 +69,9 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.sync.imageRepository | string | `"1password/connect-sync` | The 1Password Connect Sync repository |
 | connect.sync.name | string | `"connect-sync"` | The name of the 1Password Connect Sync container |
 | connect.sync.resources | object | `{}` | The resources requests/limits for the 1Password Connect Sync pod |
+| connect.sync.httpPort | integer | `8081` | The port serving the health of the Sync container |
+| connect.tls.enabled | boolean | `false` | Denotes whether the Connect API is secured with TLS |
+| connect.tls.secret | string | `"op-connect-tls"` | The name of the secret containing the TLS key (`tls.key`) and certificate (`tls.crt`)  |
 | connect.version | string | `{{.Chart.AppVersion}}` | The 1Password Connect version to pull |
 | operator.autoRestart | boolean | `false` | Denotes whether the 1Password Connect Operator will automatically restart deployments based on associated updated secrets. |
 | operator.create | boolean | `false` | Denotes whether the 1Password Connect Operator will be deployed |
