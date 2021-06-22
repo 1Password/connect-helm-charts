@@ -91,14 +91,16 @@ spec:
           readinessProbe:
             httpGet:
               path: /health
-              port: 8080
+              scheme: {{ if .Values.connect.tls.enabled }}HTTPS{{ else }}HTTP{{end}}
+              port: {{ include "onepassword-connect.apiPort" . }}
             initialDelaySeconds: 15
           {{ end }}
           {{- if .Values.connect.probes.liveness }}
           livenessProbe:
             httpGet:
               path: /heartbeat
-              port: 8080
+              scheme: {{ if .Values.connect.tls.enabled }}HTTPS{{ else }}HTTP{{end}}
+              port: {{ include "onepassword-connect.apiPort" . }}
             failureThreshold: 3
             periodSeconds: 30
             initialDelaySeconds: 15
@@ -138,14 +140,15 @@ spec:
           readinessProbe:
             httpGet:
               path: /health
-              port: 8080
+              port: {{ .Values.connect.sync.httpPort }}
             initialDelaySeconds: 15
           {{ end }}
           {{- if .Values.connect.probes.liveness }}
           livenessProbe:
             httpGet:
               path: /heartbeat
-              port: 8080
+              port: {{ .Values.connect.sync.httpPort }}
+              scheme: HTTP
             failureThreshold: 3
             periodSeconds: 30
             initialDelaySeconds: 15

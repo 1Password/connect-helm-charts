@@ -39,6 +39,14 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- range $k, $v := . -}}{{- if not $local.first -}},{{- end -}}{{- $v -}}{{- $_ := set $local "first" false -}}{{- end -}}
 {{- end -}}
 
+{{- define "onepassword-connect.apiPort" -}}
+{{- if .Values.connect.tls.enabled -}}
+{{ .Values.connect.api.httpsPort  }}
+{{- else -}}
+{{ .Values.connect.api.httpPort  }}
+{{- end }}
+{{- end }}
+
 {{- define "onepassword-connect.url" -}}
 {{- if .Values.connect.tls.enabled -}}
 https://{{ .Values.connect.applicationName }}:{{ .Values.connect.api.httpsPort  }}
