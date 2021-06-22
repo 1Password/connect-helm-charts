@@ -126,8 +126,6 @@ spec:
               - "NET_BROADCAST"
           resources:
             {{- toYaml .Values.connect.sync.resources | nindent 12 }}
-          ports:
-            - containerPort: 8081
           env:
             - name: OP_HTTP_PORT
               value: "{{ .Values.connect.sync.httpPort }}"
