@@ -12,6 +12,15 @@
 
 ---
 
+[//]: # (START/v1.4.0)
+# v1.4.0
+
+## Features
+* API and Sync containers now have liveness and readiness probes. {#47}
+* The Connect API can now be configured to use TLS with a custom certificate.
+
+---
+
 [//]: # (START/v1.3.0)
 # v1.3.0
 
