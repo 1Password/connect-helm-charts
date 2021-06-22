@@ -87,6 +87,24 @@ spec:
             - name: OP_HTTP_PORT
               value: "{{ .Values.connect.api.httpPort }}"
             {{- end }}
+          {{- if .Values.connect.probes.readiness }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              scheme: {{ if .Values.connect.tls.enabled }}HTTPS{{ else }}HTTP{{end}}
+              port: {{ include "onepassword-connect.apiPort" . }}
+            initialDelaySeconds: 15
+          {{ end }}
+          {{- if .Values.connect.probes.liveness }}
+          livenessProbe:
+            httpGet:
+              path: /heartbeat
+              scheme: {{ if .Values.connect.tls.enabled }}HTTPS{{ else }}HTTP{{end}}
+              port: {{ include "onepassword-connect.apiPort" . }}
+            failureThreshold: 3
+            periodSeconds: 30
+            initialDelaySeconds: 15
+          {{ end }}
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}
@@ -116,6 +134,23 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.connect.credentialsName }}
                   key: {{ .Values.connect.credentialsKey }}
+          {{- if .Values.connect.probes.readiness }}
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: {{ .Values.connect.sync.httpPort }}
+            initialDelaySeconds: 15
+          {{ end }}
+          {{- if .Values.connect.probes.liveness }}
+          livenessProbe:
+            httpGet:
+              path: /heartbeat
+              port: {{ .Values.connect.sync.httpPort }}
+              scheme: HTTP
+            failureThreshold: 3
+            periodSeconds: 30
+            initialDelaySeconds: 15
+          {{ end }}             
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}
