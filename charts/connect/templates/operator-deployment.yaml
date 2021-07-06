@@ -49,7 +49,7 @@ spec:
           command: ["/manager"]
           env:
             - name: WATCH_NAMESPACE
-              value: {{ tpl (include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace) . }}
+              value: {{ default "" (tpl (include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace) .) }}
             - name: POD_NAME
               valueFrom:
                 fieldRef:
@@ -70,4 +70,3 @@ spec:
           resources:
             {{- toYaml .Values.operator.resources | nindent 12 }}
 {{- end }}
-

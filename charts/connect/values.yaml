@@ -39,6 +39,7 @@ connect:
 operator:
   create: false
   autoRestart: false
+  watchallNamespaces: true
   applicationName: onepassword-connect-operator
   imagePullPolicy: IfNotPresent
   imageRepository: 1password/onepassword-operator
@@ -49,8 +50,7 @@ operator:
   labels: {}
   podAnnotations: {}
   podLabels: {}
-  watchNamespace:
-    - "{{ .Release.Namespace }}"
+  watchNamespace: []
   resources: {}
   token:
     name: onepassword-token
@@ -68,6 +68,10 @@ operator:
 
   clusterRole:
     create: "{{ .Values.operator.create }}"
+    name: onepassword-connect-operator
+
+  clusterRoleBinding:
+    create: "{{ .Values.operator.watchallNamespaces }}"
     name: onepassword-connect-operator
 
 service:
