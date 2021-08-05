@@ -71,10 +71,6 @@ operator:
     create: "{{ .Values.operator.create }}"
     name: onepassword-connect-operator
 
-service:
-  type: Nodeport
-  port: 8080
-
 acceptanceTests:
   enabled: false
   fixtures: {}
