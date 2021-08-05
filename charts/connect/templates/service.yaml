@@ -6,7 +6,7 @@ metadata:
   labels:
     {{- include "onepassword-connect.labels" . | nindent 4 }}
 spec:
-  type: NodePort
+  type: {{ .Values.connect.serviceType }}
   selector:
     app: {{ .Values.connect.applicationName }}
   ports:
