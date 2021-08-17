@@ -75,7 +75,6 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.version | string | `{{.Chart.AppVersion}}` | The 1Password Connect version to pull |
 | operator.autoRestart | boolean | `false` | Denotes whether the 1Password Connect Operator will automatically restart deployments based on associated updated secrets. |
 | operator.create | boolean | `false` | Denotes whether the 1Password Connect Operator will be deployed |
-| operator.watchallNamespaces | boolean | `true` | Denotes whether the 1Password Connect Operator will be watching all namespaces for secrets |
 | operator.imagePullPolicy | string | `"IfNotPresent` | The 1Password Connect Operator image pull policy |
 | operator.imageRepository | string | `"1password/onepassword-operator` | The 1Password Connect Operator repository |
 | operator.nodeSelector | object | `{}` | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the operator pod |
@@ -86,7 +85,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | operator.pollingInterval | integer | `600` | How often the 1Password Connect Operator will poll for secrets updates. |
 | operator.clusterRole.create | boolean | `{{.Values.operator.create}}` | Denotes whether or not a cluster role will be created for each for the 1Password Connect Operator |
 | operator.clusterRole.name | string | `"onepassword-connect-operator"` | The name of the 1Password Connect Operator Cluster Role |
-| operator.clusterRoleBinding.create | boolean | `{{.Values.operator.watchallNamespaces}}` | Denotes whether or not a Cluster role binding will be created for the 1Password Connect Operator Service Account |
+| operator.clusterRoleBinding.create | boolean | `{{.Values.operator.create}}` | Denotes whether or not a Cluster role binding will be created for the 1Password Connect Operator Service Account |
 | operator.roleBinding.create | boolean | `{{.Values.operator.create}}` | Denotes whether or not a role binding will be created for each Namespace for the 1Password Connect Operator Service Account |
 | operator.roleBinding.name | string | `"onepassword-connect-operator"` | The name of the 1Password Connect Operator Role Binding |
 | operator.serviceAccount.annotations | object | `{}` | Annotations for the 1Password Connect Service Account |
@@ -96,7 +95,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | operator.token.key | string | `"token"` | The key for the 1Password Connect token stored in the 1Password token secret |
 | operator.token.name | string | `"onepassword-token"` | The name of Kubernetes Secret containing the 1Password Connect API token |
 | operator.token.value | string | `"onepassword-token"` | An API token generated for 1Password Connect to be used by the Connect Operator |
-| operator.watchNamespace | list | `[]` | A list of Namespaces for the 1Password Connect Operator to watch and manage |
+| operator.watchNamespace | list | `[]` | A list of namespaces for the 1Password Connect Operator to watch and manage. Use the empty list to watch all namespaces. |
 | operator.resources | object | `{}` | The resources requests/limits for the 1Password Connect Operator pod |
 
 ### CRD

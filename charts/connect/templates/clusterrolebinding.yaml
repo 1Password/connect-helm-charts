@@ -1,5 +1,5 @@
 {{- if eq (tpl (.Values.operator.create | toString) .) "true" -}}
-{{- if eq (tpl (.Values.operator.clusterRoleBinding.create | toString) .) "true" -}}
+{{- if not .Values.operator.watchNamespace -}}
 {{- $name := .Values.operator.clusterRoleBinding.name -}}
 {{- $clusterRoleName := .Values.operator.clusterRole.name -}}
 {{- $serviceAccountName := .Values.operator.serviceAccount.name -}}
