@@ -50,8 +50,7 @@ operator:
   labels: {}
   podAnnotations: {}
   podLabels: {}
-  watchNamespace:
-    - "{{ .Release.Namespace }}"
+  watchNamespace: []
   resources: {}
   token:
     name: onepassword-token
@@ -71,6 +70,9 @@ operator:
     create: "{{ .Values.operator.create }}"
     name: onepassword-connect-operator
 
-acceptanceTests:
+  clusterRoleBinding:
+    create: "{{ .Values.operator.create }}"
+    name: onepassword-connect-operator
+
   enabled: false
   fixtures: {}

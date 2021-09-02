@@ -1,16 +1,13 @@
-{{- if eq (tpl (.Values.operator.roleBinding.create | toString) .) "true" -}}
-{{- if .Values.operator.watchNamespace -}}
-{{- $name := .Values.operator.roleBinding.name -}}
+{{- if eq (tpl (.Values.operator.create | toString) .) "true" -}}
+{{- if not .Values.operator.watchNamespace -}}
+{{- $name := .Values.operator.clusterRoleBinding.name -}}
 {{- $clusterRoleName := .Values.operator.clusterRole.name -}}
 {{- $serviceAccountName := .Values.operator.serviceAccount.name -}}
 {{- $releaseNamespace := .Release.Namespace -}}
-{{- range $namespace := .Values.operator.watchNamespace }}
-{{- $namespace = tpl $namespace $ -}}
-kind: RoleBinding
+kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  name: {{ $name }}-{{ $namespace }}
-  namespace: {{ $namespace }}
+  name: {{ $name }}
   labels:
     {{- include "onepassword-connect.labels" $ | nindent 4 }}
 subjects:
@@ -19,9 +16,7 @@ subjects:
   namespace: {{ $releaseNamespace }}
 roleRef:
   kind: ClusterRole
-  name: {{ $clusterRoleName}}
+  name: {{ $clusterRoleName }}
   apiGroup: rbac.authorization.k8s.io
----
-{{- end }}
 {{- end }}
 {{- end }}
