@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.connect.applicationName }}
   namespace: {{ .Release.Namespace }}
   labels:
+    app.kubernetes.io/component: connect
     {{- include "onepassword-connect.labels" . | nindent 4 }}
   {{- with .Values.connect.labels }}
   {{- toYaml . | nindent 4 }}
@@ -21,6 +22,7 @@ spec:
       labels:
         app: {{ .Values.connect.applicationName }}
         version: "{{ tpl .Values.connect.version . }}"
+        app.kubernetes.io/component: connect
       {{- with .Values.connect.podLabels }}
       {{- toYaml . | nindent 8 }}
       {{- end }}

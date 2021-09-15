@@ -4,6 +4,7 @@ metadata:
   name: {{ .Values.connect.applicationName }}
   namespace: {{ .Release.Namespace }}
   labels:
+    app.kubernetes.io/component: connect
     {{- include "onepassword-connect.labels" . | nindent 4 }}
 spec:
   type: NodePort
