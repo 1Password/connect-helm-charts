@@ -74,5 +74,6 @@ operator:
     create: "{{ .Values.operator.create }}"
     name: onepassword-connect-operator
 
+acceptanceTests:
   enabled: false
   fixtures: {}
