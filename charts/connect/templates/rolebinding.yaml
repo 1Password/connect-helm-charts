@@ -1,5 +1,4 @@
 {{- if eq (tpl (.Values.operator.roleBinding.create | toString) .) "true" -}}
-{{- if .Values.operator.watchNamespace -}}
 {{- $name := .Values.operator.roleBinding.name -}}
 {{- $clusterRoleName := .Values.operator.clusterRole.name -}}
 {{- $serviceAccountName := .Values.operator.serviceAccount.name -}}
@@ -22,6 +21,5 @@ roleRef:
   name: {{ $clusterRoleName}}
   apiGroup: rbac.authorization.k8s.io
 ---
-{{- end }}
 {{- end }}
 {{- end }}
