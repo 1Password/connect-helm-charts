@@ -12,6 +12,14 @@
 
 ---
 
+[//]: # (START/v1.5.0)
+# v1.5.0
+
+## Features
+* Add clusterrolebinding compatibility and watch all namespaces by default. {#62}
+
+---
+
 [//]: # (START/v1.4.0)
 # v1.4.0
 
