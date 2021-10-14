@@ -12,6 +12,14 @@
 
 ---
 
+[//]: # (START/v1.6.0)
+# v1.6.0
+
+## Features
+* Add `app.kubernetes.io/component` labels for Connect and Operator. {#70}
+
+---
+
 [//]: # (START/v1.5.0)
 # v1.5.0
 
