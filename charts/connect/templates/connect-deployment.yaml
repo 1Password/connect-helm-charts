@@ -71,7 +71,7 @@ spec:
               add:
               - "NET_BROADCAST"
           resources:
-            {{- toYaml .Values.connect.sync.resources | nindent 12 }}
+            {{- toYaml .Values.connect.api.resources | nindent 12 }}
           env:
             - name: OP_SESSION
               valueFrom:
