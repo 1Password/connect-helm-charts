@@ -66,6 +66,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.labels | object | `{}` | Additional labels to be added to the Connect API deployment resource. |
 | connect.podAnnotations | object | `{}` | Additional annotations to be added to the Connect API pods. |
 | connect.podLabels | object | `{}` | Additional labels to be added to the Connect API pods.  |
+| connect.serviceType | string | `NodePort` | The type of Service resource to create for the Connect API and sync services. |
 | connect.sync.imageRepository | string | `"1password/connect-sync` | The 1Password Connect Sync repository |
 | connect.sync.name | string | `"connect-sync"` | The name of the 1Password Connect Sync container |
 | connect.sync.resources | object | `{}` | The resources requests/limits for the 1Password Connect Sync pod |
