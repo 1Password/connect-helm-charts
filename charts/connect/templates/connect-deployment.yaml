@@ -46,17 +46,6 @@ spec:
           secret:
             secretName: {{ .Values.connect.tls.secret }}
         {{- end }}
-      initContainers:
-        - name: sqlite-permissions
-          image: alpine:3.12
-          command:
-            - "/bin/sh"
-            - "-c"
-          args:
-            - "mkdir -p /home/opuser/.op/data && chown -R 999 /home/opuser && chmod -R 700 /home/opuser && chmod -f -R 600 /home/opuser/.op/config || :"
-          volumeMounts:
-            - mountPath: /home/opuser/.op/data
-              name: {{ .Values.connect.dataVolume.name }}
       containers:
         - name: {{ .Values.connect.api.name }}
           image: {{ .Values.connect.api.imageRepository }}:{{ tpl .Values.connect.version . }}
