@@ -73,6 +73,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.sync.httpPort | integer | `8081` | The port serving the health of the Sync container |
 | connect.tls.enabled | boolean | `false` | Denotes whether the Connect API is secured with TLS |
 | connect.tls.secret | string | `"op-connect-tls"` | The name of the secret containing the TLS key (`tls.key`) and certificate (`tls.crt`)  |
+| connect.tolerations | list | `[]` | List of tolerations to be added to the Connect API pods.  |
 | connect.version | string | `{{.Chart.AppVersion}}` | The 1Password Connect version to pull |
 | operator.autoRestart | boolean | `false` | Denotes whether the 1Password Connect Operator will automatically restart deployments based on associated updated secrets. |
 | operator.create | boolean | `false` | Denotes whether the 1Password Connect Operator will be deployed |
@@ -92,6 +93,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | operator.serviceAccount.annotations | object | `{}` | Annotations for the 1Password Connect Service Account |
 | operator.serviceAccount.create | boolean | `{{.Values.operator.create}}` | Denotes whether or not a service account will be created for the 1Password Connect Operator |
 | operator.serviceAccount.name | string | `"onepassword-connect-operator"` | The name of the 1Password Conenct Operator |
+| operator.tolerations | list | `[]` | List of tolerations to be added to the Operator pods.  |
 | operator.version | string | `"1.0.1"` | T 1Password Connect Operator version to pull |
 | operator.token.key | string | `"token"` | The key for the 1Password Connect token stored in the 1Password token secret |
 | operator.token.name | string | `"onepassword-token"` | The name of Kubernetes Secret containing the 1Password Connect API token |

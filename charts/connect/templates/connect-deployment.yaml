@@ -57,6 +57,8 @@ spec:
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}
+      tolerations:
+{{ toYaml .Values.connect.tolerations | indent 8 }}
       containers:
         - name: {{ .Values.connect.api.name }}
           image: {{ .Values.connect.api.imageRepository }}:{{ tpl .Values.connect.version . }}
