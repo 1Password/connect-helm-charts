@@ -36,7 +36,7 @@ connect:
   labels: {}
   podAnnotations: {}
   podLabels: {}
-  tolerations: {}
+  tolerations: []
 
 operator:
   create: false
@@ -51,7 +51,7 @@ operator:
   labels: {}
   podAnnotations: {}
   podLabels: {}
-  tolerations: {}
+  tolerations: []
   watchNamespace: []
   resources: {}
   token:
