@@ -46,6 +46,8 @@ spec:
           secret:
             secretName: {{ .Values.connect.tls.secret }}
         {{- end }}
+      tolerations:
+{{ toYaml .Values.connect.tolerations | indent 8 }}
       containers:
         - name: {{ .Values.connect.api.name }}
           image: {{ .Values.connect.api.imageRepository }}:{{ tpl .Values.connect.version . }}
