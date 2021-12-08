@@ -15,6 +15,7 @@ connect:
     imageRepository: 1password/connect-sync
     resources: {}
     httpPort: 8081
+  serviceType: NodePort
   credentialsName: op-credentials
   credentialsKey: 1password-credentials.json
   credentials:
@@ -44,15 +45,14 @@ operator:
   imagePullPolicy: IfNotPresent
   imageRepository: 1password/onepassword-operator
   pollingInterval: 10
-  version: "1.0.1"
+  version: "1.1.0"
   nodeSelector: {}
   annotations: {}
   labels: {}
   podAnnotations: {}
   podLabels: {}
   tolerations: {}
-  watchNamespace:
-    - "{{ .Release.Namespace }}"
+  watchNamespace: []
   resources: {}
   token:
     name: onepassword-token
@@ -72,9 +72,9 @@ operator:
     create: "{{ .Values.operator.create }}"
     name: onepassword-connect-operator
 
-service:
-  type: Nodeport
-  port: 8080
+  clusterRoleBinding:
+    create: "{{ .Values.operator.create }}"
+    name: onepassword-connect-operator
 
 acceptanceTests:
   enabled: false
