@@ -56,11 +56,6 @@ spec:
             runAsUser: 999
             runAsGroup: 999
             allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-              - all
-              add:
-              - "NET_BROADCAST"
           resources:
             {{- toYaml .Values.connect.api.resources | nindent 12 }}
           env:
@@ -69,6 +64,10 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.connect.credentialsName }}
                   key: {{ .Values.connect.credentialsKey }}
+            - name: OP_BUS_PORT
+              value: "11220"
+            - name: OP_BUS_PEERS
+              value: localhost:11221
             {{- if .Values.connect.tls.enabled }}
             - name: OP_TLS_CERT_FILE
               value: /home/opuser/.op/certs/tls.crt
@@ -112,11 +111,6 @@ spec:
             runAsUser: 999
             runAsGroup: 999
             allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-              - all
-              add:
-              - "NET_BROADCAST"
           resources:
             {{- toYaml .Values.connect.sync.resources | nindent 12 }}
           env:
@@ -127,6 +121,10 @@ spec:
                 secretKeyRef:
                   name: {{ .Values.connect.credentialsName }}
                   key: {{ .Values.connect.credentialsKey }}
+            - name: OP_BUS_PORT
+              value: "11221"
+            - name: OP_BUS_PEERS
+              value: localhost:11220
           {{- if .Values.connect.probes.readiness }}
           readinessProbe:
             httpGet:
