@@ -2,7 +2,7 @@
 {{- $namespace := .Release.Namespace -}}
 {{- $tokenName := .Values.operator.token.name -}}
 
-{{- if not ( or (lookup "v1" "Secret" ( $namespace ) ( $credentialsName )) (.Values.connect.credentials)) }}
+{{- if not ( or (lookup "v1" "Secret" ( $namespace ) ( $credentialsName )) (.Values.connect.credentials) (.Values.connect.credentials_base64)) }}
 ---------------------------------------------------------------------------------------------
  WARNING
 
