@@ -20,7 +20,7 @@ Creation of a secret for the token can be automated by the Helm Chart by using `
 If you would prefer to create the token secret manually, the token can be saved as a Kubernetes secret using the following command:
 
 ```bash
-$ kubectl create secret generic <token-name> --from-literal=token=<OP_CONNECT_TOKEN> \ --namespace=<namespace>
+$ kubectl create secret generic <token-name> --from-literal=token=<OP_CONNECT_TOKEN> --namespace=<namespace>
 ```
 
 More information about 1Password Connect and how to generate a 1Password Connect API token can be found at https://support.1password.com/secrets-automation/.
