@@ -19,6 +19,7 @@ connect:
   credentialsName: op-credentials
   credentialsKey: 1password-credentials.json
   credentials:
+  credentials_base64:
   tls:
     enabled: false
     secret: op-connect-tls
