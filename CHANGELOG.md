@@ -12,6 +12,21 @@
 
 ---
 
+[//]: # (START/v1.7.0)
+# v1.7.0
+
+## Features
+* Connect can now run with fully unprivileged containers. {#21,#22}
+* Tolerations can now be configured with `connect.tolerations` and `operator.tolerations`. {#63}
+* Resource type for the Connect Service is now configurable. {#65}
+* Updated Connect to v1.5.0. {#81}
+* Base64-encoded credentials can be supplied through `connect.credentials_base64` if passing raw JSON through `connect.credentials` leads to issues. {#67}
+
+## Fixes
+* Resources are now correctly passed to the Connect API container. {#79}
+
+---
+
 [//]: # (START/v1.6.0)
 # v1.6.0
 
