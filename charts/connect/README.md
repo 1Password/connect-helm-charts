@@ -53,6 +53,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.api.httpPort | integer | `8080` | The port the Connect API is served on when TLS is disabled |
 | connect.api.httpsPort | integer | `8443` | The port the Connect API is served on when TLS is enabled |
 | connect.credentials | jsonString |  | Contents of the 1password-credentials.json file for Connect. Can be set be adding `--set-file connect.credentials=<path/to/1password-credentials.json>` to your helm install command |
+| connect.credentials_base64 | string |  | Base64-encoded contents of the 1password-credentials.json file for Connect. This can be used instead of `connect.credentials` in case supplying raw JSON to `connect.credentials` leads to issues.  |
 | connect.credentialsKey | string | `"op-session"` | The key for the 1Password Connect Credentials stored in the credentials secret |
 | connect.credentialsName | string | `"op-credentials"` | The name of Kubernetes Secret containing the 1Password Connect credentials |
 | connect.dataVolume.name | string | `"shared-data"` | The name of the shared volume used between 1Password Connect Containers |
