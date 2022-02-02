@@ -3,6 +3,7 @@
 # explicitly interpolated on the template side by using the `tpl` function.
 
 connect:
+  create: false
   applicationName: onepassword-connect
   api:
     name: connect-api

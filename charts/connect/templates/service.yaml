@@ -1,3 +1,4 @@
+{{- if .Values.connect.create }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -20,3 +21,4 @@ spec:
     - port: {{ .Values.connect.api.httpPort }}
       name: {{ .Values.connect.api.name }}
     {{- end }}
+{{- end}}

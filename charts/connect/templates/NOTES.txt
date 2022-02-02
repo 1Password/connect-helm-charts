@@ -1,7 +1,7 @@
 {{- $credentialsName := .Values.connect.credentialsName -}}
 {{- $namespace := .Release.Namespace -}}
 {{- $tokenName := .Values.operator.token.name -}}
-
+{{- if .Values.connect.create }}
 {{- if not ( or (lookup "v1" "Secret" ( $namespace ) ( $credentialsName )) (.Values.connect.credentials)) }}
 ---------------------------------------------------------------------------------------------
  WARNING
@@ -21,6 +21,7 @@
     file can be found at https://support.1password.com/secrets-automation/.
 
 ---------------------------------------------------------------------------------------------
+{{- end }}
 {{- end }}
 
 {{- if (and (.Values.operator.create) ( not (or (lookup "v1" "Secret" ( $namespace ) ( $tokenName )) (.Values.operator.token.value) ))) }}
