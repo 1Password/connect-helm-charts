@@ -3,6 +3,10 @@ kind: Service
 metadata:
   name: {{ .Values.connect.applicationName }}
   namespace: {{ .Release.Namespace }}
+  {{- with .Values.connect.annotations }}
+  annotations:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
   labels:
     app.kubernetes.io/component: connect
     {{- include "onepassword-connect.labels" . | nindent 4 }}
