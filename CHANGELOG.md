@@ -12,6 +12,14 @@
 
 ---
 
+[//]: # (START/v1.7.1)
+# v1.7.1
+
+## Fixes
+* Updated Connect to v1.5.1, which resolves several synchronization related issues.
+
+---
+
 [//]: # (START/v1.7.0)
 # v1.7.0
 
