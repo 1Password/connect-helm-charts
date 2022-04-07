@@ -1,17 +1,15 @@
 # 1Password Connect
 
 ## Deploying 1Password Connect
-
 Installing the Helm Chart with default configurations will deploy 1Password Connect in your default Namespace. However, Using 1Password Connect in Kubernetes requires that a 1password-credentials.json file be stored as a Kubernetes Secret. This credentials file can be saved as a Kubernetes secret by setting the file in your helm install command:
-
+            
 ```bash
 helm install connect 1password/connect --set-file connect.credentials=<path/to/1password-credentials.json>
 ```
-
+    
 More information about 1Password Connect and how to generate a 1password-credentials.json file can be found at https://support.1password.com/secrets-automation/.
 
 ## Deploying 1Password Connect Kubernetes Operator
-
 In order to deploy the 1Password Connect Kubernetes Operator along side 1Password Connect `--set operator.create=true` in your install command.
 
 Please note the following:
@@ -28,84 +26,81 @@ $ kubectl create secret generic <token-name> --from-literal=token=<OP_CONNECT_TO
 More information about 1Password Connect and how to generate a 1Password Connect API token can be found at https://support.1password.com/secrets-automation/.
 
 ## Configuration Values
-
 The 1Password Connect Helm chart offers many configuration options for deployment. Please refer to the list below for information on what configuration options are available as well as what the default configuration options are.
 
 [From the Official Helm Install Guide](https://helm.sh/docs/helm/helm_install/#helm-install):
 
-> To override values in a chart, use either the '--values' flag and pass in a file or use the '--set' flag and pass configuration from the command line, to force a string value use '--set-string'. In case a value is large and therefore you want not to use neither '--values' nor '--set', use '--set-file' to read the single large value from file.
+>To override values in a chart, use either the '--values' flag and pass in a file or use the '--set' flag and pass configuration from the command line, to force a string value use '--set-string'. In case a value is large and therefore you want not to use neither '--values' nor '--set', use '--set-file' to read the single large value from file.
 
-For example:
-
+For example: 
 ```bash
 $ helm install -f myvalues.yaml connect ./connect
 ```
 
-or
+or 
 
 ```bash
 $ helm install --set connect.applicationName=connect connect ./connect
 ```
 
 ### Values
-
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| connect.applicationName             | string     | `"onepassword-connect"`           | The name of 1Password Connect Application                                                                                                                                                          |
-| connect.api.imageRepository         | string     | `"1password/connect-api`          | The 1Password Connect API repository                                                                                                                                                               |
-| connect.api.name                    | string     | `"connect-api"`                   | The name of the 1Password Connect API container                                                                                                                                                    |
-| connect.api.resources               | object     | `{}`                              | The resources requests/limits for the 1Password Connect API pod                                                                                                                                    |
-| connect.api.httpPort                | integer    | `8080`                            | The port the Connect API is served on when TLS is disabled                                                                                                                                         |
-| connect.api.httpsPort               | integer    | `8443`                            | The port the Connect API is served on when TLS is enabled                                                                                                                                          |
-| connect.credentials                 | jsonString |                                   | Contents of the 1password-credentials.json file for Connect. Can be set be adding `--set-file connect.credentials=<path/to/1password-credentials.json>` to your helm install command               |
-| connect.credentials_base64          | string     |                                   | Base64-encoded contents of the 1password-credentials.json file for Connect. This can be used instead of `connect.credentials` in case supplying raw JSON to `connect.credentials` leads to issues. |
-| connect.credentialsKey              | string     | `"op-session"`                    | The key for the 1Password Connect Credentials stored in the credentials secret                                                                                                                     |
-| connect.credentialsName             | string     | `"op-credentials"`                | The name of Kubernetes Secret containing the 1Password Connect credentials                                                                                                                         |
-| connect.dataVolume.name             | string     | `"shared-data"`                   | The name of the shared volume used between 1Password Connect Containers                                                                                                                            |
-| connect.dataVolume.type             | string     | `"emptyDir"`                      | The type of the shared volume used between 1Password Connect Containers                                                                                                                            |
-| connect.dataVolume.values           | object     | `{}`                              | Desribes the fields and values for configuration of shared volume for 1Password Connect                                                                                                            |
-| connect.imagePullPolicy             | string     | `"IfNotPresent`                   | The 1Password Connect API image pull policy                                                                                                                                                        |
-| connect.nodeSelector                | object     | `{}`                              | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the Connect pod                                                                  |
-| connect.probes.readiness            | boolean    | `true`                            | Denotes whether the 1Password Connect API readiness probe will operate and ensure the pod is ready before serving traffic                                                                          |
-| connect.probes.liveness             | boolean    | `true`                            | Denotes whether the 1Password Connect API will be continually checked by Kubernetes for liveness and restarted if the pod becomes unresponsive                                                     |
-| connect.annotations                 | object     | `{}`                              | Additional annotations to be added to the Connect API deployment resource.                                                                                                                         |
-| connect.labels                      | object     | `{}`                              | Additional labels to be added to the Connect API deployment resource.                                                                                                                              |
-| connect.podAnnotations              | object     | `{}`                              | Additional annotations to be added to the Connect API pods.                                                                                                                                        |
-| connect.podLabels                   | object     | `{}`                              | Additional labels to be added to the Connect API pods.                                                                                                                                             |
-| connect.serviceType                 | string     | `NodePort`                        | The type of Service resource to create for the Connect API and sync services.                                                                                                                      |
-| connect.sync.imageRepository        | string     | `"1password/connect-sync`         | The 1Password Connect Sync repository                                                                                                                                                              |
-| connect.sync.name                   | string     | `"connect-sync"`                  | The name of the 1Password Connect Sync container                                                                                                                                                   |
-| connect.sync.resources              | object     | `{}`                              | The resources requests/limits for the 1Password Connect Sync pod                                                                                                                                   |
-| connect.sync.httpPort               | integer    | `8081`                            | The port serving the health of the Sync container                                                                                                                                                  |
-| connect.tls.enabled                 | boolean    | `false`                           | Denotes whether the Connect API is secured with TLS                                                                                                                                                |
-| connect.tls.secret                  | string     | `"op-connect-tls"`                | The name of the secret containing the TLS key (`tls.key`) and certificate (`tls.crt`)                                                                                                              |
-| connect.tolerations                 | list       | `[]`                              | List of tolerations to be added to the Connect API pods.                                                                                                                                           |
-| connect.version                     | string     | `{{.Chart.AppVersion}}`           | The 1Password Connect version to pull                                                                                                                                                              |
-| operator.autoRestart                | boolean    | `false`                           | Denotes whether the 1Password Connect Operator will automatically restart deployments based on associated updated secrets.                                                                         |
-| operator.create                     | boolean    | `false`                           | Denotes whether the 1Password Connect Operator will be deployed                                                                                                                                    |
-| operator.imagePullPolicy            | string     | `"IfNotPresent`                   | The 1Password Connect Operator image pull policy                                                                                                                                                   |
-| operator.imageRepository            | string     | `"1password/onepassword-operator` | The 1Password Connect Operator repository                                                                                                                                                          |
-| operator.nodeSelector               | object     | `{}`                              | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the operator pod                                                                 |
-| operator.annotations                | object     | `{}`                              | Additional annotations to be added to the Operator deployment resource.                                                                                                                            |
-| operator.labels                     | object     | `{}`                              | Additional labels to be added to the Operator deployment resource.                                                                                                                                 |
-| operator.podAnnotations             | object     | `{}`                              | Additional annotations to be added to the Operator pods.                                                                                                                                           |
-| operator.podLabels                  | object     | `{}`                              | Additional labels to be added to the Operator pods.                                                                                                                                                |
-| operator.pollingInterval            | integer    | `600`                             | How often the 1Password Connect Operator will poll for secrets updates.                                                                                                                            |
-| operator.clusterRole.create         | boolean    | `{{.Values.operator.create}}`     | Denotes whether or not a cluster role will be created for each for the 1Password Connect Operator                                                                                                  |
-| operator.clusterRole.name           | string     | `"onepassword-connect-operator"`  | The name of the 1Password Connect Operator Cluster Role                                                                                                                                            |
-| operator.clusterRoleBinding.create  | boolean    | `{{.Values.operator.create}}`     | Denotes whether or not a Cluster role binding will be created for the 1Password Connect Operator Service Account                                                                                   |
-| operator.roleBinding.create         | boolean    | `{{.Values.operator.create}}`     | Denotes whether or not a role binding will be created for each Namespace for the 1Password Connect Operator Service Account                                                                        |
-| operator.roleBinding.name           | string     | `"onepassword-connect-operator"`  | The name of the 1Password Connect Operator Role Binding                                                                                                                                            |
-| operator.serviceAccount.annotations | object     | `{}`                              | Annotations for the 1Password Connect Service Account                                                                                                                                              |
-| operator.serviceAccount.create      | boolean    | `{{.Values.operator.create}}`     | Denotes whether or not a service account will be created for the 1Password Connect Operator                                                                                                        |
-| operator.serviceAccount.name        | string     | `"onepassword-connect-operator"`  | The name of the 1Password Conenct Operator                                                                                                                                                         |
-| operator.tolerations                | list       | `[]`                              | List of tolerations to be added to the Operator pods.                                                                                                                                              |
-| operator.version                    | string     | `"1.4.0"`                         | T 1Password Connect Operator version to pull                                                                                                                                                       |
-| operator.token.key                  | string     | `"token"`                         | The key for the 1Password Connect token stored in the 1Password token secret                                                                                                                       |
-| operator.token.name                 | string     | `"onepassword-token"`             | The name of Kubernetes Secret containing the 1Password Connect API token                                                                                                                           |
-| operator.token.value                | string     | `"onepassword-token"`             | An API token generated for 1Password Connect to be used by the Connect Operator                                                                                                                    |
-| operator.watchNamespace             | list       | `[]`                              | A list of namespaces for the 1Password Connect Operator to watch and manage. Use the empty list to watch all namespaces.                                                                           |
-| operator.resources                  | object     | `{}`                              | The resources requests/limits for the 1Password Connect Operator pod                                                                                                                               |
+| connect.applicationName | string | `"onepassword-connect"` | The name of 1Password Connect Application |
+| connect.api.imageRepository | string | `"1password/connect-api` | The 1Password Connect API repository |
+| connect.api.name | string | `"connect-api"` | The name of the 1Password Connect API container |
+| connect.api.resources | object | `{}` | The resources requests/limits for the 1Password Connect API pod |
+| connect.api.httpPort | integer | `8080` | The port the Connect API is served on when TLS is disabled |
+| connect.api.httpsPort | integer | `8443` | The port the Connect API is served on when TLS is enabled |
+| connect.credentials | jsonString |  | Contents of the 1password-credentials.json file for Connect. Can be set be adding `--set-file connect.credentials=<path/to/1password-credentials.json>` to your helm install command |
+| connect.credentials_base64 | string |  | Base64-encoded contents of the 1password-credentials.json file for Connect. This can be used instead of `connect.credentials` in case supplying raw JSON to `connect.credentials` leads to issues.  |
+| connect.credentialsKey | string | `"op-session"` | The key for the 1Password Connect Credentials stored in the credentials secret |
+| connect.credentialsName | string | `"op-credentials"` | The name of Kubernetes Secret containing the 1Password Connect credentials |
+| connect.dataVolume.name | string | `"shared-data"` | The name of the shared volume used between 1Password Connect Containers |
+| connect.dataVolume.type | string | `"emptyDir"` | The type of the shared volume used between 1Password Connect Containers |
+| connect.dataVolume.values | object | `{}` | Desribes the fields and values for configuration of shared volume for 1Password Connect |
+| connect.imagePullPolicy | string | `"IfNotPresent` | The 1Password Connect API image pull policy |
+| connect.nodeSelector | object | `{}` | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the Connect pod |
+| connect.probes.readiness | boolean | `true` | Denotes whether the 1Password Connect API readiness probe will operate and ensure the pod is ready before serving traffic |
+| connect.probes.liveness | boolean | `true` | Denotes whether the 1Password Connect API will be continually checked by Kubernetes for liveness and restarted if the pod becomes unresponsive |
+| connect.annotations | object | `{}` | Additional annotations to be added to the Connect API deployment resource. |
+| connect.labels | object | `{}` | Additional labels to be added to the Connect API deployment resource. |
+| connect.podAnnotations | object | `{}` | Additional annotations to be added to the Connect API pods. |
+| connect.podLabels | object | `{}` | Additional labels to be added to the Connect API pods.  |
+| connect.serviceType | string | `NodePort` | The type of Service resource to create for the Connect API and sync services. |
+| connect.sync.imageRepository | string | `"1password/connect-sync` | The 1Password Connect Sync repository |
+| connect.sync.name | string | `"connect-sync"` | The name of the 1Password Connect Sync container |
+| connect.sync.resources | object | `{}` | The resources requests/limits for the 1Password Connect Sync pod |
+| connect.sync.httpPort | integer | `8081` | The port serving the health of the Sync container |
+| connect.tls.enabled | boolean | `false` | Denotes whether the Connect API is secured with TLS |
+| connect.tls.secret | string | `"op-connect-tls"` | The name of the secret containing the TLS key (`tls.key`) and certificate (`tls.crt`)  |
+| connect.tolerations | list | `[]` | List of tolerations to be added to the Connect API pods.  |
+| connect.version | string | `{{.Chart.AppVersion}}` | The 1Password Connect version to pull |
+| operator.autoRestart | boolean | `false` | Denotes whether the 1Password Connect Operator will automatically restart deployments based on associated updated secrets. |
+| operator.create | boolean | `false` | Denotes whether the 1Password Connect Operator will be deployed |
+| operator.imagePullPolicy | string | `"IfNotPresent` | The 1Password Connect Operator image pull policy |
+| operator.imageRepository | string | `"1password/onepassword-operator` | The 1Password Connect Operator repository |
+| operator.nodeSelector | object | `{}` | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the operator pod |
+| operator.annotations | object | `{}` | Additional annotations to be added to the Operator deployment resource. |
+| operator.labels | object | `{}` | Additional labels to be added to the Operator deployment resource. |
+| operator.podAnnotations | object | `{}` | Additional annotations to be added to the Operator pods. |
+| operator.podLabels | object | `{}` | Additional labels to be added to the Operator pods.  |
+| operator.pollingInterval | integer | `600` | How often the 1Password Connect Operator will poll for secrets updates. |
+| operator.clusterRole.create | boolean | `{{.Values.operator.create}}` | Denotes whether or not a cluster role will be created for each for the 1Password Connect Operator |
+| operator.clusterRole.name | string | `"onepassword-connect-operator"` | The name of the 1Password Connect Operator Cluster Role |
+| operator.clusterRoleBinding.create | boolean | `{{.Values.operator.create}}` | Denotes whether or not a Cluster role binding will be created for the 1Password Connect Operator Service Account |
+| operator.roleBinding.create | boolean | `{{.Values.operator.create}}` | Denotes whether or not a role binding will be created for each Namespace for the 1Password Connect Operator Service Account |
+| operator.roleBinding.name | string | `"onepassword-connect-operator"` | The name of the 1Password Connect Operator Role Binding |
+| operator.serviceAccount.annotations | object | `{}` | Annotations for the 1Password Connect Service Account |
+| operator.serviceAccount.create | boolean | `{{.Values.operator.create}}` | Denotes whether or not a service account will be created for the 1Password Connect Operator |
+| operator.serviceAccount.name | string | `"onepassword-connect-operator"` | The name of the 1Password Conenct Operator |
+| operator.tolerations | list | `[]` | List of tolerations to be added to the Operator pods.  |
+| operator.version | string | `"1.4.0"` | T 1Password Connect Operator version to pull |
+| operator.token.key | string | `"token"` | The key for the 1Password Connect token stored in the 1Password token secret |
+| operator.token.name | string | `"onepassword-token"` | The name of Kubernetes Secret containing the 1Password Connect API token |
+| operator.token.value | string | `"onepassword-token"` | An API token generated for 1Password Connect to be used by the Connect Operator |
+| operator.watchNamespace | list | `[]` | A list of namespaces for the 1Password Connect Operator to watch and manage. Use the empty list to watch all namespaces. |
+| operator.resources | object | `{}` | The resources requests/limits for the 1Password Connect Operator pod |
 
 ### CRD
 
