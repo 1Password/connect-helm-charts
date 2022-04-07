@@ -46,7 +46,7 @@ operator:
   imagePullPolicy: IfNotPresent
   imageRepository: 1password/onepassword-operator
   pollingInterval: 10
-  version: "1.3.0"
+  version: "1.4.0"
   nodeSelector: {}
   annotations: {}
   labels: {}
