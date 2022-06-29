@@ -17,7 +17,7 @@
 
 ## Features
 * Updated Kubernetes Operator to v1.5.0, which adds the `type` and `status` for the `OnePasswordItem` CRD. {#101}
-* Updated OnePasswordItem CRD to enable the new functionality added in the latest version of the Kubernetes Operator. {#92, #102}
+* Updated OnePasswordItem CRD to enable the new functionality added in the latest version of the Kubernetes Operator. Shoutout to @tomjohnburton for contributing to this enhancement. {#92, #102}
 
 ## Fixes
 * Updated Connect to v1.5.4, which resolves some bugs. {#101}
