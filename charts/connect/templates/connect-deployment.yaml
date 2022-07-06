@@ -141,7 +141,7 @@ spec:
             failureThreshold: 3
             periodSeconds: 30
             initialDelaySeconds: 15
-          {{ end }}             
+          {{ end }}
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}
