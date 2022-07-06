@@ -2,11 +2,11 @@
 
 ## Deploying 1Password Connect
 Installing the Helm Chart with default configurations will deploy 1Password Connect in your default Namespace. However, Using 1Password Connect in Kubernetes requires that a 1password-credentials.json file be stored as a Kubernetes Secret. This credentials file can be saved as a Kubernetes secret by setting the file in your helm install command:
-            
+
 ```bash
 helm install connect 1password/connect --set-file connect.credentials=<path/to/1password-credentials.json>
 ```
-    
+
 More information about 1Password Connect and how to generate a 1password-credentials.json file can be found at https://support.1password.com/secrets-automation/.
 
 ## Deploying 1Password Connect Kubernetes Operator
@@ -32,12 +32,12 @@ The 1Password Connect Helm chart offers many configuration options for deploymen
 
 >To override values in a chart, use either the '--values' flag and pass in a file or use the '--set' flag and pass configuration from the command line, to force a string value use '--set-string'. In case a value is large and therefore you want not to use neither '--values' nor '--set', use '--set-file' to read the single large value from file.
 
-For example: 
+For example:
 ```bash
 $ helm install -f myvalues.yaml connect ./connect
 ```
 
-or 
+or
 
 ```bash
 $ helm install --set connect.applicationName=connect connect ./connect
