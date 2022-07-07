@@ -3,7 +3,7 @@
 {{- $serviceName := include "onepassword-connect.name" . -}}
 {{- $tlsEnabled := .Values.connect.tls.enabled -}}
 {{- $apiHttpPort := .Values.connect.api.httpPort -}}
-{{- $apiHttpsPort := .Values.connect.api.httpPort -}}
+{{- $apiHttpsPort := .Values.connect.api.httpsPort -}}
 {{- $pathType := .Values.connect.ingress.pathType -}}
 {{- $kubeVersion := .Capabilities.KubeVersion.Version }}
 {{ if semverCompare ">= 1.19.0-0" $kubeVersion }}
