@@ -1,7 +1,9 @@
 {{- if .Values.connect.ingress.enabled -}}
 {{- $extraPaths := .Values.connect.ingress.extraPaths -}}
-{{- $serviceName := include "connect.fullname" . -}}
-{{- $servicePort := .Values.connect.service.port -}}
+{{- $serviceName := include "onepassword-connect.name" . -}}
+{{- $tlsEnabled := .Values.connect.tls.enabled -}}
+{{- $apiHttpPort := .Values.connect.api.httpPort -}}
+{{- $apiHttpsPort := .Values.connect.api.httpPort -}}
 {{- $pathType := .Values.connect.ingress.pathType -}}
 {{- $kubeVersion := .Capabilities.KubeVersion.Version }}
 {{ if semverCompare ">= 1.19.0-0" $kubeVersion }}
@@ -13,17 +15,17 @@ apiVersion: extensions/v1beta1
 {{ end }}
 kind: Ingress
 metadata:
-  name: {{ template "connect.fullname" . }}
+  name: {{ template "onepassword-connect.name" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    helm.sh/chart: {{ include "connect.chart" . }}
-    app.kubernetes.io/name: {{ include "connect.name" . }}
+    helm.sh/chart: {{ include "onepassword-connect.chart" . }}
+    app.kubernetes.io/name: {{ include "onepassword-connect.name" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
     {{- with .Values.connect.ingress.labels }}
       {{- toYaml . | nindent 4 }}
     {{- end }}
-  {{- template "connect.ingress.annotations" . }}
+  {{- template "onepassword-connect.ingress.annotations" . }}
 spec:
 {{- if .Values.connect.ingress.tls }}
   tls:
@@ -56,10 +58,18 @@ spec:
               service:
                 name: {{ $serviceName }}
                 port:
-                  number: {{ $servicePort }}
+                  {{- if $tlsEnabled }}
+                  number: {{ $apiHttpsPort }}
+                  {{- else }}
+                  number: {{ $apiHttpPort }}
+                  {{- end }}
               {{ else }}
               serviceName: {{ $serviceName }}
-              servicePort: {{ $servicePort }}
+              {{- if $tlsEnabled }}
+              servicePort: {{ $apiHttpsPort }}
+              {{- else }}
+              servicePort: {{ $apiHttpPort }}
+              {{- end }}
               {{ end }}
         {{- end }}
   {{- end }}
