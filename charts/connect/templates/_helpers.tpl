@@ -72,3 +72,18 @@ Supported inputs are Values.connect
 {{- end -}}
 {{- end }}
 {{- end -}}
+
+{{/*
+Sets extra ingress annotations
+*/}}
+{{- define "onepassword-connect.ingress.annotations" -}}
+  {{- if .Values.connect.ingress.annotations }}
+  annotations:
+    {{- $tp := typeOf .Values.connect.ingress.annotations }}
+    {{- if eq $tp "string" }}
+      {{- tpl .Values.connect.ingress.annotations . | nindent 4 }}
+    {{- else }}
+      {{- toYaml .Values.connect.ingress.annotations | nindent 4 }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
