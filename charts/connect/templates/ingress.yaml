@@ -1,6 +1,6 @@
 {{- if .Values.connect.ingress.enabled -}}
 {{- $extraPaths := .Values.connect.ingress.extraPaths -}}
-{{- $serviceName := include "onepassword-connect.name" . -}}
+{{- $serviceName := .Values.connect.applicationName -}}
 {{- $tlsEnabled := .Values.connect.tls.enabled -}}
 {{- $apiHttpPort := .Values.connect.api.httpPort -}}
 {{- $apiHttpsPort := .Values.connect.api.httpsPort -}}
@@ -56,18 +56,21 @@ spec:
             backend:
               {{ if semverCompare ">= 1.19.0-0" $kubeVersion }}
               service:
+                {{- if $tlsEnabled }}
+                name: {{ $serviceName }}-https
+                port:
+                  number: {{ $apiHttpsPort }}
+                {{- else }}
                 name: {{ $serviceName }}
                 port:
-                  {{- if $tlsEnabled }}
-                  number: {{ $apiHttpsPort }}
-                  {{- else }}
                   number: {{ $apiHttpPort }}
-                  {{- end }}
+                {{- end }}
               {{ else }}
-              serviceName: {{ $serviceName }}
               {{- if $tlsEnabled }}
+              serviceName: {{ $serviceName }}-https
               servicePort: {{ $apiHttpsPort }}
               {{- else }}
+              serviceName: {{ $serviceName }}
               servicePort: {{ $apiHttpPort }}
               {{- end }}
               {{ end }}
