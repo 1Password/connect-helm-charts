@@ -16,7 +16,7 @@
 # v1.8.1
 
 ## Fixes
-* Updated Connect to v1.5.5, which addresses some bugs.
+* Updated Connect to v1.5.6, which addresses some bugs.
 
 ---
 
