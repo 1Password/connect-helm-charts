@@ -12,8 +12,16 @@
 
 ---
 
+[//]: # (START/v1.8.1)
+# v1.8.1
+
+## Fixes
+* Updated Connect to v1.5.6, which addresses some bugs.
+
+---
+
 [//]: # (START/v1.8.0)
-# Latest
+# v.1.8.0
 
 ## Features
 * Updated Kubernetes Operator to v1.5.0, which adds the `type` and `status` for the `OnePasswordItem` CRD. {#101}
