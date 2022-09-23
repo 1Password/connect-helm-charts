@@ -12,7 +12,7 @@ Get the latest [Helm release](https://github.com/kubernetes/helm#install).
 The following command allows you to download and install all the charts from this repository:
 
 ```
-$ helm repo add 1password https://1password.github.io/connect-helm-charts
+helm repo add 1password https://1password.github.io/connect-helm-charts
 ```
 
 ## Available Charts
