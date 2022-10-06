@@ -1,0 +1,15 @@
+apiVersion: v2
+name: kuberenetes-secret-injector
+description: A Helm chart for deploying 1Password Kuberenetes Sercret Injector
+type: application
+home: https://1password.com/secrets/
+keywords:
+  - "1Password"
+  - "1Password Secret Injector"
+  - "1Password Kubernetes Secret Injector"
+maintainers:
+  - name: 1Password Secrets Integrations Team
+    email: support+business@1password.com
+icon: https://avatars.githubusercontent.com/u/38230737
+appVersion: 0.1.0
+version: 0.1.0
