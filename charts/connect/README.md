@@ -60,6 +60,15 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.dataVolume.type | string | `"emptyDir"` | The type of the shared volume used between 1Password Connect Containers |
 | connect.dataVolume.values | object | `{}` | Desribes the fields and values for configuration of shared volume for 1Password Connect |
 | connect.imagePullPolicy | string | `"IfNotPresent` | The 1Password Connect API image pull policy |
+| connect.ingress.annotations | object | `{}` | The 1Password Connect Ingress Annotations |
+| connect.ingress.enabled | bool | `false` | The boolean value to enable/disable the 1Password Connect |
+| connect.ingress.extraPaths | list | `[]` | Additional Ingress Paths |
+| connect.ingress.hosts[0].host | string | `"chart-example.local"` | The 1Password Connect Ingress Hostname |
+| connect.ingress.hosts[0].paths | list | `[]` | The 1Password Connect Ingress Path |
+| connect.ingress.ingressClassName | string | `""` | Optionally use ingressClassName instead of deprecated annotation. |
+| connect.ingress.labels | object | `{}` | Ingress labels for 1Password Connect |
+| connect.ingress.pathType | string | `"Prefix"` | Ingress PathType see [docs](https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types) |
+| connect.ingress.tls | list | `[]` | Ingress TLS see [docs](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls) |
 | connect.nodeSelector | object | `{}` | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the Connect pod |
 | connect.probes.readiness | boolean | `true` | Denotes whether the 1Password Connect API readiness probe will operate and ensure the pod is ready before serving traffic |
 | connect.probes.liveness | boolean | `true` | Denotes whether the 1Password Connect API will be continually checked by Kubernetes for liveness and restarted if the pod becomes unresponsive |
