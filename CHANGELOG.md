@@ -2,13 +2,33 @@
 # Latest
 
 ## Features
-  * A user-friendly description of a new feature. {issue-number}
+* A user-friendly description of a new feature. {issue-number}
 
 ## Fixes
- * A user-friendly description of a fix. {issue-number}
+* A user-friendly description of a fix. {issue-number}
 
 ## Security
- * A user-friendly description of a security fix. {issue-number}
+* A user-friendly description of a security fix. {issue-number}
+
+---
+
+[//]: # (START/v1.8.1)
+# v1.8.1
+
+## Fixes
+* Updated Connect to v1.5.6, which addresses some bugs.
+
+---
+
+[//]: # (START/v1.8.0)
+# v.1.8.0
+
+## Features
+* Updated Kubernetes Operator to v1.5.0, which adds the `type` and `status` for the `OnePasswordItem` CRD. {#101}
+* Updated OnePasswordItem CRD to enable the new functionality added in the latest version of the Kubernetes Operator. Shoutout to @tomjohnburton for contributing to this enhancement. {#92, #102}
+
+## Fixes
+* Updated Connect to v1.5.4, which resolves some bugs. {#101}
 
 ---
 
