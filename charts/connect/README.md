@@ -59,7 +59,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.dataVolume.name | string | `"shared-data"` | The name of the shared volume used between 1Password Connect Containers |
 | connect.dataVolume.type | string | `"emptyDir"` | The type of the shared volume used between 1Password Connect Containers |
 | connect.dataVolume.values | object | `{}` | Desribes the fields and values for configuration of shared volume for 1Password Connect |
-| connect.imagePullPolicy | string | `"IfNotPresent` | The 1Password Connect API image pull policy |
+| connect.imagePullPolicy | string | `"IfNotPresent"` | The 1Password Connect API image pull policy |
 | connect.ingress.annotations | object | `{}` | The 1Password Connect Ingress Annotations |
 | connect.ingress.enabled | bool | `false` | The boolean value to enable/disable the 1Password Connect |
 | connect.ingress.extraPaths | list | `[]` | Additional Ingress Paths |
@@ -77,7 +77,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.podAnnotations | object | `{}` | Additional annotations to be added to the Connect API pods. |
 | connect.podLabels | object | `{}` | Additional labels to be added to the Connect API pods.  |
 | connect.serviceType | string | `NodePort` | The type of Service resource to create for the Connect API and sync services. |
-| connect.sync.imageRepository | string | `"1password/connect-sync` | The 1Password Connect Sync repository |
+| connect.sync.imageRepository | string | `"1password/connect-sync"` | The 1Password Connect Sync repository |
 | connect.sync.name | string | `"connect-sync"` | The name of the 1Password Connect Sync container |
 | connect.sync.resources | object | `{}` | The resources requests/limits for the 1Password Connect Sync pod |
 | connect.sync.httpPort | integer | `8081` | The port serving the health of the Sync container |
@@ -87,8 +87,8 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.version | string | `{{.Chart.AppVersion}}` | The 1Password Connect version to pull |
 | operator.autoRestart | boolean | `false` | Denotes whether the 1Password Connect Operator will automatically restart deployments based on associated updated secrets. |
 | operator.create | boolean | `false` | Denotes whether the 1Password Connect Operator will be deployed |
-| operator.imagePullPolicy | string | `"IfNotPresent` | The 1Password Connect Operator image pull policy |
-| operator.imageRepository | string | `"1password/onepassword-operator` | The 1Password Connect Operator repository |
+| operator.imagePullPolicy | string | `"IfNotPresent"` | The 1Password Connect Operator image pull policy |
+| operator.imageRepository | string | `"1password/onepassword-operator"` | The 1Password Connect Operator repository |
 | operator.nodeSelector | object | `{}` | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the operator pod |
 | operator.annotations | object | `{}` | Additional annotations to be added to the Operator deployment resource. |
 | operator.labels | object | `{}` | Additional labels to be added to the Operator deployment resource. |
