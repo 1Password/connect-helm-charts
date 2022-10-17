@@ -20,3 +20,12 @@ spec:
     - port: {{ .Values.connect.api.httpPort }}
       name: {{ .Values.connect.api.name }}
     {{- end }}
+  {{if eq .Values.connect.serviceType "LoadBalancer"}}
+{{- if .Values.connect.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+{{ toYaml .Values.connect.loadBalancerSourceRanges | indent 4 }}
+{{- end }}
+  {{if .Values.connect.loadBalancerIP}}
+  loadBalancerIP: {{.Values.connect.loadBalancerIP}}
+  {{end}}
+  {{end}}

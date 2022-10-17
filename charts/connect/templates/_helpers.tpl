@@ -54,3 +54,36 @@ https://{{ .Values.connect.applicationName }}:{{ .Values.connect.api.httpsPort  
 http://{{ .Values.connect.applicationName }}:{{ .Values.connect.api.httpPort  }}
 {{- end }}
 {{- end }}
+
+{{/*
+loadBalancer configuration for the the 1Password API and Sync service.
+Supported inputs are Values.connect
+*/}}
+{{- define "service.loadBalancer" -}}
+{{- if  eq (.serviceType | toString) "LoadBalancer" }}
+{{- if .loadBalancerIP }}
+  loadBalancerIP: {{ .loadBalancerIP }}
+{{- end }}
+{{- with .loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+{{- range . }}
+  - {{ . }}
+{{- end }}
+{{- end -}}
+{{- end }}
+{{- end -}}
+
+{{/*
+Sets extra ingress annotations
+*/}}
+{{- define "onepassword-connect.ingress.annotations" -}}
+  {{- if .Values.connect.ingress.annotations }}
+  annotations:
+    {{- $tp := typeOf .Values.connect.ingress.annotations }}
+    {{- if eq $tp "string" }}
+      {{- tpl .Values.connect.ingress.annotations . | nindent 4 }}
+    {{- else }}
+      {{- toYaml .Values.connect.ingress.annotations | nindent 4 }}
+    {{- end }}
+  {{- end }}
+{{- end -}}

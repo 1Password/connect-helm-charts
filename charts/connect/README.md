@@ -2,11 +2,11 @@
 
 ## Deploying 1Password Connect
 Installing the Helm Chart with default configurations will deploy 1Password Connect in your default Namespace. However, Using 1Password Connect in Kubernetes requires that a 1password-credentials.json file be stored as a Kubernetes Secret. This credentials file can be saved as a Kubernetes secret by setting the file in your helm install command:
-            
+
 ```bash
 helm install connect 1password/connect --set-file connect.credentials=<path/to/1password-credentials.json>
 ```
-    
+
 More information about 1Password Connect and how to generate a 1password-credentials.json file can be found at https://support.1password.com/secrets-automation/.
 
 ## Deploying 1Password Connect Kubernetes Operator
@@ -32,12 +32,12 @@ The 1Password Connect Helm chart offers many configuration options for deploymen
 
 >To override values in a chart, use either the '--values' flag and pass in a file or use the '--set' flag and pass configuration from the command line, to force a string value use '--set-string'. In case a value is large and therefore you want not to use neither '--values' nor '--set', use '--set-file' to read the single large value from file.
 
-For example: 
+For example:
 ```bash
 $ helm install -f myvalues.yaml connect ./connect
 ```
 
-or 
+or
 
 ```bash
 $ helm install --set connect.applicationName=connect connect ./connect
@@ -60,6 +60,15 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.dataVolume.type | string | `"emptyDir"` | The type of the shared volume used between 1Password Connect Containers |
 | connect.dataVolume.values | object | `{}` | Desribes the fields and values for configuration of shared volume for 1Password Connect |
 | connect.imagePullPolicy | string | `"IfNotPresent` | The 1Password Connect API image pull policy |
+| connect.ingress.annotations | object | `{}` | The 1Password Connect Ingress Annotations |
+| connect.ingress.enabled | bool | `false` | The boolean value to enable/disable the 1Password Connect |
+| connect.ingress.extraPaths | list | `[]` | Additional Ingress Paths |
+| connect.ingress.hosts[0].host | string | `"chart-example.local"` | The 1Password Connect Ingress Hostname |
+| connect.ingress.hosts[0].paths | list | `[]` | The 1Password Connect Ingress Path |
+| connect.ingress.ingressClassName | string | `""` | Optionally use ingressClassName instead of deprecated annotation. |
+| connect.ingress.labels | object | `{}` | Ingress labels for 1Password Connect |
+| connect.ingress.pathType | string | `"Prefix"` | Ingress PathType see [docs](https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types) |
+| connect.ingress.tls | list | `[]` | Ingress TLS see [docs](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls) |
 | connect.nodeSelector | object | `{}` | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the Connect pod |
 | connect.probes.readiness | boolean | `true` | Denotes whether the 1Password Connect API readiness probe will operate and ensure the pod is ready before serving traffic |
 | connect.probes.liveness | boolean | `true` | Denotes whether the 1Password Connect API will be continually checked by Kubernetes for liveness and restarted if the pod becomes unresponsive |
