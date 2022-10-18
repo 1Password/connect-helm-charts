@@ -12,6 +12,17 @@
 
 ---
 
+[//]: # (START/LATEST)
+# v1.9.0
+
+## Features
+* Enable a better interaction with 1Password Connect and Sync applications deployed. Credits to @klaus385 for contributing to this enhancement. {#107}
+
+## Fixes
+* Updated Connect to v1.5.7, which addresses some bugs and security enahncements.
+
+---
+
 [//]: # (START/v1.8.1)
 # v1.8.1
 
@@ -25,7 +36,7 @@
 
 ## Features
 * Updated Kubernetes Operator to v1.5.0, which adds the `type` and `status` for the `OnePasswordItem` CRD. {#101}
-* Updated OnePasswordItem CRD to enable the new functionality added in the latest version of the Kubernetes Operator. Shoutout to @tomjohnburton for contributing to this enhancement. {#92, #102}
+* Updated OnePasswordItem CRD to enable the new functionality added in the latest version of the Kubernetes Operator. Credits to @tomjohnburton for contributing to this enhancement. {#92, #102}
 
 ## Fixes
 * Updated Connect to v1.5.4, which resolves some bugs. {#101}
