@@ -46,6 +46,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 ### Values
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| connect.replicas | integer | `1` | The number of replicas to run the 1Password Connect deployment |
 | connect.applicationName | string | `"onepassword-connect"` | The name of 1Password Connect Application |
 | connect.api.imageRepository | string | `"1password/connect-api` | The 1Password Connect API repository |
 | connect.api.name | string | `"connect-api"` | The name of the 1Password Connect API container |
