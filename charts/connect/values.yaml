@@ -4,6 +4,9 @@
 
 # This section of values is for 1Password Connect API and Sync Configuration
 connect:
+  # The number of replicas to run the 1Password Connect deployment
+  replicas: 1
+
   # The 1Password Connect API Specific Values
   api:
     name: connect-api
