@@ -14,6 +14,7 @@ metadata:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  replicas: {{ .Values.connect.replicas }}
   selector:
     matchLabels:
       app: {{ .Values.connect.applicationName }}
@@ -34,8 +35,7 @@ spec:
 {{- with .Values.connect.nodeSelector }}
       nodeSelector:
 {{ toYaml . | indent 8 }}
-{{- end }}
-      replicas: {{ .Values.connect.replicas }}
+{{- end }}  
       volumes:
         - name: {{ .Values.connect.dataVolume.name }}
           {{ .Values.connect.dataVolume.type }}: {{- toYaml .Values.connect.dataVolume.values | nindent 12 }}
