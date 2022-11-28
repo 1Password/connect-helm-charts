@@ -4,6 +4,9 @@
 
 # This section of values is for 1Password Connect API and Sync Configuration
 connect:
+  # Denotes whether the 1Password Connect server will be deployed
+  create: true
+
   # The number of replicas to run the 1Password Connect deployment
   replicas: 1
 

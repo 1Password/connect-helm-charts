@@ -1,3 +1,4 @@
+{{- if .Values.connect.create }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -29,3 +30,4 @@ spec:
   loadBalancerIP: {{.Values.connect.loadBalancerIP}}
   {{end}}
   {{end}}
+{{- end }}

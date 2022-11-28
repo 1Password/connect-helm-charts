@@ -25,6 +25,8 @@ $ kubectl create secret generic <token-name> --from-literal=token=<OP_CONNECT_TO
 
 More information about 1Password Connect and how to generate a 1Password Connect API token can be found at https://support.1password.com/secrets-automation/.
 
+To deploy the Kubernetes operator without also deploying 1Password Connect (for example, to deploy multiple operators on a single cluster), use `--set connect.create=false` in your install command.
+
 ## Configuration Values
 The 1Password Connect Helm chart offers many configuration options for deployment. Please refer to the list below for information on what configuration options are available as well as what the default configuration options are.
 
@@ -46,6 +48,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 ### Values
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
+| connect.create | boolean | `true` | Denotes whether the 1Password Connect server will be deployed |
 | connect.replicas | integer | `1` | The number of replicas to run the 1Password Connect deployment |
 | connect.applicationName | string | `"onepassword-connect"` | The name of 1Password Connect Application |
 | connect.api.imageRepository | string | `"1password/connect-api` | The 1Password Connect API repository |

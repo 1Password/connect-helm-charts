@@ -45,15 +45,27 @@
 ---------------------------------------------------------------------------------------------
 {{- end }}
 
+{{- if and (not (.Values.connect.create)) ( not (.Values.operator.create)) }}
+  {{- fail "The `connect.create` and `operator.create` are both set to `false`. At least one should be set to `true`." -}}
+{{- end -}}
+
 ** Please be patient while the chart is being deployed **
 
 1Password Connect is being deployed to Kubernetes. More information about 1Password Connect can 
 be found at https://support.1password.com/secrets-automation/
 
-{{- if  .Values.operator.create }}
+{{- if (.Values.connect.create) and (.Values.operator.create) }}
 
 The 1Password Connect Kubernetes Operator is also being deployed. More information about the 
 1Password Connect Operator can be found at https://github.com/1Password/onepassword-operator
 
 {{- end }}
 
+{{- if (not (.Values.connect.create)) and (.Values.operator.create) }}
+
+The 1Password Connect Kubernetes Operator is being deployed without also deploying a 1Password 
+Connect server. A Connect server is required for the operator to connect to. More information 
+about the 1Password Connect Operator can be found at 
+https://github.com/1Password/onepassword-operator
+
+{{- end }}
