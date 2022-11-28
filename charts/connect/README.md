@@ -1,15 +1,17 @@
 # 1Password Connect
 
 ## Deploying 1Password Connect
+
 Installing the Helm Chart with default configurations will deploy 1Password Connect in your default Namespace. However, Using 1Password Connect in Kubernetes requires that a 1password-credentials.json file be stored as a Kubernetes Secret. This credentials file can be saved as a Kubernetes secret by setting the file in your helm install command:
 
 ```bash
 helm install connect 1password/connect --set-file connect.credentials=<path/to/1password-credentials.json>
 ```
 
-More information about 1Password Connect and how to generate a 1password-credentials.json file can be found at https://support.1password.com/secrets-automation/.
+More information about 1Password Connect and how to generate a 1password-credentials.json file can be found at <https://support.1password.com/secrets-automation/>.
 
 ## Deploying 1Password Connect Kubernetes Operator
+
 In order to deploy the 1Password Connect Kubernetes Operator along side 1Password Connect `--set operator.create=true` in your install command.
 
 Please note the following:
@@ -19,15 +21,16 @@ Creation of a secret for the token can be automated by the Helm Chart by using `
 
 If you would prefer to create the token secret manually, the token can be saved as a Kubernetes secret using the following command:
 
-```bash
-$ kubectl create secret generic <token-name> --from-literal=token=<OP_CONNECT_TOKEN> --namespace=<namespace>
+```sh
+kubectl create secret generic <token-name> --from-literal=token=<OP_CONNECT_TOKEN> --namespace=<namespace>
 ```
 
-More information about 1Password Connect and how to generate a 1Password Connect API token can be found at https://support.1password.com/secrets-automation/.
+More information about 1Password Connect and how to generate a 1Password Connect API token can be found at <https://support.1password.com/secrets-automation/>.
 
 To deploy the Kubernetes operator without also deploying 1Password Connect (for example, to deploy multiple operators on a single cluster), use `--set connect.create=false` in your install command.
 
 ## Configuration Values
+
 The 1Password Connect Helm chart offers many configuration options for deployment. Please refer to the list below for information on what configuration options are available as well as what the default configuration options are.
 
 [From the Official Helm Install Guide](https://helm.sh/docs/helm/helm_install/#helm-install):
@@ -35,17 +38,19 @@ The 1Password Connect Helm chart offers many configuration options for deploymen
 >To override values in a chart, use either the '--values' flag and pass in a file or use the '--set' flag and pass configuration from the command line, to force a string value use '--set-string'. In case a value is large and therefore you want not to use neither '--values' nor '--set', use '--set-file' to read the single large value from file.
 
 For example:
-```bash
-$ helm install -f myvalues.yaml connect ./connect
+
+```sh
+helm install -f myvalues.yaml connect ./connect
 ```
 
 or
 
-```bash
-$ helm install --set connect.applicationName=connect connect ./connect
+```sh
+helm install --set connect.applicationName=connect connect ./connect
 ```
 
 ### Values
+
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | connect.create | boolean | `true` | Denotes whether the 1Password Connect server will be deployed |
