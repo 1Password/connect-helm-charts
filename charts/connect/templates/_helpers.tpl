@@ -87,3 +87,18 @@ Sets extra ingress annotations
     {{- end }}
   {{- end }}
 {{- end -}}
+
+{{/*
+Sets extra service annotations
+*/}}
+{{- define "onepassword-connect.serviceAnnotations" -}}
+  {{- if .Values.connect.serviceAnnotations }}
+  annotations:
+    {{- $tp := typeOf .Values.connect.serviceAnnotations }}
+    {{- if eq $tp "string" }}
+      {{- tpl .Values.connect.serviceAnnotations . | nindent 4 }}
+    {{- else }}
+      {{- toYaml .Values.connect.serviceAnnotations | nindent 4 }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
