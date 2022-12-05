@@ -52,8 +52,8 @@ be found at https://support.1password.com/secrets-automation/
 
 {{- if  .Values.operator.create }}
 
-The 1Password Connect Kubernetes Operator is also being deployed. More information about the 
-1Password Connect Operator can be found at https://github.com/1Password/onepassword-operator
+The 1Password Kubernetes Operator is also being deployed. More information about the
+1Password Operator can be found at https://github.com/1Password/onepassword-operator
 
 {{- end }}
 
