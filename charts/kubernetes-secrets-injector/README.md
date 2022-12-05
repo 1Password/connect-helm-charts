@@ -3,7 +3,7 @@ Installing the Helm Chart with default configurations will deploy 1Password Kube
 
 ## Installation
 ```
-helm install --generate-name kubernetes-secrets-injector
+helm install --generate-name 1password/kubernetes-secrets-injector
 ```
 
 ## Usage
