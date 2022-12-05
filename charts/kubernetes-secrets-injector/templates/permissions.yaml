@@ -33,6 +33,3 @@ rules:
   - apiGroups: ["admissionregistration.k8s.io"]
     resources: ["mutatingwebhookconfigurations"]
     verbs: ["create", "get", "delete", "list", "patch", "update", "watch"]
-  - apiGroups: [""] # "" indicates the core API group
-    resources: ["secrets"]
-    verbs: ["get"]
