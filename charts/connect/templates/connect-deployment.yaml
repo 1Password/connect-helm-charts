@@ -35,6 +35,7 @@ spec:
       nodeSelector:
 {{ toYaml . | indent 8 }}
 {{- end }}
+      replicas: {{ .Values.connect.replicas }}
       volumes:
         - name: {{ .Values.connect.dataVolume.name }}
           {{ .Values.connect.dataVolume.type }}: {{- toYaml .Values.connect.dataVolume.values | nindent 12 }}
@@ -141,7 +142,7 @@ spec:
             failureThreshold: 3
             periodSeconds: 30
             initialDelaySeconds: 15
-          {{ end }}             
+          {{ end }}
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}

@@ -2,81 +2,246 @@
 # that every value "{{ .Between.Curly.Braces }}" in this file needs to be
 # explicitly interpolated on the template side by using the `tpl` function.
 
+# This section of values is for 1Password Connect API and Sync Configuration
 connect:
-  applicationName: onepassword-connect
+  # The number of replicas to run the 1Password Connect deployment
+  replicas: 1
+
+  # The 1Password Connect API Specific Values
   api:
     name: connect-api
+    # The 1Password Connect API repository
     imageRepository: 1password/connect-api
     resources: {}
     httpPort: 8080
     httpsPort: 8443
+
+  # The 1Password Connect Sync Specific Values
   sync:
     name: connect-sync
     imageRepository: 1password/connect-sync
     resources: {}
     httpPort: 8081
+
+  # The name of 1Password Connect Application
+  applicationName: onepassword-connect
+
+  # The type of Service resource to create for the Connect API and sync services.
+  # See: https://kubernetes.io/docs/concepts/services-networking/service
+  # This by default is NodePort and can also be defined as LoadBalancer.
+  # If serviceType is LoadBalancer then loadBalancerSourceRanges and loadBalancerIP should be defined.
+  # See: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
   serviceType: NodePort
+
+  # loadBalancerSourceRanges:
+  #   - 10.0.0.0/16
+  #   - 1.84.26.4/32
+
+  # loadBalancerIP:
+
+  # The name of Kubernetes Secret containing the 1Password Connect credentials
   credentialsName: op-credentials
+
+  # The key for the 1Password Connect Credentials stored in the credentials secret
   credentialsKey: 1password-credentials.json
+
+  # Contents of the 1password-credentials.json file for Connect.
+  # Can be set be adding --set-file connect.credentials=<path/to/1password-credentials.json>
+  # to your helm install command
   credentials:
+
+  # Base64-encoded contents of the 1password-credentials.json file for Connect.
+  # This can be used instead of connect.credentials in case supplying raw JSON
+  # to connect.credentials leads to issues.
   credentials_base64:
-  tls:
-    enabled: false
-    secret: op-connect-tls
-  dataVolume:
-    name: shared-data
-    type: emptyDir
-    values: {}
+
+  # The 1Password Connect API repository
   imagePullPolicy: IfNotPresent
+
+  # The 1Password Connect version to pull
   version: "{{ .Chart.AppVersion }}"
+
+  # Node selector stanza for the Connect pod
+  # See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
   nodeSelector: {}
+
+  # 1Password Connect API and Sync Service
   probes:
+    # Denotes whether the 1Password Connect API readiness probe will operate
+    # and ensure the pod is ready before serving traffic
     liveness: true
+    # Denotes whether the 1Password Connect API will be continually checked
+    # by Kubernetes for liveness and restarted if the pod becomes unresponsive
     readiness: true
+
+  # Additional annotations to be added to the Connect API deployment resource.
   annotations: {}
+
+  # Additional labels to be added to the Connect API deployment resource.
   labels: {}
+
+  # Additional annotations to be added to the Connect API pods.
   podAnnotations: {}
+
+  # Additional labels to be added to the Connect API pods.
   podLabels: {}
+
+  # List of tolerations to be added to the Connect API pods.
   tolerations: []
 
+  # 1Password Connect volume shared between 1Password Connect Containers
+  dataVolume:
+    # The name of the shared volume used between 1Password Connect Containers
+    name: shared-data
+    # The type of the shared volume used between
+    # 1Password Connect Containers
+    type: emptyDir
+    # Desribes the fields and values for configuration of
+    # shared volume for 1Password Connect
+    values: {}
+
+  # Determines if HTTPS Port if setup for the 1Password Connect
+  # Services for 1Password Connect API and Sync
+  tls:
+    # Denotes whether the Connect API is secured with TLS
+    enabled: false
+    # The name of the secret containing the TLS key (tls.key) and certificate (tls.crt)
+    secret: op-connect-tls
+
+  # Ingress allows ingress services to be created to allow external access
+  # from Kubernetes to access 1Password Connect pods.
+  # In order to expose the service, use the route section below
+  ingress:
+    enabled: false
+    labels: {}
+      # traffic: external
+    annotations: {}
+      # |
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+      #   or
+      # kubernetes.io/ingress.class: nginx
+      # kubernetes.io/tls-acme: "true"
+
+    # Optionally use ingressClassName instead of deprecated annotation.
+    # See: https://kubernetes.io/docs/concepts/services-networking/ingress/#deprecated-annotation
+    ingressClassName: ""
+
+    # As of Kubernetes 1.19, all Ingress Paths must have a pathType configured. The default value below should be sufficient in most cases.
+    # See: https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types for other possible values.
+    pathType: Prefix
+    hosts:
+      - host: chart-example.local
+        paths: []
+    # Extra paths to prepend to the host configuration.
+    # This is useful when working with annotation based services.
+    extraPaths: []
+    # - path: /*
+    #   backend:
+    #     service:
+    #       name: ssl-redirect
+    #       port:
+    #         number: use-annotation
+    tls: []
+    #  - secretName: chart-example-tls
+    #    hosts:
+    #      - chart-example.local
+
+# This section of values is for 1Password Operator Configuration
 operator:
+  # Denotes whether the 1Password Connect Operator will be deployed
   create: false
+
+  # Denotes whether the 1Password Connect Operator will automatically restart deployments based on associated updated secrets.
   autoRestart: false
+
+  # The name of 1Password Connect Operator Application
   applicationName: onepassword-connect-operator
+
+  # The 1Password Connect Operator image pull policy
   imagePullPolicy: IfNotPresent
+
+  # The 1Password Connect Operator repository
   imageRepository: 1password/onepassword-operator
+
+  # How often the 1Password Connect Operator will poll for secrets updates.
   pollingInterval: 10
+
+  # The 1Password Connect Operator version to pull
   version: "1.6.0"
+
+  # Node selector stanza for the Operator pod
+  # See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
   nodeSelector: {}
+
+  # Additional annotations to be added to the Operator pods.
   annotations: {}
+
+  # Additional labels to be added to the Operator deployment resource.
   labels: {}
+
+  # Additional annotations to be added to the Operator pods.
   podAnnotations: {}
+
+  # Additional labels to be added to the Operator pods.
   podLabels: {}
+
+  # List of tolerations to be added to the Operator pods.
   tolerations: []
+
+  # A list of namespaces for the 1Password Connect Operator to watch and manage. Use the empty list to watch all namespaces.
   watchNamespace: []
+
+  # The resources requests/limits for the 1Password Connect Operator pod
   resources: {}
+
+  # 1Password Operator Token Configuration
   token:
+    # The name of Kubernetes Secret containing the 1Password Connect API token
     name: onepassword-token
+
+    # The key for the 1Password Connect token stored in the 1Password token secret
     key: token
+
+    # An API token generated for 1Password Connect to be used by the Connect Operator
     value:
 
+  # 1Password Operator Service Account Configuration
   serviceAccount:
+    # The name of the 1Password Conenct Operator
     create: "{{ .Values.operator.create }}"
+
+    # Annotations for the 1Password Connect Service Account
     annotations: {}
+
+    # The name of the 1Password Conenct Operator
     name: onepassword-connect-operator
 
+  # 1Password Operator Role Binding Configuration
   roleBinding:
+    # Denotes whether or not a role binding will be created for each Namespace for the 1Password Connect Operator Service Account
     create: "{{ .Values.operator.create }}"
+
+    # The name of the 1Password Connect Operator Role Binding
     name: onepassword-connect-operator
 
+  # 1Password Operator Cluster Role Configuration
   clusterRole:
+    # Denotes whether or not a cluster role will be created for each for the 1Password Connect Operator
     create: "{{ .Values.operator.create }}"
+
+    # The name of the 1Password Connect Operator Cluster Role
     name: onepassword-connect-operator
 
+  # 1Password Operator Cluster Role Binding Configuration
   clusterRoleBinding:
+    # Denotes whether or not a Cluster role binding will be created for the 1Password Connect Operator Service Account
     create: "{{ .Values.operator.create }}"
+
+    # The name of the 1Password Connect Operator Cluster Role
     name: onepassword-connect-operator
 
+# 1Password Acceptance Tests Functionality
 acceptanceTests:
   enabled: false
   fixtures: {}
