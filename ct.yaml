@@ -5,4 +5,4 @@ debug: true
 helm-extra-args: --timeout 120s
 charts:
   - charts/connect
-  - charts/kubernetes-secrets-injector
+  - charts/secrets-injector

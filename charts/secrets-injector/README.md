@@ -3,11 +3,11 @@ Installing the Helm Chart with default configurations will deploy 1Password Kube
 
 ## Installation
 ```
-helm install --generate-name 1password/kubernetes-secrets-injector
+helm install --generate-name 1password/secrets-injector
 ```
 
 ## Usage
-Please follow [Kubernetes Secrets Injector documentation](https://github.com/1Password/kubernetes-secrets-injector#1password-secrets-injector-for-kubernetes)
+Please follow [Secrets Injector documentation](https://github.com/1Password/kubernetes-secrets-injector#1password-secrets-injector-for-kubernetes)
 
 
 ## Configuration Values
@@ -19,13 +19,13 @@ The 1Password Kubernetes Secrets Injector Helm chart offers many configuration o
 
 For example: 
 ```bash
-$ helm install -f myvalues.yaml injector ./kubernetes-secrets-injector
+$ helm install -f myvalues.yaml injector ./secrets-injector
 ```
 
 or 
 
 ```bash
-$ helm install --set injector.applicationName=injector injector ./kubernetes-secrets-injector
+$ helm install --set injector.applicationName=injector injector ./secrets-injector
 ```
 
 ### Values
