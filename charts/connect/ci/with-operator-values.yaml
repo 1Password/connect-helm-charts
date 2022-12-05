@@ -2,3 +2,6 @@ operator:
   create: true
   token:
     name: op-operator-connect-token
+
+connect:
+  replicas: 1
