@@ -28,9 +28,8 @@ $ helm install --set injector.applicationName=injector injector ./secrets-inject
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | injector.applicationName | string | `"secrets-injector"` | The name of 1Password Kubernetes Secrets Injector Application |
+| injector.imagePullPolicy | string | `"IfNotPresent"` | The 1Password Secrets Injector docker image policy. `"IfNotPresent"` means the image is pulled only if it is not already present locally. |
+| injector.imageRepository | string | `"1password/kubernetes-secrets-injector"` | The 1Password Secrets Injector docker image repository |
 | injector.port | string | `443` | The port the Secrets Injector exposes |
 | injector.targetPort | integer | `8443` | The port the Secrets Injector API sends requests to the pod |
-| injector.imageRepository | string | `"1password/kubernetes-secrets-injector"` | The 1Password Secrets Injector docker image repository |
-| injector.imagePullPolicy | string | `"IfNotPresent"` | The 1Password Secrets Injector docker image policy. `"IfNotPresent"` means the image is pulled only if it is not already present locally. |
 | injector.version         | string | `{{.Chart.AppVersion}}` | The 1Password Secrets Injector version to pull. |
-| injector.replicas        | integer | `1` | Amount of the Secrets Injector replicas. |
