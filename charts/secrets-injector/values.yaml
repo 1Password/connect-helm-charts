@@ -1,8 +1,7 @@
 injector:
   applicationName: secrets-injector
-  port: 443
-  targetPort: 8443
   imageRepository: 1password/kubernetes-secrets-injector
   imagePullPolicy: IfNotPresent
+  port: 443
+  targetPort: 8443
   version: "{{ .Chart.AppVersion }}"
-  replicas: 1
