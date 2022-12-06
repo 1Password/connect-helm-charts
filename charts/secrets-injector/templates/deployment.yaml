@@ -21,7 +21,7 @@ spec:
       serviceAccountName: {{ .Values.injector.applicationName }}
       containers:
         - name: {{ .Values.injector.applicationName }}
-          image: {{ .Values.injector.imageRepository }}:{{ .Chart.AppVersion }}
+          image: {{ .Values.injector.imageRepository }}:{{ tpl .Values.injector.version . }}
           imagePullPolicy: {{ .Values.injector.imagePullPolicy }}
           args:
           - -service-name={{ .Values.injector.applicationName }}
