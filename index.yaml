@@ -229,4 +229,24 @@ entries:
     urls:
     - https://github.com/1Password/connect-helm-charts/releases/download/v1.0.1/connect-1.0.1.tgz
     version: 1.0.1
-generated: "2022-10-18T16:52:38.372442781Z"
+  secrets-injector:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2022-12-06T16:22:02.81032852Z"
+    description: A Helm chart for deploying 1Password Sercrets Injector
+    digest: e9bcdbbea672a53388578697af13b3aa79647ac3d0e4b2cb99efaaa93b2cb35c
+    home: https://1password.com/secrets/
+    icon: https://avatars.githubusercontent.com/u/38230737
+    keywords:
+    - 1Password
+    - 1Password Secrets Injector
+    - Secrets Injector
+    maintainers:
+    - email: support+business@1password.com
+      name: 1Password Secrets Integrations Team
+    name: secrets-injector
+    type: application
+    urls:
+    - https://github.com/1Password/connect-helm-charts/releases/download/secrets-injector-1.0.0/secrets-injector-1.0.0.tgz
+    version: 1.0.0
+generated: "2022-12-06T16:22:02.810376721Z"
