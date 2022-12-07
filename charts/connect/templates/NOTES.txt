@@ -54,14 +54,14 @@
 1Password Connect is being deployed to Kubernetes. More information about 1Password Connect can 
 be found at https://support.1password.com/secrets-automation/
 
-{{- if (.Values.connect.create) and (.Values.operator.create) }}
+{{- if and (.Values.connect.create) (.Values.operator.create) }}
 
 The 1Password Connect Kubernetes Operator is also being deployed. More information about the 
 1Password Connect Operator can be found at https://github.com/1Password/onepassword-operator
 
 {{- end }}
 
-{{- if (not (.Values.connect.create)) and (.Values.operator.create) }}
+{{- if and (not (.Values.connect.create)) (.Values.operator.create) }}
 
 The 1Password Connect Kubernetes Operator is being deployed without also deploying a 1Password 
 Connect server. A Connect server is required for the operator to connect to. More information 
