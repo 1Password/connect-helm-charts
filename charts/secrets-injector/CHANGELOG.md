@@ -16,8 +16,8 @@
 # v1.0.0
 
 ## Features
-* Ability to deploy 1Password Secrets Injector via helm
-* Inject secrets as environment variables to the pod
+* Ability to deploy 1Password Secrets Injector via Helm.
+* Inject secrets as environment variables to the pod.
 
 ---
 
