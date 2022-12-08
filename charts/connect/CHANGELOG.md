@@ -16,7 +16,7 @@
 # v1.10.0
 
 ## Features
-* Add replicas definition to the Connect Deployment {#121}
+* Add replicas definition to the Connect Deployment {#121, #128}
 * Use the latest 1password/operator version 1.6.0 {#128}
 
 ## Fixes
