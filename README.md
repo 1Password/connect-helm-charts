@@ -1,6 +1,6 @@
-# 1Password Connect Helm Charts
+# 1Password Helm Charts
 
-This repository hosts the offical 1Password Helm Charts for deploying 1Password Connect and the 1Password Connect Kubernetes Operator.
+This repository hosts the official 1Password Helm Charts.
 
 ## Installation Guide
 
@@ -17,4 +17,5 @@ helm repo add 1password https://1password.github.io/connect-helm-charts
 
 ## Available Charts
 
-* [1Password Connect and Kubernetes Operator](./charts/connect/)
+* [1Password Connect and Kubernetes Operator](./charts/connect)
+* [1Password Secrets Injector](./charts/secrets-injector)
