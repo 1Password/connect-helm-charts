@@ -55,6 +55,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.api.resources | object | `{}` | The resources requests/limits for the 1Password Connect API pod |
 | connect.api.httpPort | integer | `8080` | The port the Connect API is served on when TLS is disabled |
 | connect.api.httpsPort | integer | `8443` | The port the Connect API is served on when TLS is enabled |
+| connect.api.log.level | string | `info` | `error`, `warn`, `info`, `debug`, or `trace` |
 | connect.credentials | jsonString |  | Contents of the 1password-credentials.json file for Connect. Can be set be adding `--set-file connect.credentials=<path/to/1password-credentials.json>` to your helm install command |
 | connect.credentials_base64 | string |  | Base64-encoded contents of the 1password-credentials.json file for Connect. This can be used instead of `connect.credentials` in case supplying raw JSON to `connect.credentials` leads to issues.  |
 | connect.credentialsKey | string | `"op-session"` | The key for the 1Password Connect Credentials stored in the credentials secret |
@@ -84,6 +85,7 @@ $ helm install --set connect.applicationName=connect connect ./connect
 | connect.sync.name | string | `"connect-sync"` | The name of the 1Password Connect Sync container |
 | connect.sync.resources | object | `{}` | The resources requests/limits for the 1Password Connect Sync pod |
 | connect.sync.httpPort | integer | `8081` | The port serving the health of the Sync container |
+| connect.sync.log.level | string | `info` | `error`, `warn`, `info`, `debug`, or `trace` |
 | connect.tls.enabled | boolean | `false` | Denotes whether the Connect API is secured with TLS |
 | connect.tls.secret | string | `"op-connect-tls"` | The name of the secret containing the TLS key (`tls.key`) and certificate (`tls.crt`)  |
 | connect.tolerations | list | `[]` | List of tolerations to be added to the Connect API pods.  |
