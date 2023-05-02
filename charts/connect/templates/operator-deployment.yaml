@@ -36,6 +36,10 @@ spec:
       nodeSelector:
 {{ toYaml . | indent 8 }}
 {{- end }}
+{{- with .Values.operator.imagePullSecrets }}
+      imagePullSecrets:
+{{ toYaml . | indent 8 }}
+{{- end }}
       tolerations:
 {{ toYaml .Values.operator.tolerations | indent 8 }}
       serviceAccountName: {{ .Values.operator.serviceAccount.name }}

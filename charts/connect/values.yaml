@@ -7,6 +7,9 @@ connect:
   # The number of replicas to run the 1Password Connect deployment
   replicas: 1
 
+  # The secret use to pull from the container repository
+  # imagePullSecrets:
+  #   - name: my-private-repo
   # The 1Password Connect API Specific Values
   api:
     name: connect-api
@@ -163,6 +166,10 @@ operator:
 
   # The 1Password Operator repository
   imageRepository: 1password/onepassword-operator
+
+  # The secret use to pull from the container repository
+  # imagePullSecrets:
+  #   - name: my-private-repo
 
   # How often the 1Password Operator will poll for secrets updates.
   pollingInterval: 10
