@@ -152,26 +152,26 @@ connect:
 
 # This section of values is for 1Password Operator Configuration
 operator:
-  # Denotes whether the 1Password Connect Operator will be deployed
+  # Denotes whether the 1Password Operator will be deployed
   create: false
 
-  # Denotes whether the 1Password Connect Operator will automatically restart deployments based on associated updated secrets.
+  # Denotes whether the 1Password Operator will automatically restart deployments based on associated updated secrets.
   autoRestart: false
 
-  # The name of 1Password Connect Operator Application
+  # The name of 1Password Operator Application
   applicationName: onepassword-connect-operator
 
-  # The 1Password Connect Operator image pull policy
+  # The 1Password Operator image pull policy
   imagePullPolicy: IfNotPresent
 
-  # The 1Password Connect Operator repository
+  # The 1Password Operator repository
   imageRepository: 1password/onepassword-operator
 
-  # How often the 1Password Connect Operator will poll for secrets updates.
+  # How often the 1Password Operator will poll for secrets updates.
   pollingInterval: 10
 
-  # The 1Password Connect version to pull
-  version: "1.5.0"
+  # The 1Password Operator version to pull
+  version: "1.6.0"
 
   # Node selector stanza for the Operator pod
   # See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
@@ -192,10 +192,10 @@ operator:
   # List of tolerations to be added to the Operator pods.
   tolerations: []
 
-  # A list of namespaces for the 1Password Connect Operator to watch and manage. Use the empty list to watch all namespaces.
+  # A list of namespaces for the 1Password Operator to watch and manage. Use the empty list to watch all namespaces.
   watchNamespace: []
 
-  # The resources requests/limits for the 1Password Connect Operator pod
+  # The resources requests/limits for the 1Password Operator pod
   resources: {}
 
   # 1Password Operator Token Configuration
@@ -206,7 +206,7 @@ operator:
     # The key for the 1Password Connect token stored in the 1Password token secret
     key: token
 
-    # An API token generated for 1Password Connect to be used by the Connect Operator
+    # An API token generated for 1Password Connect to be used by the Operator
     value:
 
   # 1Password Operator Service Account Configuration
@@ -222,26 +222,26 @@ operator:
 
   # 1Password Operator Role Binding Configuration
   roleBinding:
-    # Denotes whether or not a role binding will be created for each Namespace for the 1Password Connect Operator Service Account
+    # Denotes whether or not a role binding will be created for each Namespace for the 1Password Operator Service Account
     create: "{{ .Values.operator.create }}"
 
-    # The name of the 1Password Connect Operator Role Binding
+    # The name of the 1Password Operator Role Binding
     name: onepassword-connect-operator
 
   # 1Password Operator Cluster Role Configuration
   clusterRole:
-    # Denotes whether or not a cluster role will be created for each for the 1Password Connect Operator
+    # Denotes whether or not a cluster role will be created for each for the 1Password Operator
     create: "{{ .Values.operator.create }}"
 
-    # The name of the 1Password Connect Operator Cluster Role
+    # The name of the 1Password Operator Cluster Role
     name: onepassword-connect-operator
 
   # 1Password Operator Cluster Role Binding Configuration
   clusterRoleBinding:
-    # Denotes whether or not a Cluster role binding will be created for the 1Password Connect Operator Service Account
+    # Denotes whether or not a Cluster role binding will be created for the 1Password Operator Service Account
     create: "{{ .Values.operator.create }}"
 
-    # The name of the 1Password Connect Operator Cluster Role
+    # The name of the 1Password Operator Cluster Role
     name: onepassword-connect-operator
 
 # 1Password Acceptance Tests Functionality

@@ -13,6 +13,18 @@
 ---
 
 [//]: # (START/LATEST)
+# v1.10.0
+
+## Features
+* Add replicas definition to the Connect Deployment {#121, #128}
+* Use the latest 1password/operator version 1.6.0 {#128}
+
+## Fixes
+* Use '1Password Operator' term instead of '1Password Connect Operator' in the documentation {#128}
+
+---
+
+[//]: # (START/LATEST)
 # v1.9.0
 
 ## Features
