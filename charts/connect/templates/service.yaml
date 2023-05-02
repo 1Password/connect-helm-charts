@@ -6,6 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/component: connect
     {{- include "onepassword-connect.labels" . | nindent 4 }}
+{{- template "onepassword-connect.serviceAnnotations" . }}
 spec:
   type: {{ .Values.connect.serviceType }}
   selector:
