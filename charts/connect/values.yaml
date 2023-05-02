@@ -33,6 +33,9 @@ connect:
   # See: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
   serviceType: NodePort
 
+  # Additional annotations to be added to the service resource
+  serviceAnnotations: {}
+
   # loadBalancerSourceRanges:
   #   - 10.0.0.0/16
   #   - 1.84.26.4/32
