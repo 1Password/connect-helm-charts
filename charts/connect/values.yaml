@@ -10,6 +10,7 @@ connect:
   # The secret use to pull from the container repository
   # imagePullSecrets:
   #   - name: my-private-repo
+
   # The 1Password Connect API Specific Values
   api:
     name: connect-api
