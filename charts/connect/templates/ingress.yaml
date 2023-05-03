@@ -1,4 +1,4 @@
-{{- if .Values.connect.ingress.enabled -}}
+{{- if and (.Values.connect.ingress.enabled) (.Values.connect.create) -}} 
 {{- $extraPaths := .Values.connect.ingress.extraPaths -}}
 {{- $serviceName := .Values.connect.applicationName -}}
 {{- $tlsEnabled := .Values.connect.tls.enabled -}}
