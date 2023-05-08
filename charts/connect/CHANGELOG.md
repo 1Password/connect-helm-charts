@@ -12,7 +12,22 @@
 
 ---
 
-[//]: # (START/LATEST)
+[//]: # (START/v1.11.0)
+# v1.11.0
+
+## Features
+* Extra service annotations can now be specified with `connect.serviceAnnotations`. {#106}
+* `connect.create` can now be used to control whether a Connect instance should be created. {#125}
+* The default Connect version is updated to v1.7.0.
+
+## Fixes
+* The default value of `connect.CredentialsKey` is now correctly documented. {#136}
+
+Thanks @twink0r, @lapwat, @leehanel, @Matthiasvanderhallen for your contributions.
+
+---
+
+[//]: # (START/v1.10.0)
 # v1.10.0
 
 ## Features
@@ -24,7 +39,7 @@
 
 ---
 
-[//]: # (START/LATEST)
+[//]: # (START/v1.9.0)
 # v1.9.0
 
 ## Features
