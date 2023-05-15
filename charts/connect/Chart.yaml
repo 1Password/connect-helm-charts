@@ -1,6 +1,6 @@
 apiVersion: v2
 name: connect
-version: 1.10.0
+version: 1.11.0
 description: A Helm chart for deploying 1Password Connect and the 1Password Connect Kubernetes Operator
 keywords:
   - "1Password"
@@ -11,4 +11,4 @@ maintainers:
   - name: 1Password Secrets Integrations Team
     email: support+business@1password.com
 icon: https://avatars.githubusercontent.com/u/38230737
-appVersion: "1.5.7"
+appVersion: "1.7.0"
