@@ -12,6 +12,14 @@
 
 ---
 
+[//]: # (START/v1.0.1)
+# Latest
+
+## Fixes
+* Injector overrides Pod volumeMounts instead of appending to them. {#22}
+
+---
+
 [//]: # (START/v1.0.0)
 # v1.0.0
 
