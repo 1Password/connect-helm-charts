@@ -2,6 +2,9 @@
 # that every value "{{ .Between.Curly.Braces }}" in this file needs to be
 # explicitly interpolated on the template side by using the `tpl` function.
 
+# global common labels, applied to all ressources
+commonLabels: {}
+
 # This section of values is for 1Password Connect API and Sync Configuration
 connect:
   # Denotes whether the 1Password Connect server will be deployed
