@@ -21,6 +21,25 @@ connect:
     resources: {}
     httpPort: 8080
     httpsPort: 8443
+    # Prometheus Service Monitor
+    # ref: https://github.com/coreos/prometheus-operator
+    #
+    serviceMonitor:
+      # Create ServiceMonitor Resource for scraping metrics using PrometheusOperator
+      #
+      enabled: false
+      # Specify the interval at which metrics should be scraped
+      #
+      interval: 30s
+      # Define the path used by ServiceMonitor to scrape metrics
+      #
+      path: "/metrics"
+      # Define the HTTP URL parameters used by ServiceMonitor
+      #
+      params: {}
+      # Extra annotations for the ServiceMonitor
+      #
+      annotations: {}
 
   # The 1Password Connect Sync Specific Values
   sync:
