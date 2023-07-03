@@ -81,7 +81,7 @@ spec:
               value: "{{ .Values.connect.api.httpPort }}"
             {{- end }}
             - name: OP_LOG_LEVEL
-              value: "{{ .Values.connect.api.loglevel }}"
+              value: "{{ .Values.connect.api.logLevel }}"
           {{- if .Values.connect.probes.readiness }}
           readinessProbe:
             httpGet:
@@ -129,7 +129,7 @@ spec:
             - name: OP_BUS_PEERS
               value: localhost:11220
             - name: OP_LOG_LEVEL
-              value: "{{ .Values.connect.sync.loglevel }}"
+              value: "{{ .Values.connect.sync.logLevel }}"
           {{- if .Values.connect.probes.readiness }}
           readinessProbe:
             httpGet:

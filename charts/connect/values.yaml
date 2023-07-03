@@ -15,7 +15,7 @@ connect:
     resources: {}
     httpPort: 8080
     httpsPort: 8443
-    loglevel: info
+    logLevel: info
 
   # The 1Password Connect Sync Specific Values
   sync:
@@ -23,7 +23,7 @@ connect:
     imageRepository: 1password/connect-sync
     resources: {}
     httpPort: 8081
-    loglevel: info
+    logLevel: info
 
   # The name of 1Password Connect Application
   applicationName: onepassword-connect
