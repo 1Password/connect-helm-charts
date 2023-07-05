@@ -1,13 +1,13 @@
 <!-- Image sourced from https://blog.1password.com/introducing-secrets-automation/ -->
 <img alt="" role="img" src="https://blog.1password.com/posts/2021/secrets-automation-launch/header.svg"/>
 
-<header style="text-align: center;">
-	<h1 style="margin-top: 20px; margin-bottom:0; border-bottom: none;">1Password Helm Charts</h1>
-	<p>This repository hosts the official 1Password Helm Charts.</p><br>
+<div align="center">
+	<h1>1Password Helm Charts</h1>
+	<p>This repository hosts the official 1Password Helm Charts.</p>
 	<a href="/QUICKSTART.md">
 		<img alt="Get started" src="https://user-images.githubusercontent.com/45081667/226940040-16d3684b-60f4-4d95-adb2-5757a8f1bc15.png" height="37"/>
 	</a>
-</header>
+</div>
 
 ---
 
@@ -36,4 +36,4 @@
 
 Please file requests via [**BugCrowd**](https://bugcrowd.com/agilebits).
 
-For information about security practices, please visit our [Security homepage](https://bugcrowd.com/agilebits).
+For information about security practices, please visit the [1Password Bug Bounty Program](https://bugcrowd.com/agilebits).
