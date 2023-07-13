@@ -57,7 +57,7 @@ spec:
               {{ if semverCompare ">= 1.19.0-0" $kubeVersion }}
               service:
                 {{- if $tlsEnabled }}
-                name: {{ $serviceName }}-https
+                name: {{ $serviceName }}
                 port:
                   number: {{ $apiHttpsPort }}
                 {{- else }}
