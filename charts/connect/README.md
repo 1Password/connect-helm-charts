@@ -66,7 +66,7 @@ helm install --set connect.applicationName=connect connect ./connect
 | connect.api.logLevel | string | `info` | Log level of the Connect API container. Valid options are: trace, debug, info, warn, error. |
 | connect.credentials | jsonString |  | Contents of the 1password-credentials.json file for Connect. Can be set be adding `--set-file connect.credentials=<path/to/1password-credentials.json>` to your helm install command |
 | connect.credentials_base64 | string |  | Base64-encoded contents of the 1password-credentials.json file for Connect. This can be used instead of `connect.credentials` in case supplying raw JSON to `connect.credentials` leads to issues.  |
-| connect.credentialsKey | string | `"1password-credentials.json"` | The key for the 1Password Connect Credentials stored in the credentials secret |
+| connect.credentialsKey | string | `"1password-credentials.json"` | The key for the 1Password Connect Credentials stored in the credentials secret, the credentials must be encoded as a base64 string |
 | connect.credentialsName | string | `"op-credentials"` | The name of Kubernetes Secret containing the 1Password Connect credentials |
 | connect.dataVolume.name | string | `"shared-data"` | The name of the shared volume used between 1Password Connect Containers |
 | connect.dataVolume.type | string | `"emptyDir"` | The type of the shared volume used between 1Password Connect Containers |
