@@ -1,6 +1,6 @@
 apiVersion: v2
 name: secrets-injector
-description: A Helm chart for deploying 1Password Sercrets Injector
+description: A Helm chart for deploying 1Password Secrets Injector
 type: application
 home: https://1password.com/secrets/
 keywords:
