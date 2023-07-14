@@ -155,6 +155,15 @@ connect:
     #    hosts:
     #      - chart-example.local
 
+  # Optionally the internal profiler can be enabled to debug memory or performance issues.
+  # For normal operation of Connect this does not have to enabled.
+  profiler:
+    enabled: false
+    # The interval at which profiler snapshots are taken.
+    interval: 6h
+    # Number of profiler snapshots to keep.
+    keepLast: 12
+
 # This section of values is for 1Password Operator Configuration
 operator:
   # Denotes whether the 1Password Operator will be deployed

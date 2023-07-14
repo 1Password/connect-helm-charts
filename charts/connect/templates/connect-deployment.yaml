@@ -83,6 +83,7 @@ spec:
             {{- end }}
             - name: OP_LOG_LEVEL
               value: "{{ .Values.connect.api.logLevel }}"
+            {{- include "onepassword-connect.profilerConfig" . | indent 12 -}}
           {{- if .Values.connect.probes.readiness }}
           readinessProbe:
             httpGet:
@@ -131,6 +132,7 @@ spec:
               value: localhost:11220
             - name: OP_LOG_LEVEL
               value: "{{ .Values.connect.sync.logLevel }}"
+            {{- include "onepassword-connect.profilerConfig" . | indent 12 }}
           {{- if .Values.connect.probes.readiness }}
           readinessProbe:
             httpGet:
@@ -151,4 +153,13 @@ spec:
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}
+        {{- if .Values.connect.profiler.enabled }}
+        - name: profiler-data
+          image: alpine
+          command: [ 'sleep', 'infinity' ]
+          volumeMounts:
+            - name: {{ .Values.connect.dataVolume.name }}
+              mountPath: /data
+              subPath: profiler
+        {{- end }}
 {{- end }}

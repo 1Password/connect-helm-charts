@@ -102,3 +102,17 @@ Sets extra service annotations
     {{- end }}
   {{- end }}
 {{- end -}}
+
+{{/*
+Sets environment variables when profiler is enabled
+*/}}
+{{- define "onepassword-connect.profilerConfig" -}}
+  {{- if .Values.connect.profiler.enabled}}
+- name: OP_PROFILER_OUTPUT_DIR
+  value: "/home/opuser/.op/data/profiler"
+- name: OP_PROFILER_INTERVAL
+  value: "{{ .Values.connect.profiler.interval }}"
+- name: OP_PROFILER_KEEP_LAST
+  value: "{{ .Values.connect.profiler.keepLast }}"
+  {{- end -}}
+{{- end -}}
