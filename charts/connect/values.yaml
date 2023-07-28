@@ -31,6 +31,9 @@ connect:
   # The name of 1Password Connect Application
   applicationName: onepassword-connect
 
+  # The name of 1Password Connect Host
+  host: onepassword-connect
+
   # The type of Service resource to create for the Connect API and sync services.
   # See: https://kubernetes.io/docs/concepts/services-networking/service
   # This by default is NodePort and can also be defined as LoadBalancer.
