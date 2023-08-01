@@ -12,7 +12,15 @@
 
 ---
 
-[//]: # (START/v1.11.0)
+[//]: # (START/v1.12.1)
+# v1.12.1
+
+## Fixes
+* Distinct standalone operator Helm deployments use the same lock. {#148}
+
+---
+
+[//]: # (START/v1.12.0)
 # v1.12.0
 
 ## Features
