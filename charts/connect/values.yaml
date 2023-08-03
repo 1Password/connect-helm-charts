@@ -21,6 +21,7 @@ connect:
     resources: {}
     httpPort: 8080
     httpsPort: 8443
+    logLevel: info
     # Prometheus Service Monitor
     # ref: https://github.com/coreos/prometheus-operator
     #
@@ -47,9 +48,13 @@ connect:
     imageRepository: 1password/connect-sync
     resources: {}
     httpPort: 8081
+    logLevel: info
 
   # The name of 1Password Connect Application
   applicationName: onepassword-connect
+
+  # The name of 1Password Connect Host
+  host: onepassword-connect
 
   # The type of Service resource to create for the Connect API and sync services.
   # See: https://kubernetes.io/docs/concepts/services-networking/service
@@ -174,6 +179,15 @@ connect:
     #  - secretName: chart-example-tls
     #    hosts:
     #      - chart-example.local
+
+  # Optionally the internal profiler can be enabled to debug memory or performance issues.
+  # For normal operation of Connect this does not have to enabled.
+  profiler:
+    enabled: false
+    # The interval at which profiler snapshots are taken.
+    interval: 6h
+    # Number of profiler snapshots to keep.
+    keepLast: 12
 
 # This section of values is for 1Password Operator Configuration
 operator:

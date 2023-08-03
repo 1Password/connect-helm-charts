@@ -52,9 +52,9 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 
 {{- define "onepassword-connect.url" -}}
 {{- if .Values.connect.tls.enabled -}}
-https://{{ .Values.connect.applicationName }}:{{ .Values.connect.api.httpsPort  }}
+https://{{ .Values.connect.host }}:{{ .Values.connect.api.httpsPort  }}
 {{- else -}}
-http://{{ .Values.connect.applicationName }}:{{ .Values.connect.api.httpPort  }}
+http://{{ .Values.connect.host }}:{{ .Values.connect.api.httpPort  }}
 {{- end }}
 {{- end }}
 
@@ -104,4 +104,18 @@ Sets extra service annotations
       {{- toYaml .Values.connect.serviceAnnotations | nindent 4 }}
     {{- end }}
   {{- end }}
+{{- end -}}
+
+{{/*
+Sets environment variables when profiler is enabled
+*/}}
+{{- define "onepassword-connect.profilerConfig" -}}
+  {{- if .Values.connect.profiler.enabled}}
+- name: OP_PROFILER_OUTPUT_DIR
+  value: "/home/opuser/.op/data/profiler"
+- name: OP_PROFILER_INTERVAL
+  value: "{{ .Values.connect.profiler.interval }}"
+- name: OP_PROFILER_KEEP_LAST
+  value: "{{ .Values.connect.profiler.keepLast }}"
+  {{- end -}}
 {{- end -}}
