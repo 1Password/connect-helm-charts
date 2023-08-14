@@ -2,6 +2,9 @@
 # that every value "{{ .Between.Curly.Braces }}" in this file needs to be
 # explicitly interpolated on the template side by using the `tpl` function.
 
+# global common labels, applied to all ressources
+commonLabels: {}
+
 # This section of values is for 1Password Connect API and Sync Configuration
 connect:
   # Denotes whether the 1Password Connect server will be deployed
@@ -19,6 +22,25 @@ connect:
     httpPort: 8080
     httpsPort: 8443
     logLevel: info
+    # Prometheus Service Monitor
+    # ref: https://github.com/coreos/prometheus-operator
+    #
+    serviceMonitor:
+      # Create ServiceMonitor Resource for scraping metrics using PrometheusOperator
+      #
+      enabled: false
+      # Specify the interval at which metrics should be scraped
+      #
+      interval: 30s
+      # Define the path used by ServiceMonitor to scrape metrics
+      #
+      path: "/metrics"
+      # Define the HTTP URL parameters used by ServiceMonitor
+      #
+      params: {}
+      # Extra annotations for the ServiceMonitor
+      #
+      annotations: {}
 
   # The 1Password Connect Sync Specific Values
   sync:

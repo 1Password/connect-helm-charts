@@ -1,0 +1,36 @@
+{{- if .Values.connect.api.serviceMonitor.enabled }}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .Values.connect.applicationName }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "onepassword-connect.labels" $ | nindent 4 }}
+  {{- with .Values.connect.api.serviceMonitor.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  endpoints:
+    {{- if .Values.connect.tls.enabled }}
+    - port: {{ .Values.connect.api.name }}-https
+    {{- else }}
+    - port: {{ .Values.connect.api.name }}
+    {{- end }}
+      {{- if .Values.connect.api.serviceMonitor.path }}
+      path: {{ .Values.connect.api.serviceMonitor.path }}
+      {{- end }}
+      {{- if .Values.connect.api.serviceMonitor.params }}
+      params: {{ toYaml .Values.connect.api.serviceMonitor.params | nindent 8 }}
+      {{- end }}
+      {{- if .Values.connect.api.serviceMonitor.interval }}
+      interval: {{ .Values.connect.api.serviceMonitor.interval }}
+      {{- end }}
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: connect
+      {{- include "onepassword-connect.labels" . | nindent 6 }}
+{{- end }}
