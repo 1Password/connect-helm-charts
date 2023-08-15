@@ -282,8 +282,8 @@ operator:
 
     # The name of the 1Password Operator Cluster Role
     name: onepassword-connect-operator
-  
-  #1Password Operator Log Level Configuration
+
+  # 1Password Operator Log Level Configuration
   logLevel: info
 
 # 1Password Acceptance Tests Functionality
