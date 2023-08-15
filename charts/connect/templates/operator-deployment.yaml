@@ -50,7 +50,10 @@ spec:
             capabilities:
               drop:
                 - all
-          command: ["/manager"]
+          command: 
+            - /manager
+            args:
+            - --zap-log-level={{ .Values.operator.logLevel }}
           env:
             - name: WATCH_NAMESPACE
               value: {{ default "" (tpl (include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace) .) }}

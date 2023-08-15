@@ -210,7 +210,7 @@ operator:
   pollingInterval: 600
 
   # The 1Password Operator version to pull
-  version: "1.6.0"
+  version: "1.7.1"
 
   # Node selector stanza for the Operator pod
   # See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
@@ -282,6 +282,9 @@ operator:
 
     # The name of the 1Password Operator Cluster Role
     name: onepassword-connect-operator
+  
+  #1Password Operator Log Level Configuration
+  logLevel: info
 
 # 1Password Acceptance Tests Functionality
 acceptanceTests:
