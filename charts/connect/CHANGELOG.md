@@ -12,10 +12,10 @@
 
 ---
 
-[//]: # (START/v1.12.2)
-# v1.12.2
+[//]: # (START/v1.13.0)
+# v1.13.0
 
-## Fixes
+## Features
 * Upgraded to default to version 1.7.1 of the Operator. {#164}
 * The Connect helm char now supports the ability to set the logging level on the Operator. {#164}
 
