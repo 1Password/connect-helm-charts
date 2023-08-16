@@ -13,7 +13,7 @@
 ---
 
 [//]: # (START/v1.12.2)
-# v1.12.1
+# v1.12.2
 
 ## Fixes
 * Upgraded to default to version 1.7.1 of the Operator. {#164}
