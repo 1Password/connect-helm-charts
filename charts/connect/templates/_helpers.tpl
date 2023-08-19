@@ -51,7 +51,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{- define "onepassword-connect.url" -}}
-{{- if .Values.operator.connectUrl and not .Values.connect.create -}}
+{{- if and (.Values.operator.connectUrl) not .Values.connect.create -}}
 {{ .Values.operator.connectUrl }}
 {{- else -}}
 {{- if .Values.connect.tls.enabled -}}
