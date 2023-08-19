@@ -107,7 +107,7 @@ helm install --set connect.applicationName=connect connect ./connect
 | operator.nodeSelector               | object | `{}` | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the operator pod                                                                 |
 | operator.annotations                | object | `{}` | Additional annotations to be added to the Operator deployment resource.                                                                                                                            |
 | operator.labels                     | object | `{}` | Additional labels to be added to the Operator deployment resource.                                                                                                                                 |
-| operator.logLevel                | string | `info` | Log level of the Operator container. Valid options are: debug, info and error.                                                                                                        |
+| operator.logLevel                   | string | `info` | Log level of the Operator container. Valid options are: debug, info and error.                                                                                                        |
 | operator.podAnnotations             | object | `{}` | Additional annotations to be added to the Operator pods.                                                                                                                                           |
 | operator.podLabels                  | object | `{}` | Additional labels to be added to the Operator pods.                                                                                                                                                |
 | operator.pollingInterval            | integer | `600` | How often the 1Password Operator will poll for secrets updates.                                                                                                                                    |
@@ -126,6 +126,7 @@ helm install --set connect.applicationName=connect connect ./connect
 | operator.token.value                | string | `"onepassword-token"` | An API token generated for 1Password Connect to be used by the Connect Operator                                                                                                                    |
 | operator.watchNamespace             | list | `[]` | A list of namespaces for the 1Password Operator to watch and manage. Use the empty list to watch all namespaces.                                                                                   |
 | operator.resources                  | object | `{}` | The resources requests/limits for the 1Password Operator pod                                                                                                                                       |
+| operator.connectUrl                 | string     |  | The url to the connect server with a schema, when a connect server is not deployed by this chart                                                                                                   |
 
 
 ### CRD
