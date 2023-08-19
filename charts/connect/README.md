@@ -127,6 +127,7 @@ helm install --set connect.applicationName=connect connect ./connect
 | operator.watchNamespace             | list | `[]` | A list of namespaces for the 1Password Operator to watch and manage. Use the empty list to watch all namespaces.                                                                                   |
 | operator.resources                  | object | `{}` | The resources requests/limits for the 1Password Operator pod                                                                                                                                       |
 
+
 ### CRD
 
 By default, the chart will also install the `OnePasswordItem` CRD.
