@@ -23,6 +23,9 @@ helm.sh/chart: {{ include "onepassword-connect.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- if .Values.commonLabels }}
+{{ toYaml .Values.commonLabels }}
+{{- end }}
 {{- end }}
 
 {{/*
@@ -52,9 +55,9 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{ .Values.operator.connectUrl }}
 {{- else -}}
 {{- if .Values.connect.tls.enabled -}}
-https://{{ .Values.connect.applicationName }}:{{ .Values.connect.api.httpsPort  }}
+https://{{ .Values.connect.host }}:{{ .Values.connect.api.httpsPort  }}
 {{- else -}}
-http://{{ .Values.connect.applicationName }}:{{ .Values.connect.api.httpPort  }}
+http://{{ .Values.connect.host }}:{{ .Values.connect.api.httpPort  }}
 {{- end }}
 {{- end }}
 {{- end }}

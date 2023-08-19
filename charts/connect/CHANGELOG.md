@@ -12,6 +12,40 @@
 
 ---
 
+[//]: # (START/v1.13.0)
+# v1.13.0
+
+## Features
+* Upgraded to default to version 1.7.1 of the Operator. {#164}
+* The Connect helm char now supports the ability to set the logging level on the Operator. {#164}
+
+---
+
+[//]: # (START/v1.12.1)
+# v1.12.1
+
+## Fixes
+* Distinct standalone operator Helm deployments use the same lock. {#148}
+
+---
+
+[//]: # (START/v1.12.0)
+# v1.12.0
+
+## Features
+* Connect's log level can now be specified using connect.api.loglevel and connect.sync.logLevel. {#135}
+* The default Connect version is updated to v1.7.1.
+* Connect's profiler can now be enabled through the Helm chart to help 1Password debug memory and performance issues. {#157} 
+
+## Fixes
+* Ingress now correctly works if TLS is enabled. {#140}
+* The operators's polling interval is now consistent with the readme's. {#147}
+* The readme now correctly mentions the Connect's credential file must be base64-encoded. {#155}
+
+Thanks @antham, @akohlmann, @Altiire, @JoshCooley-alto for your contributions.
+
+---
+
 [//]: # (START/v1.11.0)
 # v1.11.0
 
