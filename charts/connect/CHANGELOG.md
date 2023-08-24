@@ -12,8 +12,8 @@
 
 ---
 
-[//]: # (START/v1.13.1)
-# v1.13.1
+[//]: # (START/v1.14.0)
+# v1.14.0
 
 ## Features
 * The default Operator version is updated to v1.8.0 (kudos to @mmorejon) {#168}
