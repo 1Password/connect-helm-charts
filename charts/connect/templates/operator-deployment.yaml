@@ -15,7 +15,7 @@ metadata:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.operator.replicas }}
   selector:
     matchLabels:
       name: {{ .Values.connect.applicationName }}
