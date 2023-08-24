@@ -194,6 +194,9 @@ operator:
   # Denotes whether the 1Password Operator will be deployed
   create: false
 
+  # The number of replicas to run the 1Password Connect Operator deployment
+  replicas: 1
+
   # Denotes whether the 1Password Operator will automatically restart deployments based on associated updated secrets.
   autoRestart: false
 
