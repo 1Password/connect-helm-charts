@@ -16,7 +16,7 @@
 # v1.14.0
 
 ## Features
-* The default Operator version is updated to v1.8.0 (kudos to @mmorejon) {#168}
+* The default Operator version is updated to v1.8.0. Credits to @mmorejon for the contribution. {#168}
 * The default Connect version is updated to v1.7.2.
 
 ---
