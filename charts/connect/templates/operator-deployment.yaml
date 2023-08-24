@@ -32,10 +32,14 @@ spec:
       {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
-{{- with .Values.operator.nodeSelector }}
+      {{- with .Values.operator.nodeSelector }}
       nodeSelector:
-{{ toYaml . | indent 8 }}
-{{- end }}
+      {{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.operator.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       tolerations:
 {{ toYaml .Values.operator.tolerations | indent 8 }}
       serviceAccountName: {{ .Values.operator.serviceAccount.name }}
