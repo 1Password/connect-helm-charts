@@ -105,6 +105,8 @@ connect:
   hpa:
     # Enable Horizontal Pod Autoscaling for the Connect pod
     enabled: false
+    # Additional annotations to be added to the HPA Connect
+    annotations: {}
     # Minimum number of replicas for the Connect pod
     minReplicas: 1
     # Maximum number of replicas for the Connect pod
@@ -120,6 +122,8 @@ connect:
   pdb:
     # Enable Horizontal Pod Autoscaling for the Connect pod
     enabled: false
+    # Additional annotations to be added to the PDB Connect
+    annotations: {}
     # Number of pods that are unavailble after eviction as number or percentage (eg.: 50%)
     maxUnavailable: 1
     # Number of pods that are available after eviction as number or percentage (eg.: 50%)
@@ -253,7 +257,7 @@ operator:
   hpa:
     # Enable Horizontal Pod Autoscaling for the Operator pod
     enabled: false
-    # Additional annotations to be added to the HPA Operator.
+    # Additional annotations to be added to the HPA Operator
     annotations: {}
     # Minimum number of replicas for the Operator pod
     minReplicas: 1
@@ -270,7 +274,7 @@ operator:
   pdb:
     # Enable Horizontal Pod Autoscaling for the Operator pod
     enabled: false
-    # Additional annotations to be added to the PDB Operator.
+    # Additional annotations to be added to the PDB Operator
     annotations: {}
     # Number of pods that are unavailble after eviction as number or percentage (eg.: 50%)
     maxUnavailable: 1
