@@ -33,10 +33,14 @@ spec:
       {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
-{{- with .Values.connect.nodeSelector }}
+      {{- with .Values.connect.nodeSelector }}
       nodeSelector:
-{{ toYaml . | indent 8 }}
-{{- end }}
+      {{ toYaml . | indent 8 }}
+      {{- end }}
+      {{- with .Values.operator.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         - name: {{ .Values.connect.dataVolume.name }}
           {{ .Values.connect.dataVolume.type }}: {{- toYaml .Values.connect.dataVolume.values | nindent 12 }}
