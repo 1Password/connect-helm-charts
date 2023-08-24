@@ -12,6 +12,15 @@
 
 ---
 
+[//]: # (START/v1.13.1)
+# v1.13.1
+
+## Features
+* The default Operator version is updated to v1.8.0 {#168}
+* The default Connect version is updated to v1.7.2.
+
+---
+
 [//]: # (START/v1.13.0)
 # v1.13.0
 
