@@ -120,7 +120,7 @@ connect:
 
   ## Pod Disruption Budget for the Connect pod
   pdb:
-    # Enable Horizontal Pod Autoscaling for the Connect pod
+    # Enable Pod Disruption Budget for the Connect pod
     enabled: false
     # Additional annotations to be added to the PDB Connect
     annotations: {}
@@ -272,7 +272,7 @@ operator:
 
   ## Pod Disruption Budget for the Operator pod
   pdb:
-    # Enable Horizontal Pod Autoscaling for the Operator pod
+    # Enable Pod Disruption Budget for the Operator pod
     enabled: false
     # Additional annotations to be added to the PDB Operator
     annotations: {}
