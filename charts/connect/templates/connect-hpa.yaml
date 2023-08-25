@@ -1,0 +1,39 @@
+{{- if (and .Values.connect.create .Values.connect.hpa.enabled ) }}
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: {{ .Values.connect.applicationName }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/component: connect
+    {{- include "onepassword-connect.labels" . | nindent 4 }}
+{{- include "onepassword-connect.extraAnnotations" .Values.connect.hpa }}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: {{ .Values.connect.applicationName }}
+  minReplicas: {{ .Values.connect.hpa.minReplicas }}
+  maxReplicas: {{ .Values.connect.hpa.maxReplicas }}
+  metrics:
+    {{- with .Values.connect.hpa.avgMemoryUtilization }}
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          averageUtilization: {{ . }}
+          type: Utilization
+    {{- end }}
+    {{- with .Values.connect.hpa.avgCpuUtilization }}
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          averageUtilization: {{ . }}
+          type: Utilization
+    {{- end }}
+  {{- with .Values.connect.hpa.behavior }}
+  behavior:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+{{- end }}
