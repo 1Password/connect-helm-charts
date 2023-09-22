@@ -5,9 +5,16 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.injector.applicationName }}
+    {{- include "onepassword-connect.labels" . | nindent 4 }}
+  {{- with .Values.connect.labels }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.connect.annotations }}
   annotations:
     helm.sh/hook: pre-install
     helm.sh/hook-weight: "1"
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
   selector:
     matchLabels:
@@ -16,7 +23,20 @@ spec:
     metadata:
       labels:
         app: {{ .Values.injector.applicationName }}
+      {{- with .Values.connect.podLabels }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.connect.podAnnotations }}
+      annotations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
+{{- with .Values.connect.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+{{- end }}
+      tolerations:
+{{ toYaml .Values.connect.tolerations | indent 8 }}
       serviceAccountName: {{ .Values.injector.applicationName }}
       containers:
         - name: {{ .Values.injector.applicationName }}

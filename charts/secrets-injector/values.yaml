@@ -5,3 +5,22 @@ injector:
   port: 443
   targetPort: 8443
   version: "{{ .Chart.AppVersion }}"
+  # Node selector stanza for the Secrets Injector pod
+  # See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+  nodeSelector: {}
+
+  # Additional annotations to be added to the Secrets Injector deployment resource.
+  annotations: {}
+
+  # Additional labels to be added to the Secrets Injector deployment resource.
+  labels: {}
+  
+  # Additional annotations to be added to the Secrets Injector pod.
+  podAnnotations: {}
+  
+  # Additional labels to be added to the Secrets Injector pod.
+  podLabels: {}
+  
+  # List of tolerations to be added to the Secrets Injector pod.
+  tolerations: []
+  
