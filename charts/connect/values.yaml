@@ -189,6 +189,9 @@ connect:
     # Number of profiler snapshots to keep.
     keepLast: 12
 
+  # 1Password Connect PriorityClass Name
+  priorityClassName: ""
+
 # This section of values is for 1Password Operator Configuration
 operator:
   # Denotes whether the 1Password Operator will be deployed
@@ -258,6 +261,9 @@ operator:
 
     # The name of the 1Password Conenct Operator
     name: onepassword-connect-operator
+
+  # 1Password Operator PriorityClass Name
+  priorityClassName: ""
 
   # 1Password Operator Role Binding Configuration
   roleBinding:
