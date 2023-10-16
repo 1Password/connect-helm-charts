@@ -39,6 +39,9 @@ spec:
       tolerations:
 {{ toYaml .Values.operator.tolerations | indent 8 }}
       serviceAccountName: {{ .Values.operator.serviceAccount.name }}
+      {{- with .Values.operator.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
       containers:
         - name: {{ .Values.connect.applicationName }}
           image: {{ .Values.operator.imageRepository }}:{{ .Values.operator.version | default "latest" }}
