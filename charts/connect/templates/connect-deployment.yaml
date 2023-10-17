@@ -48,6 +48,9 @@ spec:
           secret:
             secretName: {{ .Values.connect.tls.secret }}
         {{- end }}
+      {{- with .Values.connect.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
       tolerations:
 {{ toYaml .Values.connect.tolerations | indent 8 }}
       containers:
