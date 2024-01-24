@@ -84,6 +84,10 @@ spec:
             - name: OP_LOG_LEVEL
               value: "{{ .Values.connect.api.logLevel }}"
             {{- include "onepassword-connect.profilerConfig" . | indent 12 -}}
+            {{- range .Values.connect.customEnvVars}}
+            - name: {{ .name }}
+              value: {{ .value }}
+            {{- end }} 
           {{- if .Values.connect.probes.readiness }}
           readinessProbe:
             httpGet:
