@@ -32,7 +32,7 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          {{- range .Values.operator.customEnvVars}}
+          {{- range .Values.injector.customEnvVars}}
           - name: {{ .name }}
             value: {{ .value }}
           {{- end }} 
