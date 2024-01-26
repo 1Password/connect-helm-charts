@@ -1,18 +1,10 @@
 # Contributing
 
-Hello and thank you for your interest in contributing to the 1Password `connect-helm-chart` project 👋! We sincerely appreciate the time and effort you put into improving our Helm Charts. Before you start, please take a moment to read through this guide to understand our contribution process.
+Thank you for your interest in contributing to the 1Password `connect-helm-chart` project 👋! We sincerely appreciate the time and effort you put into improving our Helm Charts. Before you start, please take a moment to read through this guide to understand our contribution process.
 
 ## Getting Started
 
-To start contributing, you'll need to fork this repository and clone it locally. Next,
-
-1. Get the latest [Helm release](https://github.com/helm/helm#install).
-2. Add the 1password repository to be able to download and install all the charts from this repository:
-   ```
-   helm repo add 1password https://1password.github.io/connect-helm-charts
-   ```
-3. For the Connect and Kubernetes Operator, follow: [connect readme](./charts/connect/README.md)
-4. For the Secrets Injector, follow: [secrets-injector readme](./charts/secrets-injector/README.md)
+To start contributing, get the latest [Helm release](https://github.com/helm/helm#install).
 
 ## Testing
 
@@ -33,6 +25,7 @@ helm test connect
 1. navigate to the root of the repository
 2. `cd..`
 3. `helm template connect-helm-charts/charts/secrets-injector --debug` for **secrets-injector** OR `helm template connect-helm-charts/charts/connect --debug` for **connect**.
+4. If adding a new configuration, update documentation for the tables in the [Connect README](./charts/connect/README.md) or in the [Secrets Injector README](./charts/secrets-injector/README.md)
 
 For more debugging templates, feel free to consult the [docs](https://helm.sh/docs/chart_template_guide/debugging/).
 
