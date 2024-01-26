@@ -25,9 +25,12 @@ helm test connect
 1. navigate to the root of the repository
 2. `cd..`
 3. `helm template connect-helm-charts/charts/secrets-injector --debug` for **secrets-injector** OR `helm template connect-helm-charts/charts/connect --debug` for **connect**.
-4. If adding a new configuration, update documentation for the tables in the [Connect README](./charts/connect/README.md) or in the [Secrets Injector README](./charts/secrets-injector/README.md)
 
 For more debugging templates, feel free to consult the [docs](https://helm.sh/docs/chart_template_guide/debugging/).
+
+## Documentation Updates
+
+If adding a new configuration, update documentation for the tables in the [Connect README](./charts/connect/README.md) or in the [Secrets Injector README](./charts/secrets-injector/README.md)
 
 ## Sign your commits
 
