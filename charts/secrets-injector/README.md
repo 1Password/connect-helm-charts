@@ -38,7 +38,7 @@ $ helm install --set injector.applicationName=injector injector ./secrets-inject
 | injector.port            | string  | `443`                                     | The port the Secrets Injector exposes                                                                                                     |
 | injector.targetPort      | integer | `8443`                                    | The port the Secrets Injector API sends requests to the pod                                                                               |
 | injector.version         | string  | `{{.Chart.AppVersion}}`                   | The 1Password Secrets Injector version to pull.                                                                                           |
-| injector.customEnvVars   | map     | `{}`                                      | Custom Environment Variables for the 1Password Secrets Injector container that are not specified in this helm chart.                      |
+| injector.customEnvVars   | array   | `[]`                                      | Custom Environment Variables for the 1Password Secrets Injector container that are not specified in this helm chart.                      |
 
 #### Custom Environment Variables
 

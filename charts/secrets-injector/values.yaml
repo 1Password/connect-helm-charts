@@ -9,4 +9,4 @@ injector:
   # Must be written in the following format:
   # - name: VARIABLE_NAME
   #   value: VARIABLE_VALUE
-  customEnvVars: {}
+  customEnvVars: []

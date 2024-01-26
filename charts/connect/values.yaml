@@ -146,11 +146,9 @@ connect:
   # In order to expose the service, use the route section below
   ingress:
     enabled: false
-    labels:
-      {}
+    labels: {}
       # traffic: external
-    annotations:
-      {}
+    annotations: {}
       # |
       # kubernetes.io/ingress.class: nginx
       # kubernetes.io/tls-acme: "true"
@@ -195,7 +193,7 @@ connect:
   # Must be written in the following format:
   # - name: VARIABLE_NAME
   #   value: VARIABLE_VALUE
-  customEnvVars: {}
+  customEnvVars: []
 
 # This section of values is for 1Password Operator Configuration
 operator:
@@ -298,7 +296,7 @@ operator:
   # Must be written in the following format:
   # - name: VARIABLE_NAME
   #   value: VARIABLE_VALUE
-  customEnvVars: {}
+  customEnvVars: []
 
 # 1Password Acceptance Tests Functionality
 acceptanceTests:
