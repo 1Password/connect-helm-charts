@@ -189,6 +189,12 @@ connect:
     # Number of profiler snapshots to keep.
     keepLast: 12
 
+  # 1Password Connect Custom Container Environment Variables
+  # Must be written in the following format:
+  # - name: VARIABLE_NAME
+  #   value: VARIABLE_VALUE
+  customEnvVars: []
+
 # This section of values is for 1Password Operator Configuration
 operator:
   # Denotes whether the 1Password Operator will be deployed
@@ -285,6 +291,12 @@ operator:
 
   # 1Password Operator Log Level Configuration
   logLevel: info
+
+  # 1Password Operator Custom Container Environment Variables
+  # Must be written in the following format:
+  # - name: VARIABLE_NAME
+  #   value: VARIABLE_VALUE
+  customEnvVars: []
 
 # 1Password Acceptance Tests Functionality
 acceptanceTests:
