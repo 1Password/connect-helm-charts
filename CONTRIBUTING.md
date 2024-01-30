@@ -22,9 +22,9 @@ helm test connect
 
 - To run `helm template --debug`:
 
-1. navigate to the root of the repository
-2. `cd..`
-3. `helm template connect-helm-charts/charts/secrets-injector --debug` for **secrets-injector** OR `helm template connect-helm-charts/charts/connect --debug` for **connect**.
+  1. navigate to the root of the repository
+  2. `cd..`
+  3. `helm template connect-helm-charts/charts/secrets-injector --debug` for **secrets-injector** OR `helm template connect-helm-charts/charts/connect --debug` for **connect**.
 
 For more debugging templates, feel free to consult the [docs](https://helm.sh/docs/chart_template_guide/debugging/).
 
