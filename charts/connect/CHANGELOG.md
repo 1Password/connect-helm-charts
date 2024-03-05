@@ -12,6 +12,15 @@
 
 ---
 
+[//]: # (START/v1.15.0)
+# v1.15.0
+
+## Features
+* Proxy Support or custom env. {#152}
+* Bump operator to v1.8.1
+
+---
+
 [//]: # (START/v1.14.0)
 # v1.14.0
 
