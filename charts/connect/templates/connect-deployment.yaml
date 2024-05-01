@@ -61,11 +61,6 @@ spec:
           resources:
             {{- toYaml .Values.connect.api.resources | nindent 12 }}
           env:
-            - name: OP_SESSION
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.connect.credentialsName }}
-                  key: {{ .Values.connect.credentialsKey }}
             - name: OP_BUS_PORT
               value: "11220"
             - name: OP_BUS_PEERS
@@ -113,6 +108,9 @@ spec:
             - name: tls-cert
               mountPath: /home/opuser/.op/certs
             {{- end }}
+            - mountPath: /home/opuser/.op/1password-credentials.json
+              name: credentials
+              subPath: {{ .Values.connect.credentialsKey }}
         - name: connect-sync
           image: {{ .Values.connect.sync.imageRepository }}:{{ tpl .Values.connect.version . }}
           imagePullPolicy: {{ .Values.connect.imagePullPolicy }}
@@ -125,11 +123,6 @@ spec:
           env:
             - name: OP_HTTP_PORT
               value: "{{ .Values.connect.sync.httpPort }}"
-            - name: OP_SESSION
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.connect.credentialsName }}
-                  key: {{ .Values.connect.credentialsKey }}
             - name: OP_BUS_PORT
               value: "11221"
             - name: OP_BUS_PEERS
@@ -157,6 +150,9 @@ spec:
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}
+            - mountPath: /home/opuser/.op/1password-credentials.json
+              name: credentials
+              subPath: {{ .Values.connect.credentialsKey }}
         {{- if .Values.connect.profiler.enabled }}
         - name: profiler-data
           image: alpine
