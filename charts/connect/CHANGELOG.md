@@ -12,6 +12,96 @@
 
 ---
 
+[//]: # (START/v1.15.0)
+# v1.15.0
+
+## Features
+* Proxy Support or custom env. {#152}
+* Bump operator to v1.8.1
+
+---
+
+[//]: # (START/v1.14.0)
+# v1.14.0
+
+## Features
+* The default Operator version is updated to v1.8.0. Credits to @mmorejon for the contribution. {#168}
+* The default Connect version is updated to v1.7.2.
+
+---
+
+[//]: # (START/v1.13.0)
+# v1.13.0
+
+## Features
+* Upgraded to default to version 1.7.1 of the Operator. {#164}
+* The Connect helm char now supports the ability to set the logging level on the Operator. {#164}
+
+---
+
+[//]: # (START/v1.12.1)
+# v1.12.1
+
+## Fixes
+* Distinct standalone operator Helm deployments use the same lock. {#148}
+
+---
+
+[//]: # (START/v1.12.0)
+# v1.12.0
+
+## Features
+* Connect's log level can now be specified using connect.api.loglevel and connect.sync.logLevel. {#135}
+* The default Connect version is updated to v1.7.1.
+* Connect's profiler can now be enabled through the Helm chart to help 1Password debug memory and performance issues. {#157} 
+
+## Fixes
+* Ingress now correctly works if TLS is enabled. {#140}
+* The operators's polling interval is now consistent with the readme's. {#147}
+* The readme now correctly mentions the Connect's credential file must be base64-encoded. {#155}
+
+Thanks @antham, @akohlmann, @Altiire, @JoshCooley-alto for your contributions.
+
+---
+
+[//]: # (START/v1.11.0)
+# v1.11.0
+
+## Features
+* Extra service annotations can now be specified with `connect.serviceAnnotations`. {#106}
+* `connect.create` can now be used to control whether a Connect instance should be created. {#125}
+* The default Connect version is updated to v1.7.0.
+
+## Fixes
+* The default value of `connect.CredentialsKey` is now correctly documented. {#136}
+
+Thanks @twink0r, @lapwat, @leehanel, @Matthiasvanderhallen for your contributions.
+
+---
+
+[//]: # (START/v1.10.0)
+# v1.10.0
+
+## Features
+* Add replicas definition to the Connect Deployment {#121, #128}
+* Use the latest 1password/operator version 1.6.0 {#128}
+
+## Fixes
+* Use '1Password Operator' term instead of '1Password Connect Operator' in the documentation {#128}
+
+---
+
+[//]: # (START/v1.9.0)
+# v1.9.0
+
+## Features
+* Enable a better interaction with 1Password Connect and Sync applications deployed. Credits to @klaus385 for contributing to this enhancement. {#107}
+
+## Fixes
+* Updated Connect to v1.5.7, which addresses some bugs and security enahncements.
+
+---
+
 [//]: # (START/v1.8.1)
 # v1.8.1
 
@@ -25,7 +115,7 @@
 
 ## Features
 * Updated Kubernetes Operator to v1.5.0, which adds the `type` and `status` for the `OnePasswordItem` CRD. {#101}
-* Updated OnePasswordItem CRD to enable the new functionality added in the latest version of the Kubernetes Operator. Shoutout to @tomjohnburton for contributing to this enhancement. {#92, #102}
+* Updated OnePasswordItem CRD to enable the new functionality added in the latest version of the Kubernetes Operator. Credits to @tomjohnburton for contributing to this enhancement. {#92, #102}
 
 ## Fixes
 * Updated Connect to v1.5.4, which resolves some bugs. {#101}

@@ -1,3 +1,4 @@
+{{- if .Values.connect.create }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,6 +15,7 @@ metadata:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  replicas: {{ .Values.connect.replicas }}
   selector:
     matchLabels:
       app: {{ .Values.connect.applicationName }}
@@ -79,6 +81,13 @@ spec:
             - name: OP_HTTP_PORT
               value: "{{ .Values.connect.api.httpPort }}"
             {{- end }}
+            - name: OP_LOG_LEVEL
+              value: "{{ .Values.connect.api.logLevel }}"
+            {{- include "onepassword-connect.profilerConfig" . | indent 12 -}}
+            {{- range .Values.connect.customEnvVars}}
+            - name: {{ .name }}
+              value: {{ .value }}
+            {{- end }} 
           {{- if .Values.connect.probes.readiness }}
           readinessProbe:
             httpGet:
@@ -125,6 +134,9 @@ spec:
               value: "11221"
             - name: OP_BUS_PEERS
               value: localhost:11220
+            - name: OP_LOG_LEVEL
+              value: "{{ .Values.connect.sync.logLevel }}"
+            {{- include "onepassword-connect.profilerConfig" . | indent 12 }}
           {{- if .Values.connect.probes.readiness }}
           readinessProbe:
             httpGet:
@@ -141,10 +153,20 @@ spec:
             failureThreshold: 3
             periodSeconds: 30
             initialDelaySeconds: 15
-          {{ end }}             
+          {{ end }}
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}
             - name: credentials
               mountPath: /home/opuser/.op/1password-credentials.json
               subPath: 1password-credentials.json
+        {{- if .Values.connect.profiler.enabled }}
+        - name: profiler-data
+          image: alpine
+          command: [ 'sleep', 'infinity' ]
+          volumeMounts:
+            - name: {{ .Values.connect.dataVolume.name }}
+              mountPath: /data
+              subPath: profiler
+        {{- end }}
+{{- end }}

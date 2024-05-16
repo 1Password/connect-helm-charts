@@ -51,6 +51,7 @@ spec:
               drop:
                 - all
           command: ["/manager"]
+          args: [--zap-log-level={{ .Values.operator.logLevel }}]
           env:
             - name: WATCH_NAMESPACE
               value: {{ default "" (tpl (include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace) .) }}
@@ -71,6 +72,10 @@ spec:
                   key: {{ .Values.operator.token.key }}
             - name: AUTO_RESTART
               value: "{{ .Values.operator.autoRestart }}"
+            {{- range .Values.operator.customEnvVars}}
+            - name: {{ .name }}
+              value: {{ .value }}
+            {{- end }} 
           resources:
             {{- toYaml .Values.operator.resources | nindent 12 }}
 {{- end }}

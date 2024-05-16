@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.injector.applicationName }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: {{ .Values.injector.applicationName }}
+  annotations:
+    helm.sh/hook: pre-install
+    helm.sh/hook-weight: "1"
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Values.injector.applicationName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.injector.applicationName }}
+    spec:
+      serviceAccountName: {{ .Values.injector.applicationName }}
+      containers:
+        - name: {{ .Values.injector.applicationName }}
+          image: {{ .Values.injector.imageRepository }}:{{ tpl .Values.injector.version . }}
+          imagePullPolicy: {{ .Values.injector.imagePullPolicy }}
+          args:
+          - -service-name={{ .Values.injector.applicationName }}
+          - -alsologtostderr
+          - -v=4
+          - 2>&1
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          {{- range .Values.injector.customEnvVars}}
+          - name: {{ .name }}
+            value: {{ .value }}
+          {{- end }} 
+          lifecycle:
+            preStop:
+              exec:
+                command: [ "/bin/sh", "-c", "/prestop.sh" ]
