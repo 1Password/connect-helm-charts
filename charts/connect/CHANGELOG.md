@@ -13,6 +13,14 @@
 ---
 
 [//]: # (START/v1.15.0)
+# v1.15.1
+
+## Features
+* Bump Connect version to v1.7.3
+
+---
+
+[//]: # (START/v1.15.0)
 # v1.15.0
 
 ## Features
