@@ -39,6 +39,12 @@ spec:
       tolerations:
 {{ toYaml .Values.operator.tolerations | indent 8 }}
       serviceAccountName: {{ .Values.operator.serviceAccount.name }}
+      volumes:
+        {{- if .Values.operator.tls.trust.secret }}
+        - name: tls-trust
+          secret:
+            secretName: {{ .Values.operator.tls.trust.secret }}
+        {{- end }}
       containers:
         - name: {{ .Values.connect.applicationName }}
           image: {{ .Values.operator.imageRepository }}:{{ .Values.operator.version | default "latest" }}
@@ -75,7 +81,16 @@ spec:
             {{- range .Values.operator.customEnvVars}}
             - name: {{ .name }}
               value: {{ .value }}
-            {{- end }} 
+            {{- end }}
+            {{- if .Values.operator.tls.trust.secret }}
+            - name: SSL_CERT_FILE
+              value: /tls/trust/tls.crt
+            {{- end }}
           resources:
             {{- toYaml .Values.operator.resources | nindent 12 }}
+          volumeMounts:
+            {{- if .Values.operator.tls.trust.secret }}
+            - mountPath: /tls/trust
+              name: tls-trust
+            {{- end}}
 {{- end }}
