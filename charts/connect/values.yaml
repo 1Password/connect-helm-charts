@@ -5,6 +5,11 @@
 # global common labels, applied to all ressources
 commonLabels: {}
 
+global:
+  # global list of secret names to use as image pull secrets for all pod specs in the chart
+  # secrets must exist in the same namespace
+  imagePullSecrets: []
+
 # This section of values is for 1Password Connect API and Sync Configuration
 connect:
   # Denotes whether the 1Password Connect server will be deployed

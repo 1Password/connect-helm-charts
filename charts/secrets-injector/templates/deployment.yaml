@@ -35,8 +35,14 @@ spec:
           {{- range .Values.injector.customEnvVars}}
           - name: {{ .name }}
             value: {{ .value }}
-          {{- end }} 
+          {{- end }}
           lifecycle:
             preStop:
               exec:
                 command: [ "/bin/sh", "-c", "/prestop.sh" ]
+      {{- with .Values.injector.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . | quote }}
+      {{- end }}
+      {{- end }}

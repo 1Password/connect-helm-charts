@@ -50,8 +50,8 @@ spec:
             capabilities:
               drop:
                 - all
-          command: ["/manager"]
-          args: [--zap-log-level={{ .Values.operator.logLevel }}]
+          command: [ "/manager" ]
+          args: [ --zap-log-level={{ .Values.operator.logLevel }}]
           env:
             - name: WATCH_NAMESPACE
               value: {{ default "" (tpl (include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace) .) }}
@@ -75,7 +75,13 @@ spec:
             {{- range .Values.operator.customEnvVars}}
             - name: {{ .name }}
               value: {{ .value }}
-            {{- end }} 
+            {{- end }}
           resources:
             {{- toYaml .Values.operator.resources | nindent 12 }}
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . | quote }}
+      {{- end }}
+      {{- end }}
 {{- end }}

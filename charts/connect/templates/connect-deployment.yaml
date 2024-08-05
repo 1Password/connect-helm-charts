@@ -33,10 +33,10 @@ spec:
       {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
-{{- with .Values.connect.nodeSelector }}
+      {{- with .Values.connect.nodeSelector }}
       nodeSelector:
-{{ toYaml . | indent 8 }}
-{{- end }}
+      {{ toYaml . | indent 8 }}
+      {{- end }}
       volumes:
         - name: {{ .Values.connect.dataVolume.name }}
           {{ .Values.connect.dataVolume.type }}: {{- toYaml .Values.connect.dataVolume.values | nindent 12 }}
@@ -49,7 +49,7 @@ spec:
             secretName: {{ .Values.connect.tls.secret }}
         {{- end }}
       tolerations:
-{{ toYaml .Values.connect.tolerations | indent 8 }}
+        {{ toYaml .Values.connect.tolerations | indent 8 }}
       containers:
         - name: {{ .Values.connect.api.name }}
           image: {{ .Values.connect.api.imageRepository }}:{{ tpl .Values.connect.version . }}
@@ -84,10 +84,10 @@ spec:
             - name: OP_LOG_LEVEL
               value: "{{ .Values.connect.api.logLevel }}"
             {{- include "onepassword-connect.profilerConfig" . | indent 12 -}}
-            {{- range .Values.connect.customEnvVars}}
+            {{- range .Values.connect.customEnvVars }}
             - name: {{ .name }}
               value: {{ .value }}
-            {{- end }} 
+            {{- end }}
           {{- if .Values.connect.probes.readiness }}
           readinessProbe:
             httpGet:
@@ -166,4 +166,10 @@ spec:
               mountPath: /data
               subPath: profiler
         {{- end }}
+      {{- with .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . | quote }}
+      {{- end }}
+      {{- end }}
 {{- end }}
