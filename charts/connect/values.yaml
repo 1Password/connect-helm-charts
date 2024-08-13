@@ -107,6 +107,9 @@ connect:
     # by Kubernetes for liveness and restarted if the pod becomes unresponsive
     readiness: true
 
+  # priorityClassName to apply to the Connect API deployment resource.
+  priorityClassName: ''
+
   # Additional annotations to be added to the Connect API deployment resource.
   annotations: {}
 
@@ -233,6 +236,9 @@ operator:
 
   # Additional labels to be added to the Operator pods.
   podLabels: {}
+
+  # priorityClassName to apply to the Operator pods.
+  priorityClassName: ''
 
   # List of tolerations to be added to the Operator pods.
   tolerations: []

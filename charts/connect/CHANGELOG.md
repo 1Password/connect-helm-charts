@@ -3,6 +3,7 @@
 
 ## Features
 * A user-friendly description of a new feature. {issue-number}
+* Add priorityClassName values to operator and connect. {#201}
 
 ## Fixes
 * A user-friendly description of a fix. {issue-number}

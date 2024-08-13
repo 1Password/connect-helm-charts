@@ -37,6 +37,9 @@ spec:
       nodeSelector:
 {{ toYaml . | indent 8 }}
 {{- end }}
+      {{- if .Values.connect.priorityClassName }}
+      priorityClassName: {{ .Values.connect.priorityClassName }}
+      {{- end }}
       volumes:
         - name: {{ .Values.connect.dataVolume.name }}
           {{ .Values.connect.dataVolume.type }}: {{- toYaml .Values.connect.dataVolume.values | nindent 12 }}
@@ -87,7 +90,7 @@ spec:
             {{- range .Values.connect.customEnvVars}}
             - name: {{ .name }}
               value: {{ .value }}
-            {{- end }} 
+            {{- end }}
           {{- if .Values.connect.probes.readiness }}
           readinessProbe:
             httpGet:

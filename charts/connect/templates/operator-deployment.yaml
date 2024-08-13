@@ -36,6 +36,9 @@ spec:
       nodeSelector:
 {{ toYaml . | indent 8 }}
 {{- end }}
+      {{- if .Values.operator.priorityClassName }}
+      priorityClassName: {{ .Values.operator.priorityClassName }}
+      {{- end }}
       tolerations:
 {{ toYaml .Values.operator.tolerations | indent 8 }}
       serviceAccountName: {{ .Values.operator.serviceAccount.name }}
@@ -75,7 +78,7 @@ spec:
             {{- range .Values.operator.customEnvVars}}
             - name: {{ .name }}
               value: {{ .value }}
-            {{- end }} 
+            {{- end }}
           resources:
             {{- toYaml .Values.operator.resources | nindent 12 }}
 {{- end }}
