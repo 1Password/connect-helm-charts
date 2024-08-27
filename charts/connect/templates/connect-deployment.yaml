@@ -37,6 +37,9 @@ spec:
       nodeSelector:
       {{- toYaml . | nindent 8 }}
       {{- end }}
+      {{- if .Values.connect.priorityClassName }}
+      priorityClassName: {{ .Values.connect.priorityClassName }}
+      {{- end }}
       {{- with .Values.connect.affinity }}
       affinity:
       {{- toYaml . | nindent 8 }}
@@ -88,6 +91,10 @@ spec:
             - name: OP_LOG_LEVEL
               value: "{{ .Values.connect.api.logLevel }}"
             {{- include "onepassword-connect.profilerConfig" . | indent 12 -}}
+            {{- range .Values.connect.customEnvVars}}
+            - name: {{ .name }}
+              value: {{ .value }}
+            {{- end }}
           {{- if .Values.connect.probes.readiness }}
           readinessProbe:
             httpGet:

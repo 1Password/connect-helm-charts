@@ -3,12 +3,39 @@
 
 ## Features
 * A user-friendly description of a new feature. {issue-number}
+* Add priorityClassName values to operator and connect. {#201}
 
 ## Fixes
 * A user-friendly description of a fix. {issue-number}
 
 ## Security
 * A user-friendly description of a security fix. {issue-number}
+
+---
+
+[//]: # (START/v1.15.0)
+# v1.15.1
+
+## Features
+* Bump Connect version to v1.7.3
+
+---
+
+[//]: # (START/v1.15.0)
+# v1.15.0
+
+## Features
+* Proxy Support or custom env. {#152}
+* Bump operator to v1.8.1
+
+---
+
+[//]: # (START/v1.14.0)
+# v1.14.0
+
+## Features
+* The default Operator version is updated to v1.8.0. Credits to @mmorejon for the contribution. {#168}
+* The default Connect version is updated to v1.7.2.
 
 ---
 

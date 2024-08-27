@@ -138,6 +138,9 @@ connect:
     # by Kubernetes for liveness and restarted if the pod becomes unresponsive
     readiness: true
 
+  # priorityClassName to apply to the Connect API deployment resource.
+  priorityClassName: ''
+
   # Additional annotations to be added to the Connect API deployment resource.
   annotations: {}
 
@@ -220,6 +223,12 @@ connect:
     # Number of profiler snapshots to keep.
     keepLast: 12
 
+  # 1Password Connect Custom Container Environment Variables
+  # Must be written in the following format:
+  # - name: VARIABLE_NAME
+  #   value: VARIABLE_VALUE
+  customEnvVars: []
+
 # This section of values is for 1Password Operator Configuration
 operator:
   # Denotes whether the 1Password Operator will be deployed
@@ -244,7 +253,7 @@ operator:
   pollingInterval: 600
 
   # The 1Password Operator version to pull
-  version: "1.8.0"
+  version: "1.8.1"
 
   # Node selector stanza for the Operator pod
   # See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
@@ -292,6 +301,9 @@ operator:
 
   # Additional labels to be added to the Operator pods.
   podLabels: {}
+
+  # priorityClassName to apply to the Operator pods.
+  priorityClassName: ''
 
   # List of tolerations to be added to the Operator pods.
   tolerations: []
@@ -350,6 +362,12 @@ operator:
 
   # 1Password Operator Log Level Configuration
   logLevel: info
+
+  # 1Password Operator Custom Container Environment Variables
+  # Must be written in the following format:
+  # - name: VARIABLE_NAME
+  #   value: VARIABLE_VALUE
+  customEnvVars: []
 
 # 1Password Acceptance Tests Functionality
 acceptanceTests:
