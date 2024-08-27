@@ -33,12 +33,16 @@ spec:
       {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
-{{- with .Values.connect.nodeSelector }}
+      {{- with .Values.connect.nodeSelector }}
       nodeSelector:
-{{ toYaml . | indent 8 }}
-{{- end }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if .Values.connect.priorityClassName }}
       priorityClassName: {{ .Values.connect.priorityClassName }}
+      {{- end }}
+      {{- with .Values.connect.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
       {{- end }}
       volumes:
         - name: {{ .Values.connect.dataVolume.name }}
@@ -52,7 +56,7 @@ spec:
             secretName: {{ .Values.connect.tls.secret }}
         {{- end }}
       tolerations:
-{{ toYaml .Values.connect.tolerations | indent 8 }}
+      {{- toYaml .Values.connect.tolerations | nindent 8 }}
       containers:
         - name: {{ .Values.connect.api.name }}
           image: {{ .Values.connect.api.imageRepository }}:{{ tpl .Values.connect.version . }}

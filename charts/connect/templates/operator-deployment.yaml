@@ -15,7 +15,7 @@ metadata:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.operator.replicas }}
   selector:
     matchLabels:
       name: {{ .Values.connect.applicationName }}
@@ -32,15 +32,19 @@ spec:
       {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
-{{- with .Values.operator.nodeSelector }}
+      {{- with .Values.operator.nodeSelector }}
       nodeSelector:
-{{ toYaml . | indent 8 }}
-{{- end }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- if .Values.operator.priorityClassName }}
       priorityClassName: {{ .Values.operator.priorityClassName }}
       {{- end }}
+      {{- with .Values.operator.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       tolerations:
-{{ toYaml .Values.operator.tolerations | indent 8 }}
+      {{- toYaml .Values.operator.tolerations | nindent 8 }}
       serviceAccountName: {{ .Values.operator.serviceAccount.name }}
       containers:
         - name: {{ .Values.connect.applicationName }}
