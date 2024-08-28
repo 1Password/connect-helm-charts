@@ -107,6 +107,21 @@ Sets extra service annotations
 {{- end -}}
 
 {{/*
+Sets extra annotations
+*/}}
+{{- define "onepassword-connect.extraAnnotations" -}}
+  {{- with .annotations }}
+  annotations:
+    {{- $tp := typeOf . }}
+    {{- if eq $tp "string" }}
+      {{- tpl . . | nindent 4 }}
+    {{- else }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- end }}
+{{- end -}}
+
+{{/*
 Sets environment variables when profiler is enabled
 */}}
 {{- define "onepassword-connect.profilerConfig" -}}

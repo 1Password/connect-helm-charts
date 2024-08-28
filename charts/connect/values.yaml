@@ -101,6 +101,37 @@ connect:
   # See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
   nodeSelector: {}
 
+  # Affinity rules for the Connect pod
+  affinity: {}
+
+  ## Horizontal Pod Autoscaling for the Connect pod
+  hpa:
+    # Enable Horizontal Pod Autoscaling for the Connect pod
+    enabled: false
+    # Additional annotations to be added to the HPA Connect
+    annotations: {}
+    # Minimum number of replicas for the Connect pod
+    minReplicas: 1
+    # Maximum number of replicas for the Connect pod
+    maxReplicas: 3
+    # Average Memory utilization percentage for the Connect pod
+    avgMemoryUtilization: 50
+    # Average CPU utilization percentage for the Connect pod
+    avgCpuUtilization: 50
+    # Defines the Autoscaling Behavior in up/down directions
+    behavior: {}
+
+  ## Pod Disruption Budget for the Connect pod
+  pdb:
+    # Enable Pod Disruption Budget for the Connect pod
+    enabled: false
+    # Additional annotations to be added to the PDB Connect
+    annotations: {}
+    # Number of pods that are unavailble after eviction as number or percentage (eg.: 50%)
+    maxUnavailable: 1
+    # Number of pods that are available after eviction as number or percentage (eg.: 50%)
+    minAvailable: 0
+
   # 1Password Connect API and Sync Service
   probes:
     # Denotes whether the 1Password Connect API readiness probe will operate
@@ -206,6 +237,9 @@ operator:
   # Denotes whether the 1Password Operator will be deployed
   create: false
 
+  # The number of replicas to run the 1Password Connect Operator deployment
+  replicas: 1
+
   # Denotes whether the 1Password Operator will automatically restart deployments based on associated updated secrets.
   autoRestart: false
 
@@ -230,6 +264,37 @@ operator:
   # Node selector stanza for the Operator pod
   # See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
   nodeSelector: {}
+
+  # Affinity rules for the Operator pod
+  affinity: {}
+
+  ## Horizontal Pod Autoscaling for the Operator pod
+  hpa:
+    # Enable Horizontal Pod Autoscaling for the Operator pod
+    enabled: false
+    # Additional annotations to be added to the HPA Operator
+    annotations: {}
+    # Minimum number of replicas for the Operator pod
+    minReplicas: 1
+    # Maximum number of replicas for the Operator pod
+    maxReplicas: 3
+    # Average Memory utilization percentage for the Operator pod
+    avgMemoryUtilization: 50
+    # Average CPU utilization percentage for the Operator pod
+    avgCpuUtilization: 50
+    # Defines the Autoscaling Behavior in up/down directions
+    behavior: {}
+
+  ## Pod Disruption Budget for the Operator pod
+  pdb:
+    # Enable Pod Disruption Budget for the Operator pod
+    enabled: false
+    # Additional annotations to be added to the PDB Operator
+    annotations: {}
+    # Number of pods that are unavailble after eviction as number or percentage (eg.: 50%)
+    maxUnavailable: 1
+    # Number of pods that are available after eviction as number or percentage (eg.: 50%)
+    minAvailable: 0
 
   # Additional annotations to be added to the Operator pods.
   annotations: {}
