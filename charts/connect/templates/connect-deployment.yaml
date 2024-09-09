@@ -91,7 +91,7 @@ spec:
             - name: OP_LOG_LEVEL
               value: "{{ .Values.connect.api.logLevel }}"
             {{- include "onepassword-connect.profilerConfig" . | indent 12 -}}
-            {{- range .Values.connect.customEnvVars}}
+            {{- range .Values.connect.customEnvVars }}
             - name: {{ .name }}
               value: {{ .value }}
             {{- end }}
@@ -173,4 +173,10 @@ spec:
               mountPath: /data
               subPath: profiler
         {{- end }}
+      {{- with .Values.connect.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . | quote }}
+      {{- end }}
+      {{- end }}
 {{- end }}

@@ -91,6 +91,9 @@ connect:
   # The 1Password Connect API repository
   imagePullPolicy: IfNotPresent
 
+  # List of secret names to use as image pull secrets. Secrets must exist in the same namespace.
+  imagePullSecrets: []
+
   # The 1Password Connect version to pull
   version: "{{ .Chart.AppVersion }}"
 
@@ -245,6 +248,9 @@ operator:
 
   # The 1Password Operator image pull policy
   imagePullPolicy: IfNotPresent
+
+  # List of secret names to use as image pull secrets. Secrets must exist in the same namespace.
+  imagePullSecrets: []
 
   # The 1Password Operator repository
   imageRepository: 1password/onepassword-operator
