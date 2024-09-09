@@ -11,9 +11,17 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v1.16.0)
+# v1.16.0
+
+## Features
+* Add ability to set Priority Class Name. Credits to @jonas-zipprick for the contribution. {#201}
+* Add a way to set imagePullSecrets to deployments. Credits to @luflow for the contribution. {#203}
+* Add HPA, PDB and Pod Affinity for both Operator and Connect components. Credits to @dapama for the contribution. {#170}
+
 ---
 
-[//]: # (START/v1.15.0)
+[//]: # (START/v1.15.1)
 # v1.15.1
 
 ## Features
