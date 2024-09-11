@@ -10,6 +10,13 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v1.1.0)
+# v1.1.0
+
+## Features
+* Custom Environment Variable Support. {#152}
+* Add a way to set imagePullSecrets to deployments. Credits to @luflow for the contribution. {#203}
+
 ---
 
 [//]: # (START/v1.0.1)
