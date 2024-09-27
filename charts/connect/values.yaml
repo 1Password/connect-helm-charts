@@ -49,14 +49,11 @@ connect:
     # Container securityContext to be added to the Connect API containers.
     # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     securityContext:
-      runAsUser: 999
-      runAsGroup: 999
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFilesystem: true
       allowPrivilegeEscalation: false
-      # capabilities:
-      #   drop:
-      #   - ALL
-      # readOnlyRootFilesystem: true
-      # runAsNonRoot: true
 
   # The 1Password Connect Sync Specific Values
   sync:
@@ -69,14 +66,11 @@ connect:
     # Container securityContext to be added to the Connect Sync containers.
     # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
     securityContext:
-      runAsUser: 999
-      runAsGroup: 999
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFilesystem: true
       allowPrivilegeEscalation: false
-      # capabilities:
-      #   drop:
-      #   - ALL
-      # readOnlyRootFilesystem: true
-      # runAsNonRoot: true
 
   # The name of 1Password Connect Application
   applicationName: onepassword-connect
@@ -186,8 +180,13 @@ connect:
 
   # Pod securityContext to be added to the Connect API pods.
   # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-  podSecurityContext: {}
-    # fsGroup: 2000
+  podSecurityContext:
+    fsGroup: 999
+    runAsUser: 999
+    runAsGroup: 999
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
 
   # List of tolerations to be added to the Connect API pods.
   tolerations: []
@@ -296,18 +295,22 @@ operator:
 
   # Pod securityContext to be added to the 1Password Operator pods.
   # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
-  podSecurityContext: {}
-    # fsGroup: 2000
+  podSecurityContext:
+    fsGroup: 65532
+    runAsUser: 65532
+    runAsGroup: 65532
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
 
   # Container securityContext to be added to the 1Password Operator containers.
   # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
   securityContext:
-    runAsUser: 65532
-    runAsGroup: 65532
-    allowPrivilegeEscalation: false
     capabilities:
       drop:
-        - all
+        - ALL
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
 
   # Node selector stanza for the Operator pod
   # See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
@@ -443,6 +446,6 @@ acceptanceTests:
   securityContext:
     capabilities:
       drop:
-        - all
+        - ALL
     readOnlyRootFilesystem: true
     allowPrivilegeEscalation: false

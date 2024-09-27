@@ -48,9 +48,15 @@ spec:
           securityContext:
           {{- toYaml . | nindent 12 }}
           {{- end }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
       {{- with .Values.injector.imagePullSecrets }}
       imagePullSecrets:
       {{- range . }}
         - name: {{ . | quote }}
       {{- end }}
       {{- end }}
+      volumes:
+        - name: tmp
+          emptyDir: {}
