@@ -18,6 +18,10 @@ spec:
         app: {{ .Values.injector.applicationName }}
     spec:
       serviceAccountName: {{ .Values.injector.applicationName }}
+      {{- with .Values.injector.podSecurityContext }}
+      securityContext:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Values.injector.applicationName }}
           image: {{ .Values.injector.imageRepository }}:{{ tpl .Values.injector.version . }}
@@ -40,6 +44,10 @@ spec:
             preStop:
               exec:
                 command: [ "/bin/sh", "-c", "/prestop.sh" ]
+          {{- with .Values.injector.securityContext }}
+          securityContext:
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
       {{- with .Values.injector.imagePullSecrets }}
       imagePullSecrets:
       {{- range . }}
