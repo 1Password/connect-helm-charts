@@ -378,6 +378,15 @@ operator:
   #   value: VARIABLE_VALUE
   customEnvVars: []
 
+  # 1Password Operator TLS settings
+  tls:
+
+    # 1Password Operator TLS trust settings
+    trust: {}
+
+      # 1Password operator should trust the certificate in this secret
+      # secret:
+
 # 1Password Acceptance Tests Functionality
 acceptanceTests:
   enabled: false
