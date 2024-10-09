@@ -21,7 +21,8 @@ connect:
     resources:
       limits:
         memory: 128Mi
-        cpu: 0.2
+      requests:
+        cpu: 0.2m
     httpPort: 8080
     httpsPort: 8443
     logLevel: info
