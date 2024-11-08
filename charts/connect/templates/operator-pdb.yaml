@@ -9,10 +9,11 @@ metadata:
     {{- include "onepassword-connect.labels" . | nindent 4 }}
 {{- include "onepassword-connect.extraAnnotations" .Values.operator.pdb }}
 spec:
-  {{- with .Values.operator.pdb.maxUnavailable }}
-  maxUnavailable: {{ . }}
-  {{- else }}
+  {{- if .Values.operator.pdb.minAvailable }}
   minAvailable: {{ .Values.operator.pdb.minAvailable }}
+  {{- end }}
+  {{- if and .Values.operator.pdb.maxUnavailable (not .Values.operator.pdb.minAvailable)}}
+  maxUnavailable: {{ .Values.operator.pdb.maxUnavailable }}
   {{- end }}
   selector:
     matchLabels:
