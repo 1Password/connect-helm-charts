@@ -17,5 +17,5 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/component: connect
-      {{- include "onepassword-connect.selectorLabels" . | nindent 6 }}
+      app: {{ .Values.connect.applicationName }}
 {{- end }}
