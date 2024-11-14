@@ -131,10 +131,10 @@ connect:
     enabled: false
     # Additional annotations to be added to the PDB Connect
     annotations: {}
-    # Number of pods that are available after eviction as number or percentage (eg.: 50%)
-    # minAvailable: 1
     # Number of pods that are unavailble after eviction as number or percentage (eg.: 50%)
-    # maxUnavailable: 1
+    maxUnavailable: 1
+    # Number of pods that are available after eviction as number or percentage (eg.: 50%)
+    minAvailable: 0
 
   # 1Password Connect API and Sync Service
   probes:
@@ -295,10 +295,10 @@ operator:
     enabled: false
     # Additional annotations to be added to the PDB Operator
     annotations: {}
-    # Number of pods that are available after eviction as number or percentage (eg.: 50%)
-    # minAvailable: 1
     # Number of pods that are unavailble after eviction as number or percentage (eg.: 50%)
-    # maxUnavailable: 1
+    maxUnavailable: 1
+    # Number of pods that are available after eviction as number or percentage (eg.: 50%)
+    minAvailable: 0
 
   # Additional annotations to be added to the Operator pods.
   annotations: {}
