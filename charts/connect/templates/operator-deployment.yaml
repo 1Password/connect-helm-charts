@@ -39,6 +39,10 @@ spec:
       {{- if .Values.operator.priorityClassName }}
       priorityClassName: {{ .Values.operator.priorityClassName }}
       {{- end }}
+      {{- with .Values.operator.podSecurityContext }}
+      securityContext:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.operator.affinity }}
       affinity:
       {{- toYaml . | nindent 8 }}
@@ -50,13 +54,10 @@ spec:
         - name: {{ .Values.connect.applicationName }}
           image: {{ .Values.operator.imageRepository }}:{{ .Values.operator.version | default "latest" }}
           imagePullPolicy: {{ .Values.connect.imagePullPolicy }}
+          {{- with .Values.operator.securityContext }}
           securityContext:
-            runAsUser: 65532
-            runAsGroup: 65532
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - all
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
           command: [ "/manager" ]
           args: [ --zap-log-level={{ .Values.operator.logLevel }}]
           env:
