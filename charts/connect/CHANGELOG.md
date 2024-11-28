@@ -11,6 +11,15 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v1.17.0)
+# v1.17.0
+
+## Features
+* Add resources defaults to limit connect API's resource consumption. (#209, #211)
+
+## Fixes
+* Fix `podDisruptionBudget` labels. Credits to @mmorejon for the contribution. (#213)
+
 [//]: # (START/v1.16.0)
 # v1.16.0
 
