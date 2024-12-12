@@ -62,10 +62,10 @@ connect:
 
   # The type of Service resource to create for the Connect API and sync services.
   # See: https://kubernetes.io/docs/concepts/services-networking/service
-  # This by default is NodePort and can also be defined as LoadBalancer.
+  # This by default is ClusterIP and can also be defined as NodePort or LoadBalancer.
   # If serviceType is LoadBalancer then loadBalancerSourceRanges and loadBalancerIP should be defined.
   # See: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
-  serviceType: NodePort
+  serviceType: ClusterIP
 
   # Additional annotations to be added to the service resource
   serviceAnnotations: {}
