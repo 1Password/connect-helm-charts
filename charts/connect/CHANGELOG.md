@@ -11,6 +11,12 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v1.18.0)
+# v1.18.0
+
+## Features
+* Made the Chart Pod Security Standards compliant to standard Restricted. (#223)
+
 [//]: # (START/v1.17.0)
 # v1.17.0
 
