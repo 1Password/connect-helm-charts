@@ -64,6 +64,7 @@ spec:
           securityContext:
             runAsUser: 999
             runAsGroup: 999
+            runAsNonRoot: true
             allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault
@@ -131,6 +132,7 @@ spec:
           securityContext:
             runAsUser: 999
             runAsGroup: 999
+            runAsNonRoot: true
             allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault
