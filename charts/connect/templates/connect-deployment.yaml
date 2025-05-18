@@ -65,6 +65,11 @@ spec:
             runAsUser: 999
             runAsGroup: 999
             allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
           resources:
             {{- toYaml .Values.connect.api.resources | nindent 12 }}
           env:
@@ -127,6 +132,11 @@ spec:
             runAsUser: 999
             runAsGroup: 999
             allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
           resources:
             {{- toYaml .Values.connect.sync.resources | nindent 12 }}
           env:
