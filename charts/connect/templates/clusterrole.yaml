@@ -42,6 +42,7 @@ rules:
   - patch
   - update
   - watch
+{{- if .Values.connect.api.serviceMonitor.enabled }}
 - apiGroups:
   - monitoring.coreos.com
   resources:
@@ -49,6 +50,7 @@ rules:
   verbs:
   - get
   - create
+{{- end }}
 - apiGroups:
   - apps
   resourceNames:
