@@ -55,9 +55,9 @@ jobs:
         env:
           OP_CONNECT_CREDENTIALS: ${{ secrets.OP_CONNECT_CREDENTIALS }}
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
-          OP_VAULT_ID: ${{ vars.OP_VAULT_ID || "v5pz6venw4roosmkzdq2nhpv6u" }}
-          OP_ITEM_ID: ${{ vars.OP_ITEM_ID || "hrgkzhrlvscomepxlgafb2m3ca" }}
-          OP_SECRET_VALUE: ${{ vars.OP_SECRET_VALUE || "RGVhciBzZWN1cml0eSByZXNlYXJjaGVyLCB0aGlzIGlzIGp1c3QgYSBkdW1teSBzZWNyZXQuIFBsZWFzZSBkb24ndCByZXBvcnQgaXQu" }}
+          OP_VAULT_ID: ${{ vars.OP_VAULT_ID || 'v5pz6venw4roosmkzdq2nhpv6u' }}
+          OP_ITEM_ID: ${{ vars.OP_ITEM_ID || 'hrgkzhrlvscomepxlgafb2m3ca' }}
+          OP_SECRET_VALUE: ${{ vars.OP_SECRET_VALUE || 'RGVhciBzZWN1cml0eSByZXNlYXJjaGVyLCB0aGlzIGlzIGp1c3QgYSBkdW1teSBzZWNyZXQuIFBsZWFzZSBkb24ndCByZXBvcnQgaXQu' }}
         run: |
           cat > fixtures.yaml << EOF
           acceptanceTests:
