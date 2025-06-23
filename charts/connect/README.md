@@ -157,6 +157,7 @@ helm install --set connect.applicationName=connect connect ./connect
 | operator.watchNamespace             | list       | `[]`                               | A list of namespaces for the 1Password Operator to watch and manage. Use the empty list to watch all namespaces.                                                                                   |
 | operator.resources                  | object     | `{}`                               | The resources requests/limits for the 1Password Operator pod                                                                                                                                       |
 | operator.customEnvVars              | array      | `[]`                               | Custom environment variables for the 1Password Operator container that are not specified in this helm chart.                                                                                       |
+| operator.tls.trust.secret           | string     | `op-connect-tls`                   | The name of the secret containing the TLS certificate (tls.crt) used by the 1Password Connect API. This is used if that cert is a self-signed cert that needs to be trusted by the Operator.       |
 
 #### Custom Environment Variables
 
