@@ -11,6 +11,12 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v1.17.1)
+# v1.17.1
+
+## Fixes
+* Apply ServiceMonitor rules conditionally by providing value. Credits to @estenrye for the contribution. (#224)
+
 [//]: # (START/v1.17.0)
 # v1.17.0
 
