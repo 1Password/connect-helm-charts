@@ -324,7 +324,7 @@ operator:
   # The resources requests/limits for the 1Password Operator pod
   resources: {}
 
-  # 1Password Operator Token Configuration
+  # 1Password Operator Connect Token Configuration
   token:
     # The name of Kubernetes Secret containing the 1Password Connect API token
     name: onepassword-token
@@ -333,6 +333,17 @@ operator:
     key: token
 
     # An API token generated for 1Password Connect to be used by the Operator
+    value:
+
+  # 1Password Service Account Token Configuration
+  serviceAccountToken:
+    # The name of Kubernetes Secret containing the 1Password Service Account token
+    name: onepassword-service-account-token
+
+    # The key for the 1Password Service Account token stored in the 1Password token secret
+    key: token
+
+    # An API token generated for 1Password Service Account to be used by the Operator
     value:
 
   # 1Password Operator Service Account Configuration
