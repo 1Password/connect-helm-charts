@@ -72,11 +72,13 @@ spec:
               value: "{{ .Values.operator.pollingInterval }}"
             - name: AUTO_RESTART
               value: "{{ .Values.operator.autoRestart }}"
+            {{- if and (not .Values.connect.create) (.Values.operator.serviceAccountToken.value) }}
             - name: OP_SERVICE_ACCOUNT_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.operator.serviceAccountToken.name }}
                   key: {{ .Values.operator.serviceAccountToken.key }}
+            {{- end }}
             {{- if .Values.connect.create }}
             - name: OP_CONNECT_HOST
               value: "{{- include "onepassword-connect.url" . }}"
