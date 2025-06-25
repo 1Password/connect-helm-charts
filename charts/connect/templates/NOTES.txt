@@ -24,11 +24,7 @@
 ---------------------------------------------------------------------------------------------
 {{- end }}
 
-{{- if (and
-  (.Values.operator.create)
-  (not (or (lookup "v1" "Secret" $namespace $tokenName) (.Values.operator.token.value)))
-  (not (or (lookup "v1" "Secret" $namespace $serviceAccountTokenName) (.Values.operator.serviceAccountToken.value)))
-) }}
+{{- if (and (.Values.operator.create) (not (or (lookup "v1" "Secret" $namespace $tokenName) (.Values.operator.token.value))) (not (or (lookup "v1" "Secret" $namespace $serviceAccountTokenName) (.Values.operator.serviceAccountToken.value))) ) }}
 ---------------------------------------------------------------------------------------------
  WARNING
 
