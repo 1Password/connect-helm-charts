@@ -3,7 +3,7 @@
 {{- $tokenName := .Values.operator.token.name -}}
 {{- $serviceAccountTokenName := .Values.operator.serviceAccountToken.name -}}
 
-{{- if not ( or (lookup "v1" "Secret" ( $namespace ) ( $credentialsName )) (.Values.connect.credentials)) }}
+{{- if (and (not (.Values.operator.serviceAccountToken.value)) (not (or (lookup "v1" "Secret" $namespace $credentialsName) (.Values.connect.credentials) ))) }}
 ---------------------------------------------------------------------------------------------
  WARNING
 
