@@ -1,8 +1,9 @@
 {{- $credentialsName := .Values.connect.credentialsName -}}
 {{- $namespace := .Release.Namespace -}}
 {{- $tokenName := .Values.operator.token.name -}}
+{{- $serviceAccountTokenName := .Values.operator.serviceAccountToken.name -}}
 
-{{- if not ( or (lookup "v1" "Secret" ( $namespace ) ( $credentialsName )) (.Values.connect.credentials)) }}
+{{- if (and (not (.Values.operator.serviceAccountToken.value)) (not (or (lookup "v1" "Secret" $namespace $credentialsName) (.Values.connect.credentials) ))) }}
 ---------------------------------------------------------------------------------------------
  WARNING
 
@@ -23,24 +24,34 @@
 ---------------------------------------------------------------------------------------------
 {{- end }}
 
-{{- if (and (.Values.operator.create) ( not (or (lookup "v1" "Secret" ( $namespace ) ( $tokenName )) (.Values.operator.token.value) ))) }}
+{{- if (and (.Values.operator.create) (not (or (lookup "v1" "Secret" $namespace $tokenName) (.Values.operator.token.value))) (not (or (lookup "v1" "Secret" $namespace $serviceAccountTokenName) (.Values.operator.serviceAccountToken.value))) ) }}
 ---------------------------------------------------------------------------------------------
  WARNING
 
     By specifying "operator.create=true", a 1Password Connect Kuberator Operates will be 
-    deployed. This operator expects that a secret containing an API token for 1Password Connect 
+    deployed. This operator expects that a secret containing a 1Password Connect Token or 1Password Service Account Token
     is saved to the configured namespace {{ $namespace }}. 
     
-    This token can be saved as a Kubernetes secret using the following command:
+    1Password Connect Token can be saved as a Kubernetes secret using the following command:
 
         kubectl create secret generic {{ $tokenName }} --from-literal=token=<OP_CONNECT_TOKEN> \
          --namespace={{ $namespace }}
 
+
+    1Password Service Account token can be saved as a Kubernetes secret using the following command:
+
+        kubectl create secret generic {{ $serviceAccountTokenName }} --from-literal=token=<OP_SERVICE_ACCOUNT_TOKEN> \
+         --namespace={{ $namespace }}
+
+
     Creation of a secret for the token can also be automated by the Helm Chart by setting
-    operator.token to the value of your token.
+    'operator.token.value' or 'operator.serviceAccountToken.value ' to the value of your token.
 
     More information about 1Password Connect and how to generate a 1Password Connect API token
     can be found at https://support.1password.com/secrets-automation/.
+
+    More information about 1Password Service Accounts and how to generate a service account token
+    can be found at https://developer.1password.com/docs/service-accounts.
 
 ---------------------------------------------------------------------------------------------
 {{- end }}
