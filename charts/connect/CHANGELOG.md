@@ -3,13 +3,21 @@
 
 ## Features
 * A user-friendly description of a new feature. {issue-number}
-* Add priorityClassName values to operator and connect. {#201}
 
 ## Fixes
 * A user-friendly description of a fix. {issue-number}
 
 ## Security
 * A user-friendly description of a security fix. {issue-number}
+
+[//]: # (START/v2.0.0)
+# v2.0.0
+
+## Features
+* Add support for configuring the operator to use a 1Password Service Account. {#226}
+
+## Security
+* Default Connect service type changed to ClusterIP. (#194)
 
 [//]: # (START/v1.17.1)
 # v1.17.1
