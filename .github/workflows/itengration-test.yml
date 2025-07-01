@@ -1,0 +1,38 @@
+name: Integration tests
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  terratest:
+    name: Run Terratest
+    runs-on: ubuntu-latest
+    env:
+      OP_CONNECT_CREDENTIALS: ${{ secrets.OP_CONNECT_CREDENTIALS }}
+      OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
+      OP_VAULT_ID: ${{ vars.OP_VAULT_ID }}
+      OP_ITEM_ID: ${{ vars.OP_ITEM_ID }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.24'
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: v3.12.0
+
+      - name: Spin up local Kubernetes cluster
+        uses: helm/kind-action@v1.8.0
+        with:
+          cluster_name: kind
+
+      - name: Run Connect integration tests
+        run: |
+          go test -v ./charts/connect/tests/integration/ -timeout 15m
