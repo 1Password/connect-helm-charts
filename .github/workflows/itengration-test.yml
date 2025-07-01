@@ -1,9 +1,6 @@
 name: Integration tests
 on:
-  pull_request:
-    branches:
-      - main
-  workflow_dispatch:
+  push:
 
 jobs:
   terratest:
