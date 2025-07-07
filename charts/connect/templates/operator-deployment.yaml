@@ -72,7 +72,7 @@ spec:
               value: "{{ .Values.operator.pollingInterval }}"
             - name: AUTO_RESTART
               value: "{{ .Values.operator.autoRestart }}"
-            {{- if eq .Values.operator.authMethod "serviceaccount" }}
+            {{- if eq .Values.operator.authMethod "service-account" }}
             - name: OP_SERVICE_ACCOUNT_TOKEN
               valueFrom:
                 secretKeyRef:

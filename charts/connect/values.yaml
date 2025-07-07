@@ -241,10 +241,10 @@ operator:
   # Denotes whether the 1Password Operator will be deployed
   create: false
 
-  # Denotes authentication method that 1Password Operator will use to access secrets
+  # Denotes authentication method that 1Password Operator will use to access 1Password secrets
   # Valid values:
-  # - connect: sets OP_CONNECT_TOKEN
-  # - serviceaccount: sets OP_SERVICE_ACCOUNT_TOKEN
+  # - connect: sets OP_CONNECT_HOST and OP_CONNECT_TOKEN
+  # - service-account: sets OP_SERVICE_ACCOUNT_TOKEN
   authMethod: connect
 
   # The number of replicas to run the 1Password Connect Operator deployment
