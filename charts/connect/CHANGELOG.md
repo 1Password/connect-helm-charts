@@ -10,6 +10,12 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v2.0.1)
+# v2.0.1
+
+## Fixes
+* Add `authMethod` value to set the authentication method used by the 1Password Operator to access 1Password secrets. (#231)
+
 [//]: # (START/v2.0.0)
 # v2.0.0
 
