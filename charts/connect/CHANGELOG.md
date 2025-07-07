@@ -14,7 +14,7 @@
 # v2.0.1
 
 ## Fixes
-* Add `authMethod` value to set authentication method that 1Password Operator will use to access 1Password secrets. (#231)
+* Add `authMethod` value to set the authentication method used by the 1Password Operator to access 1Password secrets. (#231)
 
 [//]: # (START/v2.0.0)
 # v2.0.0
