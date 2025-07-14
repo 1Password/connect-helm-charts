@@ -10,6 +10,13 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v2.0.2)
+# v2.0.2
+
+## Fixes
+* Updated Operator version to include fix for panic when handling 1Password items with files ([onepassword-operator#209](https://github.com/1Password/onepassword-operator/issues/209)).
+
+
 [//]: # (START/v2.0.1)
 # v2.0.1
 
