@@ -400,3 +400,8 @@ operator:
 acceptanceTests:
   enabled: false
   fixtures: {}
+  healthCheck:
+    enabled: true
+    image:
+      repository: curlimages/curl
+      tag: 'latest'
