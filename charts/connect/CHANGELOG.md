@@ -3,13 +3,44 @@
 
 ## Features
 * A user-friendly description of a new feature. {issue-number}
-* Add priorityClassName values to operator and connect. {#201}
 
 ## Fixes
 * A user-friendly description of a fix. {issue-number}
 
 ## Security
 * A user-friendly description of a security fix. {issue-number}
+
+[//]: # (START/v2.0.2)
+# v2.0.2
+
+## Fixes
+* Updated Operator version to include fix for panic when handling 1Password items with files ([onepassword-operator#209](https://github.com/1Password/onepassword-operator/issues/209)).
+
+
+[//]: # (START/v2.0.1)
+# v2.0.1
+
+## Fixes
+* Add `authMethod` value to set the authentication method used by the 1Password Operator to access 1Password secrets. (#231)
+
+[//]: # (START/v2.0.0)
+# v2.0.0
+
+## Breaking changes
+* Default Connect service type changed to ClusterIP. (#194)
+
+Previously, the Connect service was exposed externally by default using `NodePort`. In this release, the default service type has been changed to `ClusterIP`, meaning Connect is now only accessible from within the cluster unless explicitly configured otherwise.
+While exposing Connect via `NodePort` is not inherently insecure—since Connect requires a valid bearer token for all API access—this change aligns with the principle of least privilege and reduces unnecessary external surface area by default.
+If you require external access to Connect, you can still set `connect.serviceType` to `NodePort` or `LoadBalancer` in your Helm values.
+
+## Features
+* Add support for configuring the operator to use a 1Password Service Account. {#226}
+
+[//]: # (START/v1.17.1)
+# v1.17.1
+
+## Fixes
+* Apply ServiceMonitor rules conditionally by providing value. Credits to @estenrye for the contribution. (#224)
 
 [//]: # (START/v1.17.0)
 # v1.17.0

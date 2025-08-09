@@ -80,10 +80,10 @@ connect:
 
   # The type of Service resource to create for the Connect API and sync services.
   # See: https://kubernetes.io/docs/concepts/services-networking/service
-  # This by default is NodePort and can also be defined as LoadBalancer.
+  # This by default is ClusterIP and can also be defined as NodePort or LoadBalancer.
   # If serviceType is LoadBalancer then loadBalancerSourceRanges and loadBalancerIP should be defined.
   # See: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
-  serviceType: NodePort
+  serviceType: ClusterIP
 
   # Additional annotations to be added to the service resource
   serviceAnnotations: {}
@@ -269,6 +269,12 @@ operator:
   # Denotes whether the 1Password Operator will be deployed
   create: false
 
+  # Denotes authentication method that 1Password Operator will use to access 1Password secrets
+  # Valid values:
+  # - connect: sets OP_CONNECT_HOST and OP_CONNECT_TOKEN
+  # - service-account: sets OP_SERVICE_ACCOUNT_TOKEN
+  authMethod: connect
+
   # The number of replicas to run the 1Password Connect Operator deployment
   replicas: 1
 
@@ -291,7 +297,7 @@ operator:
   pollingInterval: 600
 
   # The 1Password Operator version to pull
-  version: "1.8.1"
+  version: "1.9.1"
 
   # Pod securityContext to be added to the 1Password Operator pods.
   # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
@@ -371,7 +377,7 @@ operator:
   # The resources requests/limits for the 1Password Operator pod
   resources: {}
 
-  # 1Password Operator Token Configuration
+  # 1Password Operator Connect Token Configuration
   token:
     # The name of Kubernetes Secret containing the 1Password Connect API token
     name: onepassword-token
@@ -380,6 +386,17 @@ operator:
     key: token
 
     # An API token generated for 1Password Connect to be used by the Operator
+    value:
+
+  # 1Password Service Account Token Configuration
+  serviceAccountToken:
+    # The name of Kubernetes Secret containing the 1Password Service Account token
+    name: onepassword-service-account-token
+
+    # The key for the 1Password Service Account token stored in the 1Password token secret
+    key: token
+
+    # An API token generated for 1Password Service Account to be used by the Operator
     value:
 
   # 1Password Operator Service Account Configuration
@@ -430,6 +447,11 @@ operator:
 acceptanceTests:
   enabled: false
   fixtures: {}
+  healthCheck:
+    enabled: true
+    image:
+      repository: curlimages/curl
+      tag: 'latest'
 
   # Pod securityContext to be added to the 1Password Acceptance Tests pods.
   # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
