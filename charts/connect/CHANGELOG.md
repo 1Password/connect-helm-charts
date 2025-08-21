@@ -10,6 +10,12 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v2.0.3)
+# v2.0.3
+
+## Fixes
+* Allow disabling healthCheck test and allow specifying image used in that test. (#241)
+
 [//]: # (START/v2.0.2)
 # v2.0.2
 
