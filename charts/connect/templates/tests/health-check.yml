@@ -11,9 +11,17 @@ metadata:
     helm.sh/hook-weight: "1"
 spec:
   restartPolicy: Never
+  {{- with .Values.acceptanceTests.podSecurityContext }}
+  securityContext:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
   containers:
     - name: curl
       image: {{ .Values.acceptanceTests.healthCheck.image.repository }}:{{ .Values.acceptanceTests.healthCheck.image.tag }}
 
       command: ["curl", "{{- include "onepassword-connect.url" . }}/health"]
+      {{- with .Values.acceptanceTests.securityContext }}
+      securityContext:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
 {{- end }}
