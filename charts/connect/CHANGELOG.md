@@ -10,6 +10,12 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v2.0.5)
+# v2.0.5
+
+## Features
+* Bump Connect version to v1.8.1
+
 [//]: # (START/v2.0.4)
 # v2.0.4
 
