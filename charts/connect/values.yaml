@@ -70,6 +70,17 @@ connect:
   # Additional annotations to be added to the service resource
   serviceAnnotations: {}
 
+  # 1Password Operator Service Account Configuration
+  serviceAccount:
+    # The name of the 1Password Conenct Operator
+    create: "{{ .Values.connect.create }}"
+
+    # Annotations for the 1Password Connect Service Account
+    annotations: {}
+
+    # The name of the 1Password Conenct
+    name: onepassword-connect
+
   # loadBalancerSourceRanges:
   #   - 10.0.0.0/16
   #   - 1.84.26.4/32
