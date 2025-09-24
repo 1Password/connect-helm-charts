@@ -70,7 +70,7 @@ connect:
   # Additional annotations to be added to the service resource
   serviceAnnotations: {}
 
-  # 1Password Operator Service Account Configuration
+  # 1Password Connect Service Account Configuration
   serviceAccount:
     # The name of the 1Password Conenct Operator
     create: "{{ .Values.connect.create }}"
