@@ -78,7 +78,7 @@ connect:
     # Annotations for the 1Password Connect Service Account
     annotations: {}
 
-    # The name of the 1Password Conenct
+    # The name of the 1Password Connect
     name: onepassword-connect
 
   # loadBalancerSourceRanges:
