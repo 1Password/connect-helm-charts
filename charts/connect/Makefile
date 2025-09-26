@@ -22,7 +22,7 @@ YELLOW := \033[0;33m
 BLUE := \033[0;34m
 NC := \033[0m # No Color
 
-.PHONY: help test-e2e test-e2e-setup test-e2e-run cleanup-test-e2e check-deps
+.PHONY: help test-e2e test-e2e-setup test-e2e-run cleanup-test-e2e check-deps revert-ci-files
 
 test-e2e: check-deps test-e2e-setup test-e2e-run cleanup-test-e2e ## Run end-to-end tests (full workflow)
 
@@ -95,7 +95,7 @@ test-e2e-run: ## Run the actual tests
 
 	@echo "$(GREEN)Tests completed successfully!$(NC)"
 
-cleanup-test-e2e: ## Cleanup test environment
+cleanup-test-e2e: revert-ci-files ## Cleanup test environment
 	@echo "$(BLUE)Cleaning up test environment...$(NC)"
 
 	# Delete Kind cluster
@@ -111,6 +111,12 @@ test-e2e-debug: check-deps test-e2e-setup ## Run tests without cleanup (for debu
 	@cd ../.. && ct install --config ct.yaml --charts charts/connect --namespace $(NAMESPACE) --debug
 	@echo "$(YELLOW)Cluster $(KIND_CLUSTER_NAME) is still running for debugging$(NC)"
 	@echo "$(YELLOW)Run 'make test-e2e-cleanup' to clean up$(NC)"
+
+revert-ci-files: ## Revert all changes to files in the ci/ directory
+	@echo "$(BLUE)Reverting changes to ci/ directory files...$(NC)"
+	@cd ../.. && git checkout -- charts/connect/ci/
+	@cd ../.. && git clean -f charts/connect/ci/
+	@echo "$(GREEN)CI files reverted successfully$(NC)"
 
 # Utility commands
 show-config: ## Show current test configuration
@@ -181,4 +187,4 @@ help: ## Show this help message
 	@awk 'BEGIN {FS = ":.*?## "} /^test-e2e.*:.*?## / {printf "  $(BLUE)%-20s$(NC) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 	@echo ""
 	@echo "$(BLUE)Utility Commands:$(NC)"
-	@awk 'BEGIN {FS = ":.*?## "} /^(check-deps|show-config):.*?## / {printf "  $(BLUE)%-20s$(NC) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+	@awk 'BEGIN {FS = ":.*?## "} /^(check-deps|show-config|revert-ci-files):.*?## / {printf "  $(BLUE)%-20s$(NC) %s\n", $$1, $$2}' $(MAKEFILE_LIST)
