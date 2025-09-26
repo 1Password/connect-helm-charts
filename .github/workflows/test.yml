@@ -47,8 +47,8 @@ jobs:
             echo "::set-output name=changed::true"
           fi
 
-      - name: Install yq
-        run: sudo snap install yq
+      - name: Install required tools
+        run: make install
         if: steps.list-changed.outputs.changed == 'true'
 
       - name: Run acceptance tests
