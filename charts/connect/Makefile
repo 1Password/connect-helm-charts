@@ -106,12 +106,6 @@ cleanup-test-e2e: revert-ci-files ## Cleanup test environment
 
 	@echo "$(GREEN)Cleanup complete$(NC)"
 
-test-e2e-debug: check-deps test-e2e-setup ## Run tests without cleanup (for debugging)
-	@echo "$(BLUE)Running tests (keeping cluster for debugging)...$(NC)"
-	@cd ../.. && ct install --config ct.yaml --charts charts/connect --namespace $(NAMESPACE) --debug
-	@echo "$(YELLOW)Cluster $(KIND_CLUSTER_NAME) is still running for debugging$(NC)"
-	@echo "$(YELLOW)Run 'make test-e2e-cleanup' to clean up$(NC)"
-
 revert-ci-files: ## Revert all changes to files in the ci/ directory
 	@echo "$(BLUE)Reverting changes to ci/ directory files...$(NC)"
 	@cd ../.. && git checkout -- charts/connect/ci/
