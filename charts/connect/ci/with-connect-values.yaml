@@ -1,0 +1,3 @@
+# Deploys Operator with default configuration using Connect to authenticate
+operator:
+  create: true
