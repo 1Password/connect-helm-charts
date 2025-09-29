@@ -2,13 +2,14 @@
 
 # Configuration
 CHART_NAME := connect
-NAMESPACE := onepassword-connect-test
+NAMESPACE := default
 KIND_CLUSTER_NAME := onepassword-connect-test
 HELM_TIMEOUT := 120s
 
 # Credentials
-OP_CONNECT_CREDENTIALS ?= $(shell cat ~/.op/connect-credentials.json 2>/dev/null || echo "")
-OP_CONNECT_TOKEN ?= $(shell op item get "Connect Token" --fields token 2>/dev/null || echo "")
+OP_CONNECT_CREDENTIALS ?= $(shell echo "$$OP_CONNECT_CREDENTIALS")
+OP_CONNECT_TOKEN ?= $(shell echo "$$OP_CONNECT_TOKEN")
+OP_SERVICE_ACCOUNT_TOKEN ?= $(shell echo "$$OP_SERVICE_ACCOUNT_TOKEN")
 
 # Test fixture values (must be set as environment variables)
 # OP_VAULT_ID - 1Password vault ID for testing
@@ -36,6 +37,11 @@ test-e2e-setup: ## Setup test environment
 	fi
 	@if [ -z "$(OP_CONNECT_TOKEN)" ]; then \
 		echo "$(RED)Error: OP_CONNECT_TOKEN environment variable is required$(NC)"; \
+		exit 1; \
+	fi
+
+	@if [ -z "$(OP_SERVICE_ACCOUNT_TOKEN)" ]; then \
+		echo "$(RED)Error: OP_SERVICE_ACCOUNT_TOKEN environment variable is required$(NC)"; \
 		exit 1; \
 	fi
 
@@ -76,7 +82,11 @@ test-e2e-setup: ## Setup test environment
 	@echo "$(BLUE)Processing CI values files...$(NC)"
 	@for values_file in ci/*.yaml; do \
 		echo "$(BLUE)Processing $$values_file...$(NC)"; \
-		yq eval '.connect.credentials = strenv(OP_CONNECT_CREDENTIALS) | .operator.token.value = strenv(OP_CONNECT_TOKEN)' -i $$values_file; \
+		if echo "$$values_file" | grep -q "service-account"; then \
+			yq eval '.connect.create = false | .operator.authMethod = "service-account" | .operator.serviceAccountToken.value = strenv(OP_SERVICE_ACCOUNT_TOKEN)' -i $$values_file; \
+		else \
+			yq eval '.connect.credentials = strenv(OP_CONNECT_CREDENTIALS) | .operator.authMethod = "connect" | .operator.token.value = strenv(OP_CONNECT_TOKEN)' -i $$values_file; \
+		fi; \
 		yq eval-all --inplace 'select(fileIndex == 0) * select(fileIndex == 1)' $$values_file fixtures.yaml; \
 	done
 
