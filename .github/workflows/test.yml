@@ -55,6 +55,7 @@ jobs:
         env:
           OP_CONNECT_CREDENTIALS: ${{ secrets.OP_CONNECT_CREDENTIALS }}
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           OP_VAULT_ID: ${{ vars.OP_VAULT_ID }}
           OP_ITEM_ID: ${{ vars.OP_ITEM_ID }}
           OP_SECRET_VALUE: ${{ vars.OP_SECRET_VALUE }}
