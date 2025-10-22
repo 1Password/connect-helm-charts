@@ -29,15 +29,8 @@ jobs:
           repository: ${{ github.event.inputs.checkout-repo }}
           ref: ${{ github.event.inputs.checkout-ref }}
 
-      - name: Set up Helm
-        uses: azure/setup-helm@v1
-        with:
-          version: v3.4.1
-
-      - name: Set up ct CLI
-        uses: helm/chart-testing-action@v2.1.0
-        with:
-          version: v3.4.0
+      - name: Install required tools
+        run: make install
 
       - name: Check if chart has changed
         id: list-changed
@@ -47,16 +40,13 @@ jobs:
             echo "::set-output name=changed::true"
           fi
 
-      - name: Install required tools
-        run: make install
-        if: steps.list-changed.outputs.changed == 'true'
-
       - name: Run acceptance tests
+        if: steps.list-changed.outputs.changed == 'true'
         env:
           OP_CONNECT_CREDENTIALS: ${{ secrets.OP_CONNECT_CREDENTIALS }}
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          OP_VAULT_ID: ${{ vars.OP_VAULT_ID }}
-          OP_ITEM_ID: ${{ vars.OP_ITEM_ID }}
-          OP_SECRET_VALUE: ${{ vars.OP_SECRET_VALUE }}
+          OP_VAULT_ID: ${{ secrets.OP_VAULT_ID }}
+          OP_ITEM_ID: ${{ secrets.OP_ITEM_ID }}
+          OP_SECRET_VALUE: ${{ secrets.OP_SECRET_VALUE }}
         run: make test-e2e
