@@ -1,4 +1,4 @@
-name: Run acceptance tests
+name: Run acceptance tests [Connect chart]
 on:
   push:
 
