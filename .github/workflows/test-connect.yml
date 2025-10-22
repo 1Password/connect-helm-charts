@@ -42,6 +42,7 @@ jobs:
 
       - name: Run acceptance tests
         if: steps.list-changed.outputs.changed == 'true'
+        working-directory: charts/connect
         env:
           OP_CONNECT_CREDENTIALS: ${{ secrets.OP_CONNECT_CREDENTIALS }}
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
