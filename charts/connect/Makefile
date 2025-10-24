@@ -137,6 +137,7 @@ show-config: ## Show current test configuration
 	@echo "$(BLUE)Credentials:$(NC)"
 	@echo "  Connect Credentials: $(if $(OP_CONNECT_CREDENTIALS),Set,Not Set)"
 	@echo "  Connect Token: $(if $(OP_CONNECT_TOKEN),Set,Not Set)"
+	@echo "  Service Account Token: $(if $(OP_SERVICE_ACCOUNT_TOKEN),Set,Not Set)"
 
 install: ## Install required dependencies (auto-detect OS)
 	@echo "$(BLUE)Detecting operating system...$(NC)"
