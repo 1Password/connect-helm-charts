@@ -53,7 +53,7 @@ make test-e2e
 ### Utility Commands
 - `make check-deps` - Check if all dependencies are installed
 - `make show-config` - Show current test configuration
-- `make test-e2e-cleanup` - Clean up test environment
+- `make cleanup-test-e2e` - Clean up test environment
 
 ## Adding New Test Scenarios
 To add a new test scenario:
@@ -66,7 +66,7 @@ To add a new test scenario:
 ### Keep Cluster for Debugging
 ```bash
 make test-e2e
-# Cluster stays running for inspection
+# If tests fail the cluster stays running
 kubectl get pods -n onepassword-connect-test
 kubectl logs -n onepassword-connect-test <pod-name>
 make test-e2e-cleanup  # Clean up when done

@@ -11,3 +11,4 @@ This document explains how to test external pull requests using workflow dispatc
   * `checkout-repo`: `<PR author>/connect-helm-charts`
   * `checkout-ref`: <copied commit hash>
   * `branch`: `acceptance-tests-on-forks`
+* After pipeline finishes, drop a comment and in the PR to let the contributor know if there are any issues
