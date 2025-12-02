@@ -1,4 +1,4 @@
-name: Run acceptance tests
+name: Run acceptance tests [Connect chart]
 on:
   push:
 
@@ -51,33 +51,16 @@ jobs:
         run: sudo snap install yq
         if: steps.list-changed.outputs.changed == 'true'
 
-      - name: Add fixtures to YAML test cases
-        env:
-          OP_CONNECT_CREDENTIALS: ${{ secrets.OP_CONNECT_CREDENTIALS }}
-          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
-          OP_VAULT_ID: ${{ vars.OP_VAULT_ID || 'v5pz6venw4roosmkzdq2nhpv6u' }}
-          OP_ITEM_ID: ${{ vars.OP_ITEM_ID || 'hrgkzhrlvscomepxlgafb2m3ca' }}
-          OP_SECRET_VALUE: ${{ vars.OP_SECRET_VALUE || 'RGVhciBzZWN1cml0eSByZXNlYXJjaGVyLCB0aGlzIGlzIGp1c3QgYSBkdW1teSBzZWNyZXQuIFBsZWFzZSBkb24ndCByZXBvcnQgaXQu' }}
-        run: |
-          cat > fixtures.yaml << EOF
-          acceptanceTests:
-            enabled: true
-            fixtures:
-              vaultId: $OP_VAULT_ID
-              itemId: $OP_ITEM_ID
-              secretValue: $OP_SECRET_VALUE
-          EOF
-
-          for values_file in charts/connect/ci/*.yaml; do
-            # Add secrets
-            yq eval '.connect.credentials = strenv(OP_CONNECT_CREDENTIALS) | .operator.token.value = strenv(OP_CONNECT_TOKEN)' -i $values_file
-
-            # Add acceptance test fixtures
-            yq eval-all --inplace 'select(fileIndex == 0) * select(fileIndex == 1)' $values_file fixtures.yaml
-          done
-
       - name: Spin up local Kubernetes cluster
         uses: helm/kind-action@v1.2.0
 
-      - name: Deploy and run acceptance tests
-        run: ct install --config ct.yaml
+      - name: Run acceptance tests
+        working-directory: charts/connect
+        env:
+          OP_CONNECT_CREDENTIALS: ${{ secrets.OP_CONNECT_CREDENTIALS }}
+          OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          OP_VAULT_ID: ${{ secrets.OP_VAULT_ID }}
+          OP_ITEM_ID: ${{ secrets.OP_ITEM_ID }}
+          OP_SECRET_VALUE: ${{ secrets.OP_SECRET_VALUE }}
+        run: make test-e2e

@@ -1,0 +1,8 @@
+# Deploys Operator with default configuration using Connect to authenticate
+operator:
+  create: true
+  customEnvVars:
+    - name: CUSTOM_TEST_VAR
+      value: "test-value-123"
+    - name: ANOTHER_CUSTOM_VAR
+      value: "another-value-456"
