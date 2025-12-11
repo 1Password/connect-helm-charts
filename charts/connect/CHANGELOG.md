@@ -10,6 +10,12 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v2.1.1)
+# v2.1.1
+
+## Fixes
+* Fix release workflow to publish charts to GHCR. (#258)
+
 [//]: # (START/v2.1.0)
 # v2.1.0
 
