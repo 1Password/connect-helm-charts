@@ -17,7 +17,7 @@
 * Helm charts are now available to install via OCI registry. (#221)
 
 ## Fixes
-* Connect helm chart handles custom env vars properly. (#197)
+* Custom env vars can be set to Connect's sync container now. (#197)
 * Numeric values can be passed as custom env variables in Connect chart. (#255)
 
 [//]: # (START/v2.0.5)
