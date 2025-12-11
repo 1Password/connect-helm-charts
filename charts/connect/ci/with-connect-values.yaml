@@ -6,3 +6,5 @@ operator:
       value: "test-value-123"
     - name: ANOTHER_CUSTOM_VAR
       value: "another-value-456"
+    - name: NUMERIC_CUSTOM_VAR
+      value: "123"

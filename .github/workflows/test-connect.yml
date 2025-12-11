@@ -10,7 +10,6 @@ on:
   # * Fill in the following:
   #   * `checkout-repo`: `<PR author>/connect-helm-charts`
   #   * `checkout-ref`: <copied commit hash>
-  #   * `branch`: `acceptance-tests-on-forks`
   workflow_dispatch:
     inputs:
       checkout-repo:

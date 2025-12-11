@@ -90,7 +90,7 @@ spec:
             {{- end }}
             {{- range .Values.operator.customEnvVars}}
             - name: {{ .name }}
-              value: {{ .value }}
+              value: {{ quote .value }}
             {{- end }}
           resources:
             {{- toYaml .Values.operator.resources | nindent 12 }}
