@@ -45,6 +45,14 @@ spec:
             exit 1
           fi
 
+          echo "🔍 Checking for NUMERIC_CUSTOM_VAR in deployment spec..."
+          if kubectl get deployment {{ .Values.operator.applicationName }} -o yaml | grep -A 1 "name: NUMERIC_CUSTOM_VAR"; then
+            echo "✅ NUMERIC_CUSTOM_VAR found in deployment spec"
+          else
+            echo "❌ NUMERIC_CUSTOM_VAR not found in deployment spec"
+            exit 1
+          fi
+
           echo "🔍 Showing all custom environment variables in deployment:"
           kubectl get deployment {{ .Values.operator.applicationName }} -o yaml | grep -A 2 -B 1 "name: CUSTOM_\|name: ANOTHER_"
 
