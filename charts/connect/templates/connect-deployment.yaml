@@ -69,7 +69,7 @@ spec:
             {{- toYaml .Values.connect.api.resources | nindent 12 }}
           env:
             - name: OP_SESSION
-              value: /home/opuser/.op/{{ .Values.connect.credentialsKey }}
+              value: /home/opuser/.op/credentials/{{ .Values.connect.credentialsKey }}
             - name: OP_BUS_PORT
               value: "11220"
             - name: OP_BUS_PEERS
@@ -113,7 +113,7 @@ spec:
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}
-            - mountPath: /home/opuser/.op/{{ .Values.connect.credentialsKey }}
+            - mountPath: /home/opuser/.op/credentials
               name: credentials
             {{- if .Values.connect.tls.enabled }}
             - name: tls-cert
@@ -132,7 +132,7 @@ spec:
             - name: OP_HTTP_PORT
               value: "{{ .Values.connect.sync.httpPort }}"
             - name: OP_SESSION
-              value: /home/opuser/.op/{{ .Values.connect.credentialsKey }}
+              value: /home/opuser/.op/credentials/{{ .Values.connect.credentialsKey }}
             - name: OP_BUS_PORT
               value: "11221"
             - name: OP_BUS_PEERS
@@ -164,7 +164,7 @@ spec:
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}
-            - mountPath: /home/opuser/.op/{{ .Values.connect.credentialsKey }}
+            - mountPath: /home/opuser/.op/credentials
               name: credentials
         {{- if .Values.connect.profiler.enabled }}
         - name: profiler-data
