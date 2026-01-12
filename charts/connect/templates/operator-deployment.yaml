@@ -5,9 +5,17 @@ metadata:
   name: {{ .Values.operator.applicationName }}
   namespace: {{ .Release.Namespace }}
   labels:
+    app.kubernetes.io/component: operator
     {{- include "onepassword-connect.labels" . | nindent 4 }}
+  {{- with .Values.operator.labels }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.operator.annotations }}
+  annotations:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.operator.replicas }}
   selector:
     matchLabels:
       name: {{ .Values.connect.applicationName }}
@@ -15,11 +23,28 @@ spec:
     metadata:
       labels:
         name: {{ .Values.connect.applicationName }}
+        app.kubernetes.io/component: operator
+      {{- with .Values.operator.podLabels }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.operator.podAnnotations }}
+      annotations:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
     spec:
-{{- with .Values.operator.nodeSelector }}
+      {{- with .Values.operator.nodeSelector }}
       nodeSelector:
-{{ toYaml . | indent 8 }}
-{{- end }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.operator.priorityClassName }}
+      priorityClassName: {{ .Values.operator.priorityClassName }}
+      {{- end }}
+      {{- with .Values.operator.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      tolerations:
+      {{- toYaml .Values.operator.tolerations | nindent 8 }}
       serviceAccountName: {{ .Values.operator.serviceAccount.name }}
       containers:
         - name: {{ .Values.connect.applicationName }}
@@ -32,26 +57,47 @@ spec:
             capabilities:
               drop:
                 - all
-          command: ["/manager"]
+          command: [ "/manager" ]
+          args: [ --zap-log-level={{ .Values.operator.logLevel }}]
           env:
             - name: WATCH_NAMESPACE
-              value: {{ tpl (include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace) . }}
+              value: {{ default "" (tpl (include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace) .) }}
             - name: POD_NAME
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
               value: "{{ .Values.operator.applicationName }}"
-            - name: OP_CONNECT_HOST
-              value: "http://{{ .Values.connect.applicationName }}:8080"
             - name: POLLING_INTERVAL
               value: "{{ .Values.operator.pollingInterval }}"
+            - name: AUTO_RESTART
+              value: "{{ .Values.operator.autoRestart }}"
+            {{- if eq .Values.operator.authMethod "service-account" }}
+            - name: OP_SERVICE_ACCOUNT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.operator.serviceAccountToken.name }}
+                  key: {{ .Values.operator.serviceAccountToken.key }}
+            {{- end }}
+            {{- if eq .Values.operator.authMethod "connect" }}
+            - name: OP_CONNECT_HOST
+              value: "{{- include "onepassword-connect.url" . }}"
             - name: OP_CONNECT_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.operator.token.name }}
                   key: {{ .Values.operator.token.key }}
-            - name: AUTO_RESTART
-              value: "{{ .Values.operator.autoRestart }}"
+            {{- end }}
+            {{- range .Values.operator.customEnvVars}}
+            - name: {{ .name }}
+              value: {{ quote .value }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.operator.resources | nindent 12 }}
+      {{- with .Values.operator.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . | quote }}
+      {{- end }}
+      {{- end }}
 {{- end }}
-

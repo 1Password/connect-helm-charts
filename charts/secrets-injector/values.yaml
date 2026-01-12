@@ -1,0 +1,13 @@
+injector:
+  applicationName: secrets-injector
+  imagePullPolicy: IfNotPresent
+  imagePullSecrets: []
+  imageRepository: 1password/kubernetes-secrets-injector
+  port: 443
+  targetPort: 8443
+  version: "{{ .Chart.AppVersion }}"
+  # 1Password Operator Custom Container Environment Variables
+  # Must be written in the following format:
+  # - name: VARIABLE_NAME
+  #   value: VARIABLE_VALUE
+  customEnvVars: []

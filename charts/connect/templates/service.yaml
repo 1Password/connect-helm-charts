@@ -1,16 +1,34 @@
+{{- if .Values.connect.create }}
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.connect.applicationName }}
   namespace: {{ .Release.Namespace }}
   labels:
+    app.kubernetes.io/component: connect
     {{- include "onepassword-connect.labels" . | nindent 4 }}
+{{- template "onepassword-connect.serviceAnnotations" . }}
 spec:
-  type: NodePort
+  type: {{ .Values.connect.serviceType }}
   selector:
     app: {{ .Values.connect.applicationName }}
   ports:
-    - port: 8080
-      name: {{ .Values.connect.api.name }}
-    - port: 8081
+    - port: {{ .Values.connect.sync.httpPort }}
       name: {{ .Values.connect.sync.name }}
+    {{- if .Values.connect.tls.enabled }}
+    - port: {{ .Values.connect.api.httpsPort }}
+      name: {{ .Values.connect.api.name }}-https
+    {{- else }}
+    - port: {{ .Values.connect.api.httpPort }}
+      name: {{ .Values.connect.api.name }}
+    {{- end }}
+  {{if eq .Values.connect.serviceType "LoadBalancer"}}
+{{- if .Values.connect.loadBalancerSourceRanges }}
+  loadBalancerSourceRanges:
+{{ toYaml .Values.connect.loadBalancerSourceRanges | indent 4 }}
+{{- end }}
+  {{if .Values.connect.loadBalancerIP}}
+  loadBalancerIP: {{.Values.connect.loadBalancerIP}}
+  {{end}}
+  {{end}}
+{{- end }}

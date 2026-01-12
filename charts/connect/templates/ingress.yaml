@@ -1,0 +1,79 @@
+{{- if and (.Values.connect.ingress.enabled) (.Values.connect.create) -}} 
+{{- $extraPaths := .Values.connect.ingress.extraPaths -}}
+{{- $serviceName := .Values.connect.applicationName -}}
+{{- $tlsEnabled := .Values.connect.tls.enabled -}}
+{{- $apiHttpPort := .Values.connect.api.httpPort -}}
+{{- $apiHttpsPort := .Values.connect.api.httpsPort -}}
+{{- $pathType := .Values.connect.ingress.pathType -}}
+{{- $kubeVersion := .Capabilities.KubeVersion.Version }}
+{{ if semverCompare ">= 1.19.0-0" $kubeVersion }}
+apiVersion: networking.k8s.io/v1
+{{ else if .Capabilities.APIVersions.Has "networking.k8s.io/v1beta1" }}
+apiVersion: networking.k8s.io/v1beta1
+{{ else }}
+apiVersion: extensions/v1beta1
+{{ end }}
+kind: Ingress
+metadata:
+  name: {{ template "onepassword-connect.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    helm.sh/chart: {{ include "onepassword-connect.chart" . }}
+    app.kubernetes.io/name: {{ include "onepassword-connect.name" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    {{- with .Values.connect.ingress.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- template "onepassword-connect.ingress.annotations" . }}
+spec:
+{{- if .Values.connect.ingress.tls }}
+  tls:
+  {{- range .Values.connect.ingress.tls }}
+    - hosts:
+      {{- range .hosts }}
+        - {{ . | quote }}
+      {{- end }}
+      secretName: {{ .secretName }}
+  {{- end }}
+{{- end }}
+{{- if .Values.connect.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.connect.ingress.ingressClassName }}
+{{- end }}
+  rules:
+  {{- range .Values.connect.ingress.hosts }}
+    - host: {{ .host | quote }}
+      http:
+        paths:
+{{ if $extraPaths }}
+{{ toYaml $extraPaths | indent 10 }}
+{{- end }}
+        {{- range (.paths | default (list "/")) }}
+          - path: {{ . }}
+            {{ if semverCompare ">= 1.19.0-0" $kubeVersion }}
+            pathType: {{ $pathType }}
+            {{ end }}
+            backend:
+              {{ if semverCompare ">= 1.19.0-0" $kubeVersion }}
+              service:
+                {{- if $tlsEnabled }}
+                name: {{ $serviceName }}
+                port:
+                  number: {{ $apiHttpsPort }}
+                {{- else }}
+                name: {{ $serviceName }}
+                port:
+                  number: {{ $apiHttpPort }}
+                {{- end }}
+              {{ else }}
+              {{- if $tlsEnabled }}
+              serviceName: {{ $serviceName }}-https
+              servicePort: {{ $apiHttpsPort }}
+              {{- else }}
+              serviceName: {{ $serviceName }}
+              servicePort: {{ $apiHttpPort }}
+              {{- end }}
+              {{ end }}
+        {{- end }}
+  {{- end }}
+{{- end }}

@@ -1,3 +1,4 @@
+{{- if and .Values.acceptanceTests.healthCheck.enabled .Values.connect.create }}
 apiVersion: v1
 kind: Pod
 metadata:
@@ -12,5 +13,7 @@ spec:
   restartPolicy: Never
   containers:
     - name: curl
-      image: curlimages/curl
-      command: ["curl", "http://{{ .Values.connect.applicationName }}:8080/health"]
+      image: {{ .Values.acceptanceTests.healthCheck.image.repository }}:{{ .Values.acceptanceTests.healthCheck.image.tag }}
+
+      command: ["curl", "{{- include "onepassword-connect.url" . }}/health"]
+{{- end }}
