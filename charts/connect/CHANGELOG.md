@@ -14,7 +14,7 @@
 # v2.2.1
 
 # Fixes
-* Update 1Password Operator image to v1.10.1 which brings fixes.
+* 1Password Operator image is updated to v1.10.1 to brings fixes for the operator.
 
 [//]: # (START/v2.2.0)
 # v2.2.0
