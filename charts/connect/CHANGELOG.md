@@ -10,6 +10,12 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v2.2.1)
+# v2.2.1
+
+# Fixes
+* Update 1Password Operator image to v1.10.1 which brings fixes.
+
 [//]: # (START/v2.2.0)
 # v2.2.0
 
