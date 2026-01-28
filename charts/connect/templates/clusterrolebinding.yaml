@@ -3,6 +3,7 @@
 {{- $name := .Values.operator.clusterRoleBinding.name -}}
 {{- $clusterRoleName := .Values.operator.clusterRole.name -}}
 {{- $serviceAccountName := .Values.operator.serviceAccount.name -}}
+{{- $connectServiceAccountName := .Values.connect.serviceAccount.name -}}
 {{- $releaseNamespace := .Release.Namespace -}}
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -13,6 +14,9 @@ metadata:
 subjects:
 - kind: ServiceAccount
   name: {{ $serviceAccountName }}
+  namespace: {{ $releaseNamespace }}
+- kind: ServiceAccount
+  name: {{ $connectServiceAccountName }}
   namespace: {{ $releaseNamespace }}
 roleRef:
   kind: ClusterRole
