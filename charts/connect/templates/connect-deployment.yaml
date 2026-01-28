@@ -57,6 +57,7 @@ spec:
         {{- end }}
       tolerations:
       {{- toYaml .Values.connect.tolerations | nindent 8 }}
+      serviceAccountName: {{ .Values.operator.serviceAccount.name }}
       containers:
         - name: {{ .Values.connect.api.name }}
           image: {{ .Values.connect.api.imageRepository }}:{{ tpl .Values.connect.version . }}
