@@ -1,3 +1,4 @@
+{{- if .Values.connect.create }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,6 +15,7 @@ metadata:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  replicas: {{ .Values.connect.replicas }}
   selector:
     matchLabels:
       app: {{ .Values.connect.applicationName }}
@@ -31,23 +33,33 @@ spec:
       {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
-{{- with .Values.connect.nodeSelector }}
+      {{- with .Values.connect.nodeSelector }}
       nodeSelector:
-{{ toYaml . | indent 8 }}
-{{- end }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.connect.priorityClassName }}
+      priorityClassName: {{ .Values.connect.priorityClassName }}
+      {{- end }}
+      {{- with .Values.connect.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       volumes:
         - name: {{ .Values.connect.dataVolume.name }}
           {{ .Values.connect.dataVolume.type }}: {{- toYaml .Values.connect.dataVolume.values | nindent 12 }}
         - name: credentials
           secret:
             secretName: {{ .Values.connect.credentialsName }}
+            items:
+              - key: {{ .Values.connect.credentialsKey }}
+                path: 1password-credentials.json
         {{- if .Values.connect.tls.enabled }}
         - name: tls-cert
           secret:
             secretName: {{ .Values.connect.tls.secret }}
         {{- end }}
       tolerations:
-{{ toYaml .Values.connect.tolerations | indent 8 }}
+      {{- toYaml .Values.connect.tolerations | nindent 8 }}
       containers:
         - name: {{ .Values.connect.api.name }}
           image: {{ .Values.connect.api.imageRepository }}:{{ tpl .Values.connect.version . }}
@@ -60,10 +72,7 @@ spec:
             {{- toYaml .Values.connect.api.resources | nindent 12 }}
           env:
             - name: OP_SESSION
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.connect.credentialsName }}
-                  key: {{ .Values.connect.credentialsKey }}
+              value: /home/opuser/.op/1password-credentials.json
             - name: OP_BUS_PORT
               value: "11220"
             - name: OP_BUS_PEERS
@@ -78,6 +87,13 @@ spec:
             {{- else }}
             - name: OP_HTTP_PORT
               value: "{{ .Values.connect.api.httpPort }}"
+            {{- end }}
+            - name: OP_LOG_LEVEL
+              value: "{{ .Values.connect.api.logLevel }}"
+            {{- include "onepassword-connect.profilerConfig" . | indent 12 -}}
+            {{- range .Values.connect.customEnvVars }}
+            - name: {{ .name }}
+              value: {{ quote .value }}
             {{- end }}
           {{- if .Values.connect.probes.readiness }}
           readinessProbe:
@@ -100,6 +116,9 @@ spec:
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}
+            - name: credentials
+              mountPath: /home/opuser/.op/1password-credentials.json
+              subPath: 1password-credentials.json
             {{- if .Values.connect.tls.enabled }}
             - name: tls-cert
               mountPath: /home/opuser/.op/certs
@@ -117,14 +136,18 @@ spec:
             - name: OP_HTTP_PORT
               value: "{{ .Values.connect.sync.httpPort }}"
             - name: OP_SESSION
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Values.connect.credentialsName }}
-                  key: {{ .Values.connect.credentialsKey }}
+              value: /home/opuser/.op/1password-credentials.json
             - name: OP_BUS_PORT
               value: "11221"
             - name: OP_BUS_PEERS
               value: localhost:11220
+            - name: OP_LOG_LEVEL
+              value: "{{ .Values.connect.sync.logLevel }}"
+            {{- include "onepassword-connect.profilerConfig" . | indent 12 }}
+            {{- range .Values.connect.customEnvVars }}
+            - name: {{ .name }}
+              value: {{ quote .value }}
+            {{- end }}
           {{- if .Values.connect.probes.readiness }}
           readinessProbe:
             httpGet:
@@ -141,7 +164,26 @@ spec:
             failureThreshold: 3
             periodSeconds: 30
             initialDelaySeconds: 15
-          {{ end }}             
+          {{ end }}
           volumeMounts:
             - mountPath: /home/opuser/.op/data
               name: {{ .Values.connect.dataVolume.name }}
+            - name: credentials
+              mountPath: /home/opuser/.op/1password-credentials.json
+              subPath: 1password-credentials.json
+        {{- if .Values.connect.profiler.enabled }}
+        - name: profiler-data
+          image: alpine
+          command: [ 'sleep', 'infinity' ]
+          volumeMounts:
+            - name: {{ .Values.connect.dataVolume.name }}
+              mountPath: /data
+              subPath: profiler
+        {{- end }}
+      {{- with .Values.connect.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . | quote }}
+      {{- end }}
+      {{- end }}
+{{- end }}

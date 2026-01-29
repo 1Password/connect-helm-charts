@@ -1,16 +1,21 @@
-name: Release charts if needed
+name: Release Charts
 
 on:
   push:
     branches:
       - main
+    paths:
+      - charts/**
 
 jobs:
   release:
+    permissions:
+      contents: write # for helm/chart-releaser-action to push chart release and create a release
+      packages: write # for pushing chart to the GHCR registry
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
@@ -21,9 +26,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Install Helm
-        uses: azure/setup-helm@v1
-        with:
-          version: v3.4.1
+        uses: azure/setup-helm@v4
 
       - name: Run chart-releaser
         # Fork of helm/chart-releaser-action to avoid unwanted release attempts.
@@ -31,5 +34,34 @@ jobs:
         uses: florisvdg/chart-releaser-action@v1.3.0
         with:
           charts_dir: charts
+        id: cr
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          CR_SKIP_EXISTING: true
+
+      - name: Check for released packages
+        id: check_packages
+        run: |
+          if [ -d ".cr-release-packages" ] && [ -n "$(ls -A .cr-release-packages/ 2>/dev/null)" ]; then
+            echo "has_packages=true" >> $GITHUB_OUTPUT
+            echo "Found packages:"
+            ls -la .cr-release-packages/
+          else
+            echo "has_packages=false" >> $GITHUB_OUTPUT
+            echo "No packages found"
+          fi
+
+      - if: ${{ steps.check_packages.outputs.has_packages == 'true' }}
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - if: ${{ steps.check_packages.outputs.has_packages == 'true' }}
+        name: Push Charts to GHCR
+        run: |
+          for pkg in .cr-release-packages/*; do
+            helm push "${pkg}" oci://ghcr.io/${GITHUB_REPOSITORY_OWNER,,} # convert repository owner to lowercase
+          done
