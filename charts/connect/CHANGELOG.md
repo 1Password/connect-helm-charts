@@ -10,6 +10,34 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v2.2.1)
+# v2.2.1
+
+# Fixes
+* 1Password Operator image is updated to v1.10.1 to brings fixes for the operator.
+
+[//]: # (START/v2.2.0)
+# v2.2.0
+
+## Features
+* Connect helm chart supports `--enable-annotations` flag to enable users to set custom anotations on the onepassword-operator managed resources. (#261)
+
+[//]: # (START/v2.1.1)
+# v2.1.1
+
+## Fixes
+* Fix release workflow to publish charts to GHCR. (#258)
+
+[//]: # (START/v2.1.0)
+# v2.1.0
+
+## Features
+* Helm charts are now available to install via OCI registry. (#221)
+
+## Fixes
+* Custom env vars can be set to Connect's sync container now. (#197)
+* Numeric values can be passed as custom env variables in Connect chart. (#255)
+
 [//]: # (START/v2.0.5)
 # v2.0.5
 
