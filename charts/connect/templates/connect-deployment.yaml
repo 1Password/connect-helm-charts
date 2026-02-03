@@ -57,7 +57,7 @@ spec:
         {{- end }}
       tolerations:
       {{- toYaml .Values.connect.tolerations | nindent 8 }}
-      {{- if eq (tpl (.Values.connect.serviceAccount.create | toString) .) "true" }}
+      {{- if .Values.connect.serviceAccount.create }}
       serviceAccountName: {{ .Values.connect.serviceAccount.name }}
       {{- end }}
       containers:
