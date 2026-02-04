@@ -40,6 +40,10 @@ spec:
       {{- if .Values.connect.priorityClassName }}
       priorityClassName: {{ .Values.connect.priorityClassName }}
       {{- end }}
+      {{- with .Values.connect.podSecurityContext }}
+      securityContext:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.connect.affinity }}
       affinity:
       {{- toYaml . | nindent 8 }}
@@ -67,16 +71,10 @@ spec:
         - name: {{ .Values.connect.api.name }}
           image: {{ .Values.connect.api.imageRepository }}:{{ tpl .Values.connect.version . }}
           imagePullPolicy: {{ .Values.connect.imagePullPolicy }}
+          {{- with .Values.connect.api.securityContext }}
           securityContext:
-            runAsUser: 999
-            runAsGroup: 999
-            runAsNonRoot: true
-            allowPrivilegeEscalation: false
-            seccompProfile:
-              type: RuntimeDefault
-            capabilities:
-              drop:
-                - ALL
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.connect.api.resources | nindent 12 }}
           env:
@@ -135,16 +133,10 @@ spec:
         - name: connect-sync
           image: {{ .Values.connect.sync.imageRepository }}:{{ tpl .Values.connect.version . }}
           imagePullPolicy: {{ .Values.connect.imagePullPolicy }}
+          {{- with .Values.connect.sync.securityContext }}
           securityContext:
-            runAsUser: 999
-            runAsGroup: 999
-            runAsNonRoot: true
-            allowPrivilegeEscalation: false
-            seccompProfile:
-              type: RuntimeDefault
-            capabilities:
-              drop:
-                - ALL
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.connect.sync.resources | nindent 12 }}
           env:
