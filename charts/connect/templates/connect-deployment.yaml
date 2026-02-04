@@ -70,7 +70,13 @@ spec:
           securityContext:
             runAsUser: 999
             runAsGroup: 999
+            runAsNonRoot: true
             allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
           resources:
             {{- toYaml .Values.connect.api.resources | nindent 12 }}
           env:
@@ -132,7 +138,13 @@ spec:
           securityContext:
             runAsUser: 999
             runAsGroup: 999
+            runAsNonRoot: true
             allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
           resources:
             {{- toYaml .Values.connect.sync.resources | nindent 12 }}
           env:
@@ -178,6 +190,16 @@ spec:
         - name: profiler-data
           image: alpine
           command: [ 'sleep', 'infinity' ]
+          securityContext:
+            runAsUser: 999
+            runAsGroup: 999
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
+            capabilities:
+              drop:
+                - ALL
           volumeMounts:
             - name: {{ .Values.connect.dataVolume.name }}
               mountPath: /data

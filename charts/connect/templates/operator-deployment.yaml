@@ -53,10 +53,13 @@ spec:
           securityContext:
             runAsUser: 65532
             runAsGroup: 65532
+            runAsNonRoot: true
             allowPrivilegeEscalation: false
+            seccompProfile:
+              type: RuntimeDefault
             capabilities:
               drop:
-                - all
+                - ALL
           command: [ "/manager" ]
           args:
             - --zap-log-level={{ .Values.operator.logLevel }}
