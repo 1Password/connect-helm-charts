@@ -1,0 +1,21 @@
+{{- if (and .Values.operator.create .Values.operator.pdb.enabled ) }}
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ .Values.operator.applicationName }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/component: operator
+    {{- include "onepassword-connect.labels" . | nindent 4 }}
+{{- include "onepassword-connect.extraAnnotations" .Values.operator.pdb }}
+spec:
+  {{- with .Values.operator.pdb.maxUnavailable }}
+  maxUnavailable: {{ . }}
+  {{- else }}
+  minAvailable: {{ .Values.operator.pdb.minAvailable }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: operator
+      name: {{ .Values.connect.applicationName }}
+{{- end }}

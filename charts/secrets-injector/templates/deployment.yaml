@@ -15,6 +15,10 @@ spec:
         app: {{ .Values.injector.applicationName }}
     spec:
       serviceAccountName: {{ .Values.injector.applicationName }}
+      {{- with .Values.injector.podSecurityContext }}
+      securityContext:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Values.injector.applicationName }}
           image: {{ .Values.injector.imageRepository }}:{{ tpl .Values.injector.version . }}
@@ -31,9 +35,25 @@ spec:
                 fieldPath: metadata.namespace
           {{- range .Values.injector.customEnvVars}}
           - name: {{ .name }}
-            value: {{ .value }}
-          {{- end }} 
+            value: {{ quote .value }}
+          {{- end }}
           lifecycle:
             preStop:
               exec:
                 command: [ "/bin/sh", "-c", "/prestop.sh" ]
+          {{- with .Values.injector.securityContext }}
+          securityContext:
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      {{- with .Values.injector.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . | quote }}
+      {{- end }}
+      {{- end }}
+      volumes:
+        - name: tmp
+          emptyDir: {}

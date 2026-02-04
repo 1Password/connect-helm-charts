@@ -15,7 +15,7 @@ metadata:
   {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.operator.replicas }}
   selector:
     matchLabels:
       name: {{ .Values.connect.applicationName }}
@@ -32,26 +32,38 @@ spec:
       {{- toYaml . | nindent 8 }}
       {{- end }}
     spec:
-{{- with .Values.operator.nodeSelector }}
+      {{- with .Values.operator.nodeSelector }}
       nodeSelector:
-{{ toYaml . | indent 8 }}
-{{- end }}
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.operator.priorityClassName }}
+      priorityClassName: {{ .Values.operator.priorityClassName }}
+      {{- end }}
+      {{- with .Values.operator.podSecurityContext }}
+      securityContext:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.operator.affinity }}
+      affinity:
+      {{- toYaml . | nindent 8 }}
+      {{- end }}
       tolerations:
-{{ toYaml .Values.operator.tolerations | indent 8 }}
+      {{- toYaml .Values.operator.tolerations | nindent 8 }}
       serviceAccountName: {{ .Values.operator.serviceAccount.name }}
       containers:
         - name: {{ .Values.connect.applicationName }}
           image: {{ .Values.operator.imageRepository }}:{{ .Values.operator.version | default "latest" }}
           imagePullPolicy: {{ .Values.connect.imagePullPolicy }}
+          {{- with .Values.operator.securityContext }}
           securityContext:
-            runAsUser: 65532
-            runAsGroup: 65532
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop:
-                - all
-          command: ["/manager"]
-          args: [--zap-log-level={{ .Values.operator.logLevel }}]
+          {{- toYaml . | nindent 12 }}
+          {{- end }}
+          command: [ "/manager" ]
+          args:
+            - --zap-log-level={{ .Values.operator.logLevel }}
+            {{- if .Values.operator.enableAnnotations }}
+            - --enable-annotations
+            {{- end }}
           env:
             - name: WATCH_NAMESPACE
               value: {{ default "" (tpl (include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace) .) }}
@@ -61,21 +73,36 @@ spec:
                   fieldPath: metadata.name
             - name: OPERATOR_NAME
               value: "{{ .Values.operator.applicationName }}"
-            - name: OP_CONNECT_HOST
-              value: "{{- include "onepassword-connect.url" . }}"
             - name: POLLING_INTERVAL
               value: "{{ .Values.operator.pollingInterval }}"
+            - name: AUTO_RESTART
+              value: "{{ .Values.operator.autoRestart }}"
+            {{- if eq .Values.operator.authMethod "service-account" }}
+            - name: OP_SERVICE_ACCOUNT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.operator.serviceAccountToken.name }}
+                  key: {{ .Values.operator.serviceAccountToken.key }}
+            {{- end }}
+            {{- if eq .Values.operator.authMethod "connect" }}
+            - name: OP_CONNECT_HOST
+              value: "{{- include "onepassword-connect.url" . }}"
             - name: OP_CONNECT_TOKEN
               valueFrom:
                 secretKeyRef:
                   name: {{ .Values.operator.token.name }}
                   key: {{ .Values.operator.token.key }}
-            - name: AUTO_RESTART
-              value: "{{ .Values.operator.autoRestart }}"
+            {{- end }}
             {{- range .Values.operator.customEnvVars}}
             - name: {{ .name }}
-              value: {{ .value }}
-            {{- end }} 
+              value: {{ quote .value }}
+            {{- end }}
           resources:
             {{- toYaml .Values.operator.resources | nindent 12 }}
+      {{- with .Values.operator.imagePullSecrets }}
+      imagePullSecrets:
+      {{- range . }}
+        - name: {{ . | quote }}
+      {{- end }}
+      {{- end }}
 {{- end }}
