@@ -59,7 +59,11 @@ spec:
           {{- toYaml . | nindent 12 }}
           {{- end }}
           command: [ "/manager" ]
-          args: [ --zap-log-level={{ .Values.operator.logLevel }}]
+          args:
+            - --zap-log-level={{ .Values.operator.logLevel }}
+            {{- if .Values.operator.enableAnnotations }}
+            - --enable-annotations
+            {{- end }}
           env:
             - name: WATCH_NAMESPACE
               value: {{ default "" (tpl (include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace) .) }}
@@ -91,7 +95,7 @@ spec:
             {{- end }}
             {{- range .Values.operator.customEnvVars}}
             - name: {{ .name }}
-              value: {{ .value }}
+              value: {{ quote .value }}
             {{- end }}
           resources:
             {{- toYaml .Values.operator.resources | nindent 12 }}

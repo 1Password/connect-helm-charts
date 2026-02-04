@@ -9,6 +9,10 @@
           "type": "string",
           "enum": ["connect", "service-account"],
           "description": "Denotes authentication method that 1Password Operator will use to access 1Password secrets."
+        },
+        "enableAnnotations": {
+          "type": "boolean",
+          "description": "Passes the --enable-annotations flag to the Operator container when true."
         }
       }
     }

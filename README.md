@@ -4,7 +4,7 @@
 <div align="center">
 	<h1>1Password Helm Charts</h1>
 	<p>This repository hosts the official 1Password Helm Charts.</p>
-	<a href="/QUICKSTART.md">
+	<a href="https://developer.1password.com/docs/k8s/helm">
 		<img alt="Get started" src="https://user-images.githubusercontent.com/45081667/226940040-16d3684b-60f4-4d95-adb2-5757a8f1bc15.png" height="37"/>
 	</a>
 </div>
@@ -27,7 +27,7 @@
 ## 💙 Community & Support
 
 - File an [issue](https://github.com/1Password/connect-helm-charts/issues) for bugs and feature requests.
-- Join the [Developer Slack workspace](https://join.slack.com/t/1password-devs/shared_invite/zt-1halo11ps-6o9pEv96xZ3LtX_VE0fJQA).
+- Join the [Developer Slack workspace](https://developer.1password.com/joinslack).
 - Subscribe to the [Developer Newsletter](https://1password.com/dev-subscribe/).
 
 ## 🔐 Security

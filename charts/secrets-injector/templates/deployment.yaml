@@ -38,7 +38,7 @@ spec:
                 fieldPath: metadata.namespace
           {{- range .Values.injector.customEnvVars}}
           - name: {{ .name }}
-            value: {{ .value }}
+            value: {{ quote .value }}
           {{- end }}
           lifecycle:
             preStop:
