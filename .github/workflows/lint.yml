@@ -20,3 +20,12 @@ jobs:
 
       - name: Lint chart
         run: ct lint --config ct.yaml
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+
+      - name: Install helm-docs
+        run: go install github.com/norwoodj/helm-docs/cmd/helm-docs@v1.14.2
+
+      - name: Check README.md is up-to-date
+        run: make docs-check
