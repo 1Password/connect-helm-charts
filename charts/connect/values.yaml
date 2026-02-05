@@ -18,7 +18,11 @@ connect:
     name: connect-api
     # The 1Password Connect API repository
     imageRepository: 1password/connect-api
-    resources: {}
+    resources:
+      limits:
+        memory: 128Mi
+      requests:
+        cpu: 0.2
     httpPort: 8080
     httpsPort: 8443
     logLevel: info
@@ -42,6 +46,15 @@ connect:
       #
       annotations: {}
 
+    # Container securityContext to be added to the Connect API containers.
+    # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    securityContext:
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
+
   # The 1Password Connect Sync Specific Values
   sync:
     name: connect-sync
@@ -49,6 +62,15 @@ connect:
     resources: {}
     httpPort: 8081
     logLevel: info
+
+    # Container securityContext to be added to the Connect Sync containers.
+    # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+    securityContext:
+      capabilities:
+        drop:
+          - ALL
+      readOnlyRootFilesystem: true
+      allowPrivilegeEscalation: false
 
   # The name of 1Password Connect Application
   applicationName: onepassword-connect
@@ -58,13 +80,24 @@ connect:
 
   # The type of Service resource to create for the Connect API and sync services.
   # See: https://kubernetes.io/docs/concepts/services-networking/service
-  # This by default is NodePort and can also be defined as LoadBalancer.
+  # This by default is ClusterIP and can also be defined as NodePort or LoadBalancer.
   # If serviceType is LoadBalancer then loadBalancerSourceRanges and loadBalancerIP should be defined.
   # See: https://kubernetes.io/docs/concepts/services-networking/service/#loadbalancer
-  serviceType: NodePort
+  serviceType: ClusterIP
 
   # Additional annotations to be added to the service resource
   serviceAnnotations: {}
+
+  # 1Password Connect Service Account Configuration
+  serviceAccount:
+    # Create service account for the 1Password Connect deployment
+    create: false
+
+    # Annotations for the 1Password Connect Service Account
+    annotations: {}
+
+    # The name of the 1Password Connect Service Account
+    name: onepassword-connect
 
   # loadBalancerSourceRanges:
   #   - 10.0.0.0/16
@@ -91,12 +124,46 @@ connect:
   # The 1Password Connect API repository
   imagePullPolicy: IfNotPresent
 
+  # List of secret names to use as image pull secrets. Secrets must exist in the same namespace.
+  imagePullSecrets: []
+
   # The 1Password Connect version to pull
   version: "{{ .Chart.AppVersion }}"
 
   # Node selector stanza for the Connect pod
   # See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
   nodeSelector: {}
+
+  # Affinity rules for the Connect pod
+  affinity: {}
+
+  ## Horizontal Pod Autoscaling for the Connect pod
+  hpa:
+    # Enable Horizontal Pod Autoscaling for the Connect pod
+    enabled: false
+    # Additional annotations to be added to the HPA Connect
+    annotations: {}
+    # Minimum number of replicas for the Connect pod
+    minReplicas: 1
+    # Maximum number of replicas for the Connect pod
+    maxReplicas: 3
+    # Average Memory utilization percentage for the Connect pod
+    avgMemoryUtilization: 50
+    # Average CPU utilization percentage for the Connect pod
+    avgCpuUtilization: 50
+    # Defines the Autoscaling Behavior in up/down directions
+    behavior: {}
+
+  ## Pod Disruption Budget for the Connect pod
+  pdb:
+    # Enable Pod Disruption Budget for the Connect pod
+    enabled: false
+    # Additional annotations to be added to the PDB Connect
+    annotations: {}
+    # Number of pods that are unavailble after eviction as number or percentage (eg.: 50%)
+    maxUnavailable: 1
+    # Number of pods that are available after eviction as number or percentage (eg.: 50%)
+    minAvailable: 0
 
   # 1Password Connect API and Sync Service
   probes:
@@ -106,6 +173,9 @@ connect:
     # Denotes whether the 1Password Connect API will be continually checked
     # by Kubernetes for liveness and restarted if the pod becomes unresponsive
     readiness: true
+
+  # priorityClassName to apply to the Connect API deployment resource.
+  priorityClassName: ''
 
   # Additional annotations to be added to the Connect API deployment resource.
   annotations: {}
@@ -118,6 +188,16 @@ connect:
 
   # Additional labels to be added to the Connect API pods.
   podLabels: {}
+
+  # Pod securityContext to be added to the Connect API pods.
+  # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  podSecurityContext:
+    fsGroup: 999
+    runAsUser: 999
+    runAsGroup: 999
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
 
   # List of tolerations to be added to the Connect API pods.
   tolerations: []
@@ -189,10 +269,25 @@ connect:
     # Number of profiler snapshots to keep.
     keepLast: 12
 
+  # 1Password Connect Custom Container Environment Variables
+  # Must be written in the following format:
+  # - name: VARIABLE_NAME
+  #   value: VARIABLE_VALUE
+  customEnvVars: []
+
 # This section of values is for 1Password Operator Configuration
 operator:
   # Denotes whether the 1Password Operator will be deployed
   create: false
+
+  # Denotes authentication method that 1Password Operator will use to access 1Password secrets
+  # Valid values:
+  # - connect: sets OP_CONNECT_HOST and OP_CONNECT_TOKEN
+  # - service-account: sets OP_SERVICE_ACCOUNT_TOKEN
+  authMethod: connect
+
+  # The number of replicas to run the 1Password Connect Operator deployment
+  replicas: 1
 
   # Denotes whether the 1Password Operator will automatically restart deployments based on associated updated secrets.
   autoRestart: false
@@ -203,6 +298,9 @@ operator:
   # The 1Password Operator image pull policy
   imagePullPolicy: IfNotPresent
 
+  # List of secret names to use as image pull secrets. Secrets must exist in the same namespace.
+  imagePullSecrets: []
+
   # The 1Password Operator repository
   imageRepository: 1password/onepassword-operator
 
@@ -210,11 +308,61 @@ operator:
   pollingInterval: 600
 
   # The 1Password Operator version to pull
-  version: "1.8.0"
+  version: "1.10.1"
+
+  # Pod securityContext to be added to the 1Password Operator pods.
+  # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  podSecurityContext:
+    fsGroup: 65532
+    runAsUser: 65532
+    runAsGroup: 65532
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+
+  # Container securityContext to be added to the 1Password Operator containers.
+  # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
 
   # Node selector stanza for the Operator pod
   # See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
   nodeSelector: {}
+
+  # Affinity rules for the Operator pod
+  affinity: {}
+
+  ## Horizontal Pod Autoscaling for the Operator pod
+  hpa:
+    # Enable Horizontal Pod Autoscaling for the Operator pod
+    enabled: false
+    # Additional annotations to be added to the HPA Operator
+    annotations: {}
+    # Minimum number of replicas for the Operator pod
+    minReplicas: 1
+    # Maximum number of replicas for the Operator pod
+    maxReplicas: 3
+    # Average Memory utilization percentage for the Operator pod
+    avgMemoryUtilization: 50
+    # Average CPU utilization percentage for the Operator pod
+    avgCpuUtilization: 50
+    # Defines the Autoscaling Behavior in up/down directions
+    behavior: {}
+
+  ## Pod Disruption Budget for the Operator pod
+  pdb:
+    # Enable Pod Disruption Budget for the Operator pod
+    enabled: false
+    # Additional annotations to be added to the PDB Operator
+    annotations: {}
+    # Number of pods that are unavailble after eviction as number or percentage (eg.: 50%)
+    maxUnavailable: 1
+    # Number of pods that are available after eviction as number or percentage (eg.: 50%)
+    minAvailable: 0
 
   # Additional annotations to be added to the Operator pods.
   annotations: {}
@@ -228,6 +376,9 @@ operator:
   # Additional labels to be added to the Operator pods.
   podLabels: {}
 
+  # priorityClassName to apply to the Operator pods.
+  priorityClassName: ''
+
   # List of tolerations to be added to the Operator pods.
   tolerations: []
 
@@ -237,7 +388,7 @@ operator:
   # The resources requests/limits for the 1Password Operator pod
   resources: {}
 
-  # 1Password Operator Token Configuration
+  # 1Password Operator Connect Token Configuration
   token:
     # The name of Kubernetes Secret containing the 1Password Connect API token
     name: onepassword-token
@@ -248,9 +399,20 @@ operator:
     # An API token generated for 1Password Connect to be used by the Operator
     value:
 
+  # 1Password Service Account Token Configuration
+  serviceAccountToken:
+    # The name of Kubernetes Secret containing the 1Password Service Account token
+    name: onepassword-service-account-token
+
+    # The key for the 1Password Service Account token stored in the 1Password token secret
+    key: token
+
+    # An API token generated for 1Password Service Account to be used by the Operator
+    value:
+
   # 1Password Operator Service Account Configuration
   serviceAccount:
-    # The name of the 1Password Conenct Operator
+    # Create service account for the 1Password Connect Operator deployment
     create: "{{ .Values.operator.create }}"
 
     # Annotations for the 1Password Connect Service Account
@@ -286,7 +448,40 @@ operator:
   # 1Password Operator Log Level Configuration
   logLevel: info
 
+  # Enables operator-driven annotations when true
+  enableAnnotations: false
+
+  # 1Password Operator Custom Container Environment Variables
+  # Must be written in the following format:
+  # - name: VARIABLE_NAME
+  #   value: VARIABLE_VALUE
+  customEnvVars: []
+
 # 1Password Acceptance Tests Functionality
 acceptanceTests:
   enabled: false
   fixtures: {}
+  healthCheck:
+    enabled: true
+    image:
+      repository: curlimages/curl
+      tag: 'latest'
+
+  # Pod securityContext to be added to the 1Password Acceptance Tests pods.
+  # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  podSecurityContext:
+    fsGroup: 65532
+    runAsUser: 65532
+    runAsGroup: 65532
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+
+  # Container securityContext to be added to the 1Password Acceptance Tests containers.
+  # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false

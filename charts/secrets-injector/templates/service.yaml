@@ -5,9 +5,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.injector.applicationName }}
-  annotations:
-    helm.sh/hook: pre-install
-    helm.sh/hook-weight: "2"
 spec:
   ports:
     - port: {{ .Values.injector.port }}

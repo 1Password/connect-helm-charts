@@ -1,0 +1,60 @@
+{{- if and .Values.operator.create .Values.operator.customEnvVars -}}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ .Release.Name }}-custom-env-vars-check"
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "onepassword-connect.labels" . | nindent 4 }}
+  annotations:
+    helm.sh/hook: test
+    helm.sh/hook-weight: "4"
+spec:
+  serviceAccountName: {{ .Values.operator.serviceAccount.name }}
+  restartPolicy: Never
+  containers:
+    - name: env-check
+      image: alpine/k8s:1.28.2
+      command: ["sh", "-c"]
+      args:
+        - |
+          # Get the operator pod name using the deployment name
+          OPERATOR_POD=$(kubectl get pods -l name={{ .Values.connect.applicationName }} -o jsonpath='{.items[0].metadata.name}')
+          
+          if [ -z "$OPERATOR_POD" ]; then
+            echo "❌ Could not find operator pod"
+            exit 1
+          fi
+          
+          echo "🔍 Found operator pod: $OPERATOR_POD"
+
+          # Check if custom environment variables are set in the deployment spec
+          echo "🔍 Checking for CUSTOM_TEST_VAR in deployment spec..."
+          if kubectl get deployment {{ .Values.operator.applicationName }} -o yaml | grep -A 1 "name: CUSTOM_TEST_VAR"; then
+            echo "✅ CUSTOM_TEST_VAR found in deployment spec"
+          else
+            echo "❌ CUSTOM_TEST_VAR not found in deployment spec"
+            exit 1
+          fi
+          
+          echo "🔍 Checking for ANOTHER_CUSTOM_VAR in deployment spec..."
+          if kubectl get deployment {{ .Values.operator.applicationName }} -o yaml | grep -A 1 "name: ANOTHER_CUSTOM_VAR"; then
+            echo "✅ ANOTHER_CUSTOM_VAR found in deployment spec"
+          else
+            echo "❌ ANOTHER_CUSTOM_VAR not found in deployment spec"
+            exit 1
+          fi
+
+          echo "🔍 Checking for NUMERIC_CUSTOM_VAR in deployment spec..."
+          if kubectl get deployment {{ .Values.operator.applicationName }} -o yaml | grep -A 1 "name: NUMERIC_CUSTOM_VAR"; then
+            echo "✅ NUMERIC_CUSTOM_VAR found in deployment spec"
+          else
+            echo "❌ NUMERIC_CUSTOM_VAR not found in deployment spec"
+            exit 1
+          fi
+
+          echo "🔍 Showing all custom environment variables in deployment:"
+          kubectl get deployment {{ .Values.operator.applicationName }} -o yaml | grep -A 2 -B 1 "name: CUSTOM_\|name: ANOTHER_"
+
+          echo "✅ All custom environment variables are correctly configured in the deployment!"
+{{- end }}
