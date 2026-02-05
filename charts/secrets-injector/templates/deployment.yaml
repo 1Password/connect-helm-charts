@@ -5,7 +5,6 @@ metadata:
   namespace: {{ .Release.Namespace }}
   labels:
     app: {{ .Values.injector.applicationName }}
-    {{- include "onepassword-connect.labels" . | nindent 4 }}
   {{- with .Values.injector.labels }}
   {{- toYaml . | nindent 4 }}
   {{- end }}
