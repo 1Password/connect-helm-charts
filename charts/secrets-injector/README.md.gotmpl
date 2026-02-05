@@ -28,8 +28,6 @@ or
 $ helm install --set injector.applicationName=injector injector ./secrets-injector
 ```
 
-{{ template "chart.valuesSection" . }}
-
 #### Custom Environment Variables
 
 The injector container supports additional environment variables beyond those explicitly defined in the Helm chart. These can be defined using a key map for each custom variable. An example is shown below:
@@ -42,3 +40,5 @@ injector:
     - name: "CUSTOM_ENV_VAR2"
       value: "customvar2"
 ```
+
+{{ template "chart.valuesSection" . }}

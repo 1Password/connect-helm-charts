@@ -51,8 +51,6 @@ or
 helm install --set connect.applicationName=connect connect ./connect
 ```
 
-{{ template "chart.valuesSection" . }}
-
 #### Custom Environment Variables
 
 Some containers support additional environment variables beyond those explicitly defined in the Helm chart. These can be defined using a key map for each custom variable. An example of adding custom variables to the connect container is shown below:
@@ -70,3 +68,5 @@ connect:
 
 By default, the chart will also install the `OnePasswordItem` CRD.
 To disable this, you can run `helm install` with the [`--skip-crds` flag](https://helm.sh/docs/chart_best_practices/custom_resource_definitions/#method-1-let-helm-do-it-for-you).
+
+{{ template "chart.valuesSection" . }}

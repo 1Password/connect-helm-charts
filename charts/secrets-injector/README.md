@@ -28,6 +28,19 @@ or
 $ helm install --set injector.applicationName=injector injector ./secrets-injector
 ```
 
+#### Custom Environment Variables
+
+The injector container supports additional environment variables beyond those explicitly defined in the Helm chart. These can be defined using a key map for each custom variable. An example is shown below:
+
+```yaml
+injector:
+  customEnvVars:
+    - name: "CUSTOM_ENV_VAR1"
+      value: "customvar2"
+    - name: "CUSTOM_ENV_VAR2"
+      value: "customvar2"
+```
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -48,16 +61,3 @@ $ helm install --set injector.applicationName=injector injector ./secrets-inject
 | injector.targetPort | int | `8443` | The port the Secrets Injector API sends requests to the pod |
 | injector.tolerations | list | `[]` | List of tolerations to be added to the Secrets Injector pod. |
 | injector.version | string | `"{{ .Chart.AppVersion }}"` | The 1Password Secrets Injector version to pull. |
-
-#### Custom Environment Variables
-
-The injector container supports additional environment variables beyond those explicitly defined in the Helm chart. These can be defined using a key map for each custom variable. An example is shown below:
-
-```yaml
-injector:
-  customEnvVars:
-    - name: "CUSTOM_ENV_VAR1"
-      value: "customvar2"
-    - name: "CUSTOM_ENV_VAR2"
-      value: "customvar2"
-```

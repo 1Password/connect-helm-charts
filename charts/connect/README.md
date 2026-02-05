@@ -51,6 +51,24 @@ or
 helm install --set connect.applicationName=connect connect ./connect
 ```
 
+#### Custom Environment Variables
+
+Some containers support additional environment variables beyond those explicitly defined in the Helm chart. These can be defined using a key map for each custom variable. An example of adding custom variables to the connect container is shown below:
+
+```yaml
+connect:
+  customEnvVars:
+    - name: "CUSTOM_ENV_VAR1"
+      value: "customvar2"
+    - name: "CUSTOM_ENV_VAR2"
+      value: "customvar2"
+```
+
+### CRD
+
+By default, the chart will also install the `OnePasswordItem` CRD.
+To disable this, you can run `helm install` with the [`--skip-crds` flag](https://helm.sh/docs/chart_best_practices/custom_resource_definitions/#method-1-let-helm-do-it-for-you).
+
 ## Values
 
 | Key | Type | Default | Description |
@@ -186,21 +204,3 @@ helm install --set connect.applicationName=connect connect ./connect
 | operator.tolerations | list | `[]` | List of tolerations to be added to the Operator pods. |
 | operator.version | string | `"1.10.1"` | The 1Password Operator version to pull |
 | operator.watchNamespace | list | `[]` | A list of namespaces for the 1Password Operator to watch and manage. Use the empty list to watch all namespaces. |
-
-#### Custom Environment Variables
-
-Some containers support additional environment variables beyond those explicitly defined in the Helm chart. These can be defined using a key map for each custom variable. An example of adding custom variables to the connect container is shown below:
-
-```yaml
-connect:
-  customEnvVars:
-    - name: "CUSTOM_ENV_VAR1"
-      value: "customvar2"
-    - name: "CUSTOM_ENV_VAR2"
-      value: "customvar2"
-```
-
-### CRD
-
-By default, the chart will also install the `OnePasswordItem` CRD.
-To disable this, you can run `helm install` with the [`--skip-crds` flag](https://helm.sh/docs/chart_best_practices/custom_resource_definitions/#method-1-let-helm-do-it-for-you).
