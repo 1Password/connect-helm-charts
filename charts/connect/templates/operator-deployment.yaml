@@ -64,6 +64,9 @@ spec:
             {{- if .Values.operator.enableAnnotations }}
             - --enable-annotations
             {{- end }}
+            {{- if .Values.operator.allowEmptyValues }}
+            - --allow-empty-values
+            {{- end }}
           env:
             - name: WATCH_NAMESPACE
               value: {{ default "" (tpl (include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace) .) }}
