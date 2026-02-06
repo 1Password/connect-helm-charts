@@ -438,6 +438,12 @@ operator:
   # -- Custom environment variables for the 1Password Operator container.
   customEnvVars: []
 
+  # 1Password Operator TLS settings
+  tls:
+
+    # -- Set trust.secret to the secret name containing the Connect TLS cert when using a self-signed cert.
+    trust: {}
+
 # 1Password Acceptance Tests Functionality
 acceptanceTests:
   # -- Enable acceptance tests for the chart
