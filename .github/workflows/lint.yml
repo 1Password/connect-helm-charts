@@ -6,23 +6,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v5
 
       - name: Set up Helm
-        uses: azure/setup-helm@v4
-        with:
-          version: v3.14.0
+        uses: azure/setup-helm@v4.3.1
 
       # Set up Python for ct lint, which needs Python for Yamale and yamllint
       - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+        uses: actions/setup-python@v6
 
       - name: Set up ct CLI
         uses: helm/chart-testing-action@v2.7.0
 
       - name: Lint chart
         run: ct lint --config ct.yaml
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+
+      - name: Install helm-docs
+        run: go install github.com/norwoodj/helm-docs/cmd/helm-docs@v1.14.2
+
+      - name: Check README.md is up-to-date
+        run: make docs-check

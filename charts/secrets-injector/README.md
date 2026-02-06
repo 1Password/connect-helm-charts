@@ -28,19 +28,6 @@ or
 $ helm install --set injector.applicationName=injector injector ./secrets-injector
 ```
 
-### Values
-
-| Key                       | Type    | Default                                   | Description                                                                                                                               |
-|---------------------------|---------|-------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
-| injector.applicationName  | string  | `"secrets-injector"`                      | The name of 1Password Kubernetes Secrets Injector Application                                                                             |
-| injector.imagePullPolicy  | string  | `"IfNotPresent"`                          | The 1Password Secrets Injector docker image policy. `"IfNotPresent"` means the image is pulled only if it is not already present locally. |
-| injector.imagePullSecrets | array   | `[]`                                      | Global list of secret names to use as image pull secrets for all pod specs in the chart. Secrets must exist in the same namespace         |
-| injector.imageRepository  | string  | `"1password/kubernetes-secrets-injector"` | The 1Password Secrets Injector docker image repository                                                                                    |
-| injector.port             | string  | `443`                                     | The port the Secrets Injector exposes                                                                                                     |
-| injector.targetPort       | integer | `8443`                                    | The port the Secrets Injector API sends requests to the pod                                                                               |
-| injector.version          | string  | `{{.Chart.AppVersion}}`                   | The 1Password Secrets Injector version to pull.                                                                                           |
-| injector.customEnvVars    | array   | `[]`                                      | Custom Environment Variables for the 1Password Secrets Injector container that are not specified in this helm chart.                      |
-
 #### Custom Environment Variables
 
 The injector container supports additional environment variables beyond those explicitly defined in the Helm chart. These can be defined using a key map for each custom variable. An example is shown below:
@@ -53,3 +40,24 @@ injector:
     - name: "CUSTOM_ENV_VAR2"
       value: "customvar2"
 ```
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| injector.annotations | object | `{}` | Additional annotations to be added to the Secrets Injector deployment resource. |
+| injector.applicationName | string | `"secrets-injector"` | The name of 1Password Kubernetes Secrets Injector Application |
+| injector.customEnvVars | list | `[]` | Custom Environment Variables for the 1Password Secrets Injector container that are not specified in this helm chart. |
+| injector.imagePullPolicy | string | `"IfNotPresent"` | The 1Password Secrets Injector docker image policy. |
+| injector.imagePullSecrets | list | `[]` | Global list of secret names to use as image pull secrets for all pod specs in the chart. Secrets must exist in the same namespace |
+| injector.imageRepository | string | `"1password/kubernetes-secrets-injector"` | The 1Password Secrets Injector docker image repository |
+| injector.labels | object | `{}` | Additional labels to be added to the Secrets Injector deployment resource. |
+| injector.nodeSelector | object | `{}` | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the Secrets Injector pod |
+| injector.podAnnotations | object | `{}` | Additional annotations to be added to the Secrets Injector pod. |
+| injector.podLabels | object | `{}` | Additional labels to be added to the Secrets Injector pod. |
+| injector.podSecurityContext | object | `{"fsGroup":65532,"runAsGroup":65532,"runAsNonRoot":true,"runAsUser":65532,"seccompProfile":{"type":"RuntimeDefault"}}` | Pod `securityContext` for the 1Password Secrets Injector pod. |
+| injector.port | int | `443` | The port the Secrets Injector exposes |
+| injector.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true}` | Container `securityContext` for the 1Password Secrets Injector container. |
+| injector.targetPort | int | `8443` | The port the Secrets Injector API sends requests to the pod |
+| injector.tolerations | list | `[]` | List of tolerations to be added to the Secrets Injector pod. |
+| injector.version | string | `"{{ .Chart.AppVersion }}"` | The 1Password Secrets Injector version to pull. |
