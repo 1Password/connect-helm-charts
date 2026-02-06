@@ -1,4 +1,4 @@
-name: Run acceptance tests
+name: Run acceptance tests [Connect chart]
 on:
   push:
 
@@ -10,7 +10,6 @@ on:
   # * Fill in the following:
   #   * `checkout-repo`: `<PR author>/connect-helm-charts`
   #   * `checkout-ref`: <copied commit hash>
-  #   * `branch`: `acceptance-tests-on-forks`
   workflow_dispatch:
     inputs:
       checkout-repo:
@@ -23,21 +22,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           repository: ${{ github.event.inputs.checkout-repo }}
           ref: ${{ github.event.inputs.checkout-ref }}
 
       - name: Set up Helm
-        uses: azure/setup-helm@v1
-        with:
-          version: v3.4.1
+        uses: azure/setup-helm@v4.3.1
 
       - name: Set up ct CLI
-        uses: helm/chart-testing-action@v2.1.0
-        with:
-          version: v3.4.0
+        uses: helm/chart-testing-action@v2.7.0
 
       - name: Check if chart has changed
         id: list-changed
@@ -51,30 +46,16 @@ jobs:
         run: sudo snap install yq
         if: steps.list-changed.outputs.changed == 'true'
 
-      - name: Add fixtures to YAML test cases
+      - name: Spin up local Kubernetes cluster
+        uses: helm/kind-action@v1.12.0
+
+      - name: Run acceptance tests
+        working-directory: charts/connect
         env:
           OP_CONNECT_CREDENTIALS: ${{ secrets.OP_CONNECT_CREDENTIALS }}
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
-        run: |
-          cat > fixtures.yaml << EOF
-          acceptanceTests:
-            enabled: true
-            fixtures:
-              vaultId: v5pz6venw4roosmkzdq2nhpv6u
-              itemId: hrgkzhrlvscomepxlgafb2m3ca
-              secretValue: RGVhciBzZWN1cml0eSByZXNlYXJjaGVyLCB0aGlzIGlzIGp1c3QgYSBkdW1teSBzZWNyZXQuIFBsZWFzZSBkb24ndCByZXBvcnQgaXQu
-          EOF
-
-          for values_file in charts/connect/ci/*.yaml; do
-            # Add secrets
-            yq eval '.connect.credentials = strenv(OP_CONNECT_CREDENTIALS) | .operator.token.value = strenv(OP_CONNECT_TOKEN)' -i $values_file
-
-            # Add acceptance test fixtures
-            yq eval-all --inplace 'select(fileIndex == 0) * select(fileIndex == 1)' $values_file fixtures.yaml
-          done
-
-      - name: Spin up local Kubernetes cluster
-        uses: helm/kind-action@v1.2.0
-
-      - name: Deploy and run acceptance tests
-        run: ct install --config ct.yaml
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          OP_VAULT_ID: ${{ secrets.OP_VAULT_ID }}
+          OP_ITEM_ID: ${{ secrets.OP_ITEM_ID }}
+          OP_SECRET_VALUE: ${{ secrets.OP_SECRET_VALUE }}
+        run: make test-e2e

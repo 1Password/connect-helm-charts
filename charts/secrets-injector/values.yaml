@@ -11,3 +11,41 @@ injector:
   # - name: VARIABLE_NAME
   #   value: VARIABLE_VALUE
   customEnvVars: []
+
+  # Pod securityContext to be added to the 1Password secrets injector pods.
+  # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
+  podSecurityContext:
+    fsGroup: 65532
+    runAsUser: 65532
+    runAsGroup: 65532
+    runAsNonRoot: true
+    seccompProfile:
+      type: RuntimeDefault
+
+  # Container securityContext to be added to the 1Password secrets injector containers.
+  # See: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-container
+  securityContext:
+    capabilities:
+      drop:
+        - ALL
+    readOnlyRootFilesystem: true
+    allowPrivilegeEscalation: false
+
+  # Node selector stanza for the Secrets Injector pod
+  # See: https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector
+  nodeSelector: {}
+
+  # Additional annotations to be added to the Secrets Injector deployment resource.
+  annotations: {}
+
+  # Additional labels to be added to the Secrets Injector deployment resource.
+  labels: {}
+
+  # Additional annotations to be added to the Secrets Injector pod.
+  podAnnotations: {}
+
+  # Additional labels to be added to the Secrets Injector pod.
+  podLabels: {}
+
+  # List of tolerations to be added to the Secrets Injector pod.
+  tolerations: []

@@ -3,13 +3,99 @@
 
 ## Features
 * A user-friendly description of a new feature. {issue-number}
-* Add priorityClassName values to operator and connect. {#201}
 
 ## Fixes
 * A user-friendly description of a fix. {issue-number}
 
 ## Security
 * A user-friendly description of a security fix. {issue-number}
+
+[//]: # (START/v2.2.1)
+# v2.2.1
+
+# Fixes
+* 1Password Operator image is updated to v1.10.1 to brings fixes for the operator.
+
+[//]: # (START/v2.2.0)
+# v2.2.0
+
+## Features
+* Connect helm chart supports `--enable-annotations` flag to enable users to set custom anotations on the onepassword-operator managed resources. (#261)
+
+[//]: # (START/v2.1.1)
+# v2.1.1
+
+## Fixes
+* Fix release workflow to publish charts to GHCR. (#258)
+
+[//]: # (START/v2.1.0)
+# v2.1.0
+
+## Features
+* Helm charts are now available to install via OCI registry. (#221)
+
+## Fixes
+* Custom env vars can be set to Connect's sync container now. (#197)
+* Numeric values can be passed as custom env variables in Connect chart. (#255)
+
+[//]: # (START/v2.0.5)
+# v2.0.5
+
+## Features
+* Bump Connect version to v1.8.1
+
+[//]: # (START/v2.0.4)
+# v2.0.4
+
+## Features
+* Bump Connect version to v1.8.0
+
+[//]: # (START/v2.0.3)
+# v2.0.3
+
+## Fixes
+* Allow disabling healthCheck test and allow specifying image used in that test. (#241)
+
+[//]: # (START/v2.0.2)
+# v2.0.2
+
+## Fixes
+* Updated Operator version to include fix for panic when handling 1Password items with files ([onepassword-operator#209](https://github.com/1Password/onepassword-operator/issues/209)).
+
+
+[//]: # (START/v2.0.1)
+# v2.0.1
+
+## Fixes
+* Add `authMethod` value to set the authentication method used by the 1Password Operator to access 1Password secrets. (#231)
+
+[//]: # (START/v2.0.0)
+# v2.0.0
+
+## Breaking changes
+* Default Connect service type changed to ClusterIP. (#194)
+
+Previously, the Connect service was exposed externally by default using `NodePort`. In this release, the default service type has been changed to `ClusterIP`, meaning Connect is now only accessible from within the cluster unless explicitly configured otherwise.
+While exposing Connect via `NodePort` is not inherently insecure—since Connect requires a valid bearer token for all API access—this change aligns with the principle of least privilege and reduces unnecessary external surface area by default.
+If you require external access to Connect, you can still set `connect.serviceType` to `NodePort` or `LoadBalancer` in your Helm values.
+
+## Features
+* Add support for configuring the operator to use a 1Password Service Account. {#226}
+
+[//]: # (START/v1.17.1)
+# v1.17.1
+
+## Fixes
+* Apply ServiceMonitor rules conditionally by providing value. Credits to @estenrye for the contribution. (#224)
+
+[//]: # (START/v1.17.0)
+# v1.17.0
+
+## Features
+* Add resources defaults to limit connect API's resource consumption. (#209, #211)
+
+## Fixes
+* Fix `podDisruptionBudget` labels. Credits to @mmorejon for the contribution. (#213)
 
 [//]: # (START/v1.16.0)
 # v1.16.0
