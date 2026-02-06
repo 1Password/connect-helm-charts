@@ -50,7 +50,6 @@ or
 ```sh
 helm install --set connect.applicationName=connect connect ./connect
 ```
-| operator.tls.trust.secret           | string     | `""`                   | The name of the secret containing the TLS certificate (tls.crt) used by the 1Password Connect API. This is used if that cert is a self-signed cert that needs to be trusted by the Operator.       |
 
 #### Custom Environment Variables
 
@@ -200,6 +199,7 @@ To disable this, you can run `helm install` with the [`--skip-crds` flag](https:
 | operator.serviceAccountToken.key | string | `"token"` | The key for the 1Password Service Account token stored in the 1Password token secret |
 | operator.serviceAccountToken.name | string | `"onepassword-service-account-token"` | The name of Kubernetes Secret containing the 1Password Service Account token |
 | operator.serviceAccountToken.value | string | `nil` | Generated 1Password Service Account token to be used by the 1Password Operator |
+| operator.tls.trust | object | `{}` | Set trust.secret to the secret name containing the Connect TLS cert when using a self-signed cert. |
 | operator.token.key | string | `"token"` | The key for the 1Password Connect token stored in the 1Password token secret |
 | operator.token.name | string | `"onepassword-token"` | The name of Kubernetes Secret containing the 1Password Connect API token |
 | operator.token.value | string | `nil` | An API token generated for 1Password Connect to be used by the 1Password Operator |
