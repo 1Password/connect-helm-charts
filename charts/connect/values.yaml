@@ -432,7 +432,10 @@ operator:
   # -- Passes the `--enable-annotations` flag to the Operator container when true.
   enableAnnotations: false
 
-  # -- Custom environment variables for the 1Password Operator container that are not specified in this helm chart.
+  # -- Passes the `--allow-empty-values` flag to the Operator container that allows adding fields with empty values to Kubernetes secrets when true
+  allowEmptyValues: false
+
+  # -- Custom environment variables for the 1Password Operator container.
   customEnvVars: []
 
 # 1Password Acceptance Tests Functionality
