@@ -451,6 +451,9 @@ operator:
   # Enables operator-driven annotations when true
   enableAnnotations: false
 
+  # Allow adding fields with empty values to Kubernetes secrets when true
+  allowEmptyValues: false
+
   # 1Password Operator Custom Container Environment Variables
   # Must be written in the following format:
   # - name: VARIABLE_NAME
