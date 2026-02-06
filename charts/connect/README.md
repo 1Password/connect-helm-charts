@@ -154,6 +154,7 @@ To disable this, you can run `helm install` with the [`--skip-crds` flag](https:
 | connect.tolerations | list | `[]` | List of tolerations to be added to the Connect API pods. |
 | connect.version | string | `"{{ .Chart.AppVersion }}"` | The 1Password Connect version to pull |
 | operator.affinity | object | `{}` | [Affinity](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#affinity-and-anti-affinity) rules for the Operator pod |
+| operator.allowEmptyValues | bool | `false` | Passes the `--allow-empty-values` flag to the Operator container that allows adding fields with empty values to Kubernetes secrets when true |
 | operator.annotations | object | `{}` | Additional annotations to be added to the Operator deployment resource. |
 | operator.applicationName | string | `"onepassword-connect-operator"` | The name of 1Password Operator Application |
 | operator.authMethod | string | `"connect"` | Authentication method for the Operator. Valid values: `connect` (uses Connect token) or `service-account` (uses 1Password Service Account token) |
@@ -163,7 +164,7 @@ To disable this, you can run `helm install` with the [`--skip-crds` flag](https:
 | operator.clusterRoleBinding.create | string | `"{{ .Values.operator.create }}"` | Denotes whether or not a Cluster role binding will be created for the 1Password Operator Service Account |
 | operator.clusterRoleBinding.name | string | `"onepassword-connect-operator"` | The name of the 1Password Operator Cluster Role Binding |
 | operator.create | bool | `false` | Denotes whether the 1Password Operator will be deployed |
-| operator.customEnvVars | list | `[]` | Custom environment variables for the 1Password Operator container that are not specified in this helm chart. |
+| operator.customEnvVars | list | `[]` | Custom environment variables for the 1Password Operator container. |
 | operator.enableAnnotations | bool | `false` | Passes the `--enable-annotations` flag to the Operator container when true. |
 | operator.hpa.annotations | object | `{}` | Additional annotations to be added to the HPA Operator |
 | operator.hpa.avgCpuUtilization | int | `50` | Average CPU utilization percentage for the Operator pod |
