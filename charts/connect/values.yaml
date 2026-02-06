@@ -463,11 +463,9 @@ operator:
   # 1Password Operator TLS settings
   tls:
 
-    # 1Password Operator TLS trust settings
+    # Set trust.secret to the secret name containing the Connect tls cert
+    # when using a self-signed cert.
     trust: {}
-
-      # 1Password operator should trust the certificate in this secret
-      # secret:
 
 # 1Password Acceptance Tests Functionality
 acceptanceTests:
