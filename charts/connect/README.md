@@ -204,5 +204,5 @@ To disable this, you can run `helm install` with the [`--skip-crds` flag](https:
 | operator.token.name | string | `"onepassword-token"` | The name of Kubernetes Secret containing the 1Password Connect API token |
 | operator.token.value | string | `nil` | An API token generated for 1Password Connect to be used by the 1Password Operator |
 | operator.tolerations | list | `[]` | List of tolerations to be added to the Operator pods. |
-| operator.version | string | `"1.10.1"` | The 1Password Operator version to pull |
+| operator.version | string | `"1.11.0"` | The 1Password Operator version to pull |
 | operator.watchNamespace | list | `[]` | A list of namespaces for the 1Password Operator to watch and manage. Use the empty list to watch all namespaces. |

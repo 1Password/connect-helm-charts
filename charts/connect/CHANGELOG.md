@@ -10,6 +10,23 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v2.3.0)
+# v2.3.0
+
+# Features
+* Connect Helm chart supports `operator.allowEmptyValues` value to configure the Operator's `--allow-empty-values` flag. Empty secret field values are skipped by default. (#264)
+* Connect Helm chart supports configurable `securityContext` and is Pod Security Standards (Restricted) compliant, so it can run in restricted namespaces without Pod Security Admission warnings. (#192, #210, #223)
+* README values tables are now auto-generated from `values.yaml` for consistency. (#268)
+* Connect Helm chart supports operator trust for self-signed or internal CA certificates via `operator.tls.trust.secret`. (#171, #200)
+
+# Fixes
+* Connect Helm chart now uses `operator.serviceAccountToken.key` for the operator’s service account token instead of `operator.token.key`. (#266)
+* Connect Helm chart supports a custom ServiceAccount for the Connect deployment, allowing a dedicated or pre-existing service account to be specified. (#249)
+* Fix expired dev Slack link in README. {#265}
+* Hide the credentials warning when `connect.credentials_base64` is set, since credentials are already provided. (#84)
+* Fix credential secret when set from values with correct encoding and mount credentials as a file with `OP_SESSION` pointing to the path. (#196)
+* 1Password Operator image is updated to v1.11.0 to brings fixes for the operator.
+
 [//]: # (START/v2.2.1)
 # v2.2.1
 
@@ -156,7 +173,7 @@ If you require external access to Connect, you can still set `connect.serviceTyp
 ## Features
 * Connect's log level can now be specified using connect.api.loglevel and connect.sync.logLevel. {#135}
 * The default Connect version is updated to v1.7.1.
-* Connect's profiler can now be enabled through the Helm chart to help 1Password debug memory and performance issues. {#157} 
+* Connect's profiler can now be enabled through the Helm chart to help 1Password debug memory and performance issues. {#157}
 
 ## Fixes
 * Ingress now correctly works if TLS is enabled. {#140}
