@@ -20,8 +20,6 @@
 * Connect Helm chart supports operator trust for self-signed or internal CA certificates via `operator.tls.trust.secret`. (#171, #200)
 
 # Fixes
-* Secrets Injector Helm chart adds nodeSelector, labels, annotations, podLabels, podAnnotations, and tolerations to the deployment. (#175)
-* Removes hook annotations from Secrets Injector deployment and service. (#150, #184)
 * Connect Helm chart now uses `operator.serviceAccountToken.key` for the operator’s service account token instead of `operator.token.key`. (#266)
 * Connect Helm chart supports a custom ServiceAccount for the Connect deployment, allowing a dedicated or pre-existing service account to be specified. (#249)
 * Fix expired dev Slack link in README. {#265}
