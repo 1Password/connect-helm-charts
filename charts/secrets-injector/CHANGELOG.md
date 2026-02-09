@@ -10,6 +10,13 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v1.2.0)
+# v1.2.0
+
+# Fixes
+* Secrets Injector Helm chart adds nodeSelector, labels, annotations, podLabels, podAnnotations, and tolerations to the deployment. (#175)
+* Removes hook annotations from Secrets Injector deployment and service. (#150, #184)
+
 [//]: # (START/v1.1.0)
 # v1.1.0
 
@@ -25,7 +32,7 @@
 This release updates the secrets-injector image to v1.0.2 with brings in several fixes.
 
 ## Fixes
-* Injector no longer overwrites pod volumeMounts. {[#22](https://github.com/1Password/kubernetes-secrets-injector/issues/22)} 
+* Injector no longer overwrites pod volumeMounts. {[#22](https://github.com/1Password/kubernetes-secrets-injector/issues/22)}
 * Fixed bug causing the need for the mutatingwebhookconfig object to be deleted every time the application restarts. {[#32](https://github.com/1Password/kubernetes-secrets-injector/issues/32)}
 
 ---
