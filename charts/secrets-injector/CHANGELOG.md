@@ -10,8 +10,8 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
-[//]: # (START/v1.2.0)
-# v1.2.0
+[//]: # (START/v1.1.1)
+# v1.1.1
 
 # Fixes
 * Secrets Injector Helm chart adds nodeSelector, labels, annotations, podLabels, podAnnotations, and tolerations to the deployment. (#175)
