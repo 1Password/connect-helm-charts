@@ -15,9 +15,12 @@
 
 ## Features
 * Secrets Injector Helm chart adds nodeSelector, labels, annotations, podLabels, podAnnotations, and tolerations to the deployment. (#175)
+* Secrets Injector Helm chart supports configurable `securityContext` with Restricted PSS defaults for use in restricted namespaces. (#210)
+* README values tables are now auto-generated from values.yaml for consistency. (#268)
 
 ## Fixes
 * Removes hook annotations from Secrets Injector deployment and service. (#150, #184)
+* Numeric values can now be passed as custom env variables in Secrets Injector chart. (#255)
 
 [//]: # (START/v1.1.0)
 # v1.1.0
