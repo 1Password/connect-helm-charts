@@ -369,6 +369,15 @@ operator:
   # -- The resources requests/limits for the 1Password Operator pod
   resources: {}
 
+  # 1Password Operator Health Probes
+  probes:
+    # -- Denotes whether the 1Password Operator will be continually checked by Kubernetes for liveness and restarted if the pod becomes unresponsive
+    liveness: true
+    # -- Denotes whether the 1Password Operator readiness probe will operate and ensure the pod is ready before serving traffic
+    readiness: true
+    # -- The port the health probe endpoints are served on for the Operator pod
+    port: 8081
+
   # 1Password Operator Connect Token Configuration
   token:
     # -- The name of Kubernetes Secret containing the 1Password Connect API token
