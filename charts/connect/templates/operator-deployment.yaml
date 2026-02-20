@@ -67,6 +67,7 @@ spec:
           command: [ "/manager" ]
           args:
             - --zap-log-level={{ .Values.operator.logLevel }}
+            - --health-probe-bind-address=:{{ .Values.operator.probes.port }}
             {{- if .Values.operator.enableAnnotations }}
             - --enable-annotations
             {{- end }}
@@ -112,6 +113,23 @@ spec:
             {{- end }}
           resources:
             {{- toYaml .Values.operator.resources | nindent 12 }}
+          {{- if .Values.operator.probes.readiness.create }}
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: {{ .Values.operator.probes.port }}
+            initialDelaySeconds: {{ .Values.operator.probes.readiness.initialDelaySeconds }}
+            periodSeconds: {{ .Values.operator.probes.readiness.periodSeconds }}
+          {{- end }}
+          {{- if .Values.operator.probes.liveness.create }}
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: {{ .Values.operator.probes.port }}
+            failureThreshold: {{ .Values.operator.probes.liveness.failureThreshold }}
+            periodSeconds: {{ .Values.operator.probes.liveness.periodSeconds }}
+            initialDelaySeconds: {{ .Values.operator.probes.liveness.initialDelaySeconds }}
+          {{- end }}
           volumeMounts:
             {{- if .Values.operator.tls.trust.secret }}
             - mountPath: /tls/trust
