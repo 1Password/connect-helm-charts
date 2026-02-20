@@ -188,9 +188,14 @@ To disable this, you can run `helm install` with the [`--skip-crds` flag](https:
 | operator.podSecurityContext | object | `{"fsGroup":65532,"runAsGroup":65532,"runAsNonRoot":true,"runAsUser":65532,"seccompProfile":{"type":"RuntimeDefault"}}` | Pod securityContext to be added to the Operator pods. |
 | operator.pollingInterval | int | `600` | How often the 1Password Operator will poll for secrets updates. |
 | operator.priorityClassName | string | `""` | [priorityClassName](https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/) to apply to the Operator pods. |
-| operator.probes.liveness | bool | `true` | Denotes whether the 1Password Operator will be continually checked by Kubernetes for liveness and restarted if the pod becomes unresponsive |
+| operator.probes.liveness.create | bool | `true` | Denotes whether the 1Password Operator will be continually checked by Kubernetes for liveness and restarted if the pod becomes unresponsive |
+| operator.probes.liveness.failureThreshold | int | `3` | Number of consecutive failures before Kubernetes restarts the container |
+| operator.probes.liveness.initialDelaySeconds | int | `15` | Number of seconds to wait before starting liveness probes |
+| operator.probes.liveness.periodSeconds | int | `20` | Number of seconds between liveness probe checks |
 | operator.probes.port | int | `8081` | The port the health probe endpoints are served on for the Operator pod |
-| operator.probes.readiness | bool | `true` | Denotes whether the 1Password Operator readiness probe will operate and ensure the pod is ready before serving traffic |
+| operator.probes.readiness.create | bool | `true` | Denotes whether the 1Password Operator readiness probe will operate and ensure the pod is ready before serving traffic |
+| operator.probes.readiness.initialDelaySeconds | int | `5` | Number of seconds to wait before starting readiness probes |
+| operator.probes.readiness.periodSeconds | int | `10` | Number of seconds between readiness probe checks |
 | operator.replicas | int | `1` | The number of replicas to run the 1Password Operator deployment |
 | operator.resources | object | `{}` | The resources requests/limits for the 1Password Operator pod |
 | operator.roleBinding.create | string | `"{{ .Values.operator.create }}"` | Denotes whether or not a role binding will be created for each Namespace for the 1Password Operator Service Account |
