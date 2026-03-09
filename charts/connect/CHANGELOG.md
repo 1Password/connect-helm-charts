@@ -10,6 +10,14 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v2.4.0)
+# v2.4.0
+
+## Features
+* Bump Connect version to v1.8.2
+* Add configurable liveness and readiness probes for the Operator. (#275)
+
+
 [//]: # (START/v2.3.0)
 # v2.3.0
 
