@@ -292,7 +292,7 @@ operator:
   pollingInterval: 600
 
   # -- The 1Password Operator version to pull
-  version: "1.11.0"
+  version: "1.12.0"
 
   # -- Pod securityContext to be added to the Operator pods.
   podSecurityContext:
