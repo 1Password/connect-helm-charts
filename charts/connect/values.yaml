@@ -18,7 +18,7 @@ connect:
     # -- The name of the 1Password Connect API container
     name: connect-api
     # -- The 1Password Connect API repository
-    imageRepository: 1password/connect-api
+    imageRepository: docker.io/1password/connect-api
     # -- The resources requests/limits for the 1Password Connect API pod
     resources:
       limits:
@@ -58,7 +58,7 @@ connect:
     # -- The name of the 1Password Connect Sync container
     name: connect-sync
     # -- The 1Password Connect Sync repository
-    imageRepository: 1password/connect-sync
+    imageRepository: docker.io/1password/connect-sync
     # -- The resources requests/limits for the 1Password Connect Sync pod
     resources: {}
     # -- The port serving the health of the Sync container
@@ -286,7 +286,7 @@ operator:
   imagePullSecrets: []
 
   # -- The 1Password Operator repository
-  imageRepository: 1password/onepassword-operator
+  imageRepository: docker.io/1password/onepassword-operator
 
   # -- How often the 1Password Operator will poll for secrets updates.
   pollingInterval: 600
@@ -476,7 +476,7 @@ acceptanceTests:
     enabled: true
     image:
       # -- The image repository for the health check test container
-      repository: curlimages/curl
+      repository: docker.io/curlimages/curl
       # -- The image tag for the health check test container
       tag: "latest"
 

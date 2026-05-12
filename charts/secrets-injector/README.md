@@ -50,7 +50,7 @@ injector:
 | injector.customEnvVars | list | `[]` | Custom Environment Variables for the 1Password Secrets Injector container that are not specified in this helm chart. |
 | injector.imagePullPolicy | string | `"IfNotPresent"` | The 1Password Secrets Injector docker image policy. |
 | injector.imagePullSecrets | list | `[]` | Global list of secret names to use as image pull secrets for all pod specs in the chart. Secrets must exist in the same namespace |
-| injector.imageRepository | string | `"1password/kubernetes-secrets-injector"` | The 1Password Secrets Injector docker image repository |
+| injector.imageRepository | string | `"docker.io/1password/kubernetes-secrets-injector"` | The 1Password Secrets Injector docker image repository |
 | injector.labels | object | `{}` | Additional labels to be added to the Secrets Injector deployment resource. |
 | injector.nodeSelector | object | `{}` | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the Secrets Injector pod |
 | injector.podAnnotations | object | `{}` | Additional annotations to be added to the Secrets Injector pod. |
