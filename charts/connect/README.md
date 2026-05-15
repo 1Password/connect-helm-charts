@@ -76,7 +76,7 @@ To disable this, you can run `helm install` with the [`--skip-crds` flag](https:
 | acceptanceTests.enabled | bool | `false` | Enable acceptance tests for the chart |
 | acceptanceTests.fixtures | object | `{}` | Test fixtures configuration for acceptance tests |
 | acceptanceTests.healthCheck.enabled | bool | `true` | Enable the health check test |
-| acceptanceTests.healthCheck.image.repository | string | `"curlimages/curl"` | The image repository for the health check test container |
+| acceptanceTests.healthCheck.image.repository | string | `"docker.io/curlimages/curl"` | The image repository for the health check test container |
 | acceptanceTests.healthCheck.image.tag | string | `"latest"` | The image tag for the health check test container |
 | acceptanceTests.podSecurityContext | object | `{"fsGroup":65532,"runAsGroup":65532,"runAsNonRoot":true,"runAsUser":65532,"seccompProfile":{"type":"RuntimeDefault"}}` | Pod securityContext to be added to the acceptance test pods. |
 | acceptanceTests.securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true}` | Container securityContext to be added to the acceptance test containers. |
@@ -85,7 +85,7 @@ To disable this, you can run `helm install` with the [`--skip-crds` flag](https:
 | connect.annotations | object | `{}` | Additional annotations to be added to the Connect API deployment resource. |
 | connect.api.httpPort | int | `8080` | The port the Connect API is served on when TLS is disabled |
 | connect.api.httpsPort | int | `8443` | The port the Connect API is served on when TLS is enabled |
-| connect.api.imageRepository | string | `"1password/connect-api"` | The 1Password Connect API repository |
+| connect.api.imageRepository | string | `"docker.io/1password/connect-api"` | The 1Password Connect API repository |
 | connect.api.logLevel | string | `"info"` | Log level of the Connect API container. Valid options are: trace, debug, info, warn, error. |
 | connect.api.name | string | `"connect-api"` | The name of the 1Password Connect API container |
 | connect.api.resources | object | `{"limits":{"memory":"128Mi"},"requests":{"cpu":0.2}}` | The resources requests/limits for the 1Password Connect API pod |
@@ -144,7 +144,7 @@ To disable this, you can run `helm install` with the [`--skip-crds` flag](https:
 | connect.serviceAnnotations | object | `{}` | Additional annotations to be added to the service. |
 | connect.serviceType | string | `"ClusterIP"` | The type of Service resource to create for the Connect API and sync services. |
 | connect.sync.httpPort | int | `8081` | The port serving the health of the Sync container |
-| connect.sync.imageRepository | string | `"1password/connect-sync"` | The 1Password Connect Sync repository |
+| connect.sync.imageRepository | string | `"docker.io/1password/connect-sync"` | The 1Password Connect Sync repository |
 | connect.sync.logLevel | string | `"info"` | Log level of the Connect Sync container. Valid options are: trace, debug, info, warn, error. |
 | connect.sync.name | string | `"connect-sync"` | The name of the 1Password Connect Sync container |
 | connect.sync.resources | object | `{}` | The resources requests/limits for the 1Password Connect Sync pod |
@@ -175,7 +175,7 @@ To disable this, you can run `helm install` with the [`--skip-crds` flag](https:
 | operator.hpa.minReplicas | int | `1` | Minimum number of replicas for the Operator pod |
 | operator.imagePullPolicy | string | `"IfNotPresent"` | The 1Password Operator image pull policy |
 | operator.imagePullSecrets | list | `[]` | List of secret names to use as image pull secrets. Secrets must exist in the same namespace. |
-| operator.imageRepository | string | `"1password/onepassword-operator"` | The 1Password Operator repository |
+| operator.imageRepository | string | `"docker.io/1password/onepassword-operator"` | The 1Password Operator repository |
 | operator.labels | object | `{}` | Additional labels to be added to the Operator deployment resource. |
 | operator.logLevel | string | `"info"` | Log level of the Operator container. Valid options are: debug, info and error. |
 | operator.nodeSelector | object | `{}` | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the operator pod |
