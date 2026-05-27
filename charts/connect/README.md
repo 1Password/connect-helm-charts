@@ -113,6 +113,12 @@ To disable this, you can run `helm install` with the [`--skip-crds` flag](https:
 | connect.hpa.enabled | bool | `false` | Enable Horizontal Pod Autoscaling for the Connect pod |
 | connect.hpa.maxReplicas | int | `3` | Maximum number of replicas for the Connect pod |
 | connect.hpa.minReplicas | int | `1` | Minimum number of replicas for the Connect pod |
+| connect.httpRoute.annotations | object | `{}` | Additional annotations to be added to the HTTPRoute resource |
+| connect.httpRoute.enabled | bool | `false` | Enable the creation of a Gateway API HTTPRoute resource for the Connect API |
+| connect.httpRoute.hostnames | list | `[]` | Hostnames that the HTTPRoute should match |
+| connect.httpRoute.labels | object | `{}` | Additional labels to be added to the HTTPRoute resource |
+| connect.httpRoute.parentRefs | list | `[]` | Parent references to Gateway resources. At least one is required when enabled. ref: https://gateway-api.sigs.k8s.io/reference/api-spec/main/spec/#parentreference |
+| connect.httpRoute.rules | list | `[]` (See [values.yaml]) | HTTPRoute rules configuration. The default backendRefs service name and port are automatically set from connect.applicationName and the API port. ref: https://gateway-api.sigs.k8s.io/reference/api-spec/main/spec/#httprouterule |
 | connect.imagePullPolicy | string | `"IfNotPresent"` | The 1Password Connect API image pull policy |
 | connect.imagePullSecrets | list | `[]` | List of secret names to use as image pull secrets. Secrets must exist in the same namespace. |
 | connect.ingress.annotations | object | `{}` | The 1Password Connect Ingress Annotations |
