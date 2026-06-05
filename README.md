@@ -11,6 +11,8 @@
 
 ---
 
+*This project is licensed under [MIT](./LICENSE). Use of the 1Password APIs and services accessed through these tools is governed by the [1Password API Terms of Service](https://1password.com/legal/api-sdk-terms-of-service).*
+
 ## ✨ Quickstart
 
 1. Get the latest [Helm release](https://github.com/kubernetes/helm#install).
