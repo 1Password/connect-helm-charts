@@ -1,0 +1,13 @@
+# Deploys Connect with an HTTPRoute instead of Ingress
+connect:
+  httpRoute:
+    enabled: true
+    parentRefs:
+      - name: test-gateway
+        namespace: default
+    hostnames:
+      - connect.example.com
+    labels:
+      traffic: external
+    annotations:
+      example.com/test: "true"
