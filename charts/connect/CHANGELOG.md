@@ -10,6 +10,12 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v2.4.2)
+# v2.4.2
+
+## Security
+* Bump Connect version to v1.8.3, which remediates CVEs in the Connect images.
+
 [//]: # (START/v2.4.1)
 # v2.4.1
 
