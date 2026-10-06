@@ -1,0 +1,51 @@
+{{- if and (.Values.connect.httpRoute.enabled) (.Values.connect.create) -}}
+{{- if .Values.connect.ingress.enabled -}}
+{{- fail "connect.ingress.enabled and connect.httpRoute.enabled are mutually exclusive" -}}
+{{- end -}}
+{{- if not .Values.connect.httpRoute.parentRefs -}}
+{{- fail "connect.httpRoute.parentRefs must specify at least one Gateway reference when connect.httpRoute.enabled is true" -}}
+{{- end -}}
+{{- $serviceName := .Values.connect.applicationName -}}
+{{- $tlsEnabled := .Values.connect.tls.enabled -}}
+{{- $apiHttpPort := .Values.connect.api.httpPort -}}
+{{- $apiHttpsPort := .Values.connect.api.httpsPort -}}
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: {{ template "onepassword-connect.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "onepassword-connect.labels" . | nindent 4 }}
+    {{- with .Values.connect.httpRoute.labels }}
+      {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.connect.httpRoute.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  parentRefs:
+    {{- toYaml .Values.connect.httpRoute.parentRefs | nindent 4 }}
+  {{- with .Values.connect.httpRoute.hostnames }}
+  hostnames:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  rules:
+    {{- range .Values.connect.httpRoute.rules }}
+    - {{- if .matches }}
+      matches:
+        {{- toYaml .matches | nindent 8 }}
+      {{- end }}
+      {{- if .filters }}
+      filters:
+        {{- toYaml .filters | nindent 8 }}
+      {{- end }}
+      backendRefs:
+      {{- if .backendRefs }}
+        {{- toYaml .backendRefs | nindent 8 }}
+      {{- else }}
+        - name: {{ $serviceName }}
+          port: {{ if $tlsEnabled }}{{ $apiHttpsPort }}{{ else }}{{ $apiHttpPort }}{{ end }}
+      {{- end }}
+    {{- end }}
+{{- end }}
