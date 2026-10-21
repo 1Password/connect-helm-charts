@@ -166,6 +166,7 @@ To disable this, you can run `helm install` with the [`--skip-crds` flag](https:
 | operator.create | bool | `false` | Denotes whether the 1Password Operator will be deployed |
 | operator.customEnvVars | list | `[]` | Custom environment variables for the 1Password Operator container. |
 | operator.enableAnnotations | bool | `false` | Passes the `--enable-annotations` flag to the Operator container when true. |
+| operator.extraArgs | list | `[]` | Extra command line arguments |
 | operator.hpa.annotations | object | `{}` | Additional annotations to be added to the HPA Operator |
 | operator.hpa.avgCpuUtilization | int | `50` | Average CPU utilization percentage for the Operator pod |
 | operator.hpa.avgMemoryUtilization | int | `50` | Average Memory utilization percentage for the Operator pod |

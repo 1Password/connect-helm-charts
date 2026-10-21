@@ -74,6 +74,9 @@ spec:
             {{- if .Values.operator.allowEmptyValues }}
             - --allow-empty-values
             {{- end }}
+            {{- range .Values.operator.extraArgs }}
+            - {{ . | quote }}
+            {{- end }}
           env:
             - name: WATCH_NAMESPACE
               value: {{ default "" (tpl (include "helm-toolkit.utils.joinListWithComma" .Values.operator.watchNamespace) .) }}
