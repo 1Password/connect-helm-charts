@@ -10,6 +10,12 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v1.2.1)
+# v1.2.1
+
+## Security
+* Bump Secrets Injector to v1.0.3 to pull in the latest security patches. (#301)
+
 [//]: # (START/v1.2.0)
 # v1.2.0
 
