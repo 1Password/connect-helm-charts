@@ -465,6 +465,9 @@ operator:
     # -- Set trust.secret to the secret name containing the Connect TLS cert when using a self-signed cert.
     trust: {}
 
+  # -- Extra command line arguments
+  extraArgs: []
+
 # 1Password Acceptance Tests Functionality
 acceptanceTests:
   # -- Enable acceptance tests for the chart
