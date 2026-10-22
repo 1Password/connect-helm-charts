@@ -10,6 +10,12 @@
 ## Security
 * A user-friendly description of a security fix. {issue-number}
 
+[//]: # (START/v2.4.3)
+# v2.4.3
+
+## Security
+* Bump Connect to v1.8.4 and the 1Password Operator to v1.12.1 to pull in the latest security patches. (#301)
+
 [//]: # (START/v2.4.2)
 # v2.4.2
 
