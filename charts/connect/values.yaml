@@ -250,6 +250,35 @@ connect:
     #    hosts:
     #      - chart-example.local
 
+  # HTTPRoute allows creating a Gateway API HTTPRoute resource as an alternative to Ingress.
+  # Cannot be enabled at the same time as ingress.
+  # ref: https://gateway-api.sigs.k8s.io/reference/api-spec/main/spec/#httproute
+  httpRoute:
+    # -- Enable the creation of a Gateway API HTTPRoute resource for the Connect API
+    enabled: false
+    # -- Additional labels to be added to the HTTPRoute resource
+    labels: {}
+    # -- Additional annotations to be added to the HTTPRoute resource
+    annotations: {}
+    # -- Parent references to Gateway resources. At least one is required when enabled.
+    # ref: https://gateway-api.sigs.k8s.io/reference/api-spec/main/spec/#parentreference
+    parentRefs: []
+    #  - name: my-gateway
+    #    namespace: gateway-ns
+    #    sectionName: https
+    # -- Hostnames that the HTTPRoute should match
+    hostnames: []
+    #  - chart-example.local
+    # -- HTTPRoute rules configuration.
+    # The default backendRefs service name and port are automatically set from connect.applicationName and the API port.
+    # ref: https://gateway-api.sigs.k8s.io/reference/api-spec/main/spec/#httprouterule
+    # @default -- `[]` (See [values.yaml])
+    rules:
+      - matches:
+          - path:
+              type: PathPrefix
+              value: /
+
   # Optionally the internal profiler can be enabled to debug memory or performance issues.
   profiler:
     # -- Enable the internal profiler to debug memory or performance issues. For normal operation this does not have to be enabled.
