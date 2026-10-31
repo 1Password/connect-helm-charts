@@ -181,8 +181,12 @@ connect:
   podLabels: {}
 
   # -- Pod securityContext to be added to the Connect pods.
+  # `fsGroupChangePolicy: OnRootMismatch` keeps kubelet from re-applying group
+  # permissions to every cached file on each restart when `dataVolume` is persistent,
+  # which would loosen Connect's 600 files and stall connect-sync.
   podSecurityContext:
     fsGroup: 999
+    fsGroupChangePolicy: OnRootMismatch
     runAsUser: 999
     runAsGroup: 999
     runAsNonRoot: true
