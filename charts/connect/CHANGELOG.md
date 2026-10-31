@@ -6,6 +6,7 @@
 
 ## Fixes
 * A user-friendly description of a fix. {issue-number}
+* Set `fsGroupChangePolicy: OnRootMismatch` in the default Connect `podSecurityContext`, so a persistent `dataVolume` keeps Connect's cached files at mode 600 across restarts and connect-sync no longer fails with "permissions are too broad". (#299)
 
 ## Security
 * A user-friendly description of a security fix. {issue-number}

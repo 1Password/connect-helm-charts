@@ -130,7 +130,7 @@ To disable this, you can run `helm install` with the [`--skip-crds` flag](https:
 | connect.pdb.minAvailable | int | `0` | Number of pods that are available after eviction as number or percentage (eg.: 50%) |
 | connect.podAnnotations | object | `{}` | Additional annotations to be added to the Connect API pods. |
 | connect.podLabels | object | `{}` | Additional labels to be added to the Connect API pods. |
-| connect.podSecurityContext | object | `{"fsGroup":999,"runAsGroup":999,"runAsNonRoot":true,"runAsUser":999,"seccompProfile":{"type":"RuntimeDefault"}}` | Pod securityContext to be added to the Connect pods. |
+| connect.podSecurityContext | object | `{"fsGroup":999,"fsGroupChangePolicy":"OnRootMismatch","runAsGroup":999,"runAsNonRoot":true,"runAsUser":999,"seccompProfile":{"type":"RuntimeDefault"}}` | Pod securityContext to be added to the Connect pods. `fsGroupChangePolicy: OnRootMismatch` keeps kubelet from re-applying group permissions to every cached file on each restart when `dataVolume` is persistent, which would loosen Connect's 600 files and stall connect-sync. |
 | connect.priorityClassName | string | `""` | [priorityClassName](https://kubernetes.io/docs/concepts/scheduling-eviction/pod-priority-preemption/) to apply to the Connect API deployment resource. |
 | connect.probes.liveness | bool | `true` | Denotes whether the 1Password Connect API will be continually checked by Kubernetes for liveness and restarted if the pod becomes unresponsive |
 | connect.probes.readiness | bool | `true` | Denotes whether the 1Password Connect API readiness probe will operate and ensure the pod is ready before serving traffic |
