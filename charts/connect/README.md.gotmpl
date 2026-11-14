@@ -64,6 +64,52 @@ connect:
       value: "customvar2"
 ```
 
+### Service IP Families and Metrics Discovery
+
+The chart leaves Service IP families and policy unspecified by default. To
+request dual-stack allocation while keeping IPv4 as the primary family:
+
+```yaml
+connect:
+  ipFamilyPolicy: PreferDualStack
+  ipFamilies: [IPv4, IPv6]
+```
+
+For a new IPv6-only Service, use `SingleStack` and `[IPv6]`. These settings control
+Service address allocation; they do not configure Connect listeners or add
+IPv6 support to the cluster. Verify both the cluster and your deployed Connect
+version support the requested family. Kubernetes does not allow changing an
+existing Service's primary family in place. Preserve its first family when
+adding a secondary family, or plan a separate Service and consumer migration.
+
+A dual-stack Service does not guarantee that Prometheus scrapes IPv6. To keep
+the chart-managed monitor while selecting a separately managed IPv6 metrics
+Service in the same namespace:
+
+```yaml
+connect:
+  api:
+    serviceMonitor:
+      enabled: true
+      selector:
+        matchLabels:
+          monitoring.example.com/component: connect
+          monitoring.example.com/address-family: ipv6
+      relabelings:
+        - targetLabel: service
+          replacement: onepassword-connect
+        - targetLabel: job
+          replacement: onepassword-connect
+```
+
+The selector replaces the default selector rather than merging with it. An
+empty object retains the default. Provision the matching Service separately,
+with the correct Connect pod selector, `ipFamilyPolicy: SingleStack`,
+`ipFamilies: [IPv6]`, and a port named `connect-api` (or the configured API
+container name). With TLS enabled, the port name must have the `-https` suffix.
+Select only the intended metrics Service to avoid duplicate scrapes. Target
+relabeling runs before scraping and does not replace metric relabeling.
+
 ### CRD
 
 By default, the chart will also install the `OnePasswordItem` CRD.

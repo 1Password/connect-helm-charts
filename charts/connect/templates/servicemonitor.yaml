@@ -26,11 +26,18 @@ spec:
       {{- if .Values.connect.api.serviceMonitor.interval }}
       interval: {{ .Values.connect.api.serviceMonitor.interval }}
       {{- end }}
+      {{- with .Values.connect.api.serviceMonitor.relabelings }}
+      relabelings: {{ toYaml . | nindent 8 }}
+      {{- end }}
   namespaceSelector:
     matchNames:
       - {{ .Release.Namespace }}
   selector:
+    {{- with .Values.connect.api.serviceMonitor.selector }}
+    {{- toYaml . | nindent 4 }}
+    {{- else }}
     matchLabels:
       app.kubernetes.io/component: connect
       {{- include "onepassword-connect.labels" . | nindent 6 }}
+    {{- end }}
 {{- end }}

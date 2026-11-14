@@ -10,6 +10,12 @@ metadata:
 {{- template "onepassword-connect.serviceAnnotations" . }}
 spec:
   type: {{ .Values.connect.serviceType }}
+  {{- with .Values.connect.ipFamilyPolicy }}
+  ipFamilyPolicy: {{ . | quote }}
+  {{- end }}
+  {{- with .Values.connect.ipFamilies }}
+  ipFamilies: {{ toYaml . | nindent 4 }}
+  {{- end }}
   selector:
     app: {{ .Values.connect.applicationName }}
   ports:
