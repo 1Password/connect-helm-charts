@@ -19,6 +19,69 @@
           "description": "Passes the --allow-empty-values flag to the Operator when true, allowing fields with empty values to be added to Kubernetes secrets."
         }
       }
+    },
+    "connect": {
+      "type": "object",
+      "properties": {
+        "ipFamilyPolicy": {
+          "type": "string",
+          "enum": [
+            "",
+            "SingleStack",
+            "PreferDualStack",
+            "RequireDualStack"
+          ],
+          "description": "Service IP-family policy. Empty leaves Kubernetes to choose the default."
+        },
+        "ipFamilies": {
+          "type": "array",
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "enum": [
+              "IPv4",
+              "IPv6"
+            ]
+          },
+          "description": "Ordered Service IP families. Empty leaves Kubernetes to choose the default."
+        },
+        "api": {
+          "type": "object",
+          "properties": {
+            "serviceMonitor": {
+              "type": "object",
+              "properties": {
+                "selector": {
+                  "type": "object",
+                  "description": "ServiceMonitor label selector override; empty preserves the chart selector.",
+                  "properties": {
+                    "matchLabels": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    },
+                    "matchExpressions": {
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    }
+                  }
+                },
+                "relabelings": {
+                  "type": "array",
+                  "items": {
+                    "type": "object"
+                  },
+                  "description": "Prometheus Operator target relabeling configurations."
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

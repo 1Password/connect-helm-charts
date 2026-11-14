@@ -64,6 +64,52 @@ connect:
       value: "customvar2"
 ```
 
+### Service IP Families and Metrics Discovery
+
+The chart leaves Service IP families and policy unspecified by default. To
+request dual-stack allocation while keeping IPv4 as the primary family:
+
+```yaml
+connect:
+  ipFamilyPolicy: PreferDualStack
+  ipFamilies: [IPv4, IPv6]
+```
+
+For a new IPv6-only Service, use `SingleStack` and `[IPv6]`. These settings control
+Service address allocation; they do not configure Connect listeners or add
+IPv6 support to the cluster. Verify both the cluster and your deployed Connect
+version support the requested family. Kubernetes does not allow changing an
+existing Service's primary family in place. Preserve its first family when
+adding a secondary family, or plan a separate Service and consumer migration.
+
+A dual-stack Service does not guarantee that Prometheus scrapes IPv6. To keep
+the chart-managed monitor while selecting a separately managed IPv6 metrics
+Service in the same namespace:
+
+```yaml
+connect:
+  api:
+    serviceMonitor:
+      enabled: true
+      selector:
+        matchLabels:
+          monitoring.example.com/component: connect
+          monitoring.example.com/address-family: ipv6
+      relabelings:
+        - targetLabel: service
+          replacement: onepassword-connect
+        - targetLabel: job
+          replacement: onepassword-connect
+```
+
+The selector replaces the default selector rather than merging with it. An
+empty object retains the default. Provision the matching Service separately,
+with the correct Connect pod selector, `ipFamilyPolicy: SingleStack`,
+`ipFamilies: [IPv6]`, and a port named `connect-api` (or the configured API
+container name). With TLS enabled, the port name must have the `-https` suffix.
+Select only the intended metrics Service to avoid duplicate scrapes. Target
+relabeling runs before scraping and does not replace metric relabeling.
+
 ### CRD
 
 By default, the chart will also install the `OnePasswordItem` CRD.
@@ -95,6 +141,8 @@ To disable this, you can run `helm install` with the [`--skip-crds` flag](https:
 | connect.api.serviceMonitor.interval | string | `"30s"` | Specify the interval at which metrics should be scraped |
 | connect.api.serviceMonitor.params | object | `{}` | Define the HTTP URL parameters used by ServiceMonitor |
 | connect.api.serviceMonitor.path | string | `"/metrics"` | Define the path used by ServiceMonitor to scrape metrics |
+| connect.api.serviceMonitor.relabelings | list | `[]` | Relabel discovered targets before scraping (Prometheus Operator RelabelConfig entries) |
+| connect.api.serviceMonitor.selector | object | `{}` | Override the ServiceMonitor label selector; an empty object retains the chart's Connect Service selector |
 | connect.applicationName | string | `"onepassword-connect"` | The name of 1Password Connect Application |
 | connect.create | bool | `true` | Denotes whether the 1Password Connect server will be deployed |
 | connect.credentials | string | `nil` | Contents of the 1password-credentials.json file for Connect. Can be set be adding `--set-file connect.credentials=<path/to/1password-credentials.json>` to your helm install command |
@@ -122,6 +170,8 @@ To disable this, you can run `helm install` with the [`--skip-crds` flag](https:
 | connect.ingress.labels | object | `{}` | Ingress labels for 1Password Connect |
 | connect.ingress.pathType | string | `"Prefix"` | Ingress PathType see [docs](https://kubernetes.io/docs/concepts/services-networking/ingress/#path-types) |
 | connect.ingress.tls | list | `[]` | Ingress TLS see [docs](https://kubernetes.io/docs/concepts/services-networking/ingress/#tls) |
+| connect.ipFamilies | list | `[]` | Ordered Service IP families (IPv4 and/or IPv6); empty uses the cluster default |
+| connect.ipFamilyPolicy | string | `""` | Service IP-family policy (SingleStack, PreferDualStack or RequireDualStack); empty uses the cluster default |
 | connect.labels | object | `{}` | Additional labels to be added to the Connect API deployment resource. |
 | connect.nodeSelector | object | `{}` | [Node selector](https://kubernetes.io/docs/concepts/scheduling-eviction/assign-pod-node/#nodeselector) stanza for the Connect pod |
 | connect.pdb.annotations | object | `{}` | Additional annotations to be added to the PDB Connect |

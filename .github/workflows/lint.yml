@@ -26,6 +26,11 @@ jobs:
       - name: Set up ct CLI
         uses: step-security/chart-testing-action@e66d34fcc8fcc5da27c3442bd532031edb3ce1aa # v2.8.0
 
+      - name: Test Connect chart rendering
+        run: |
+          python -m pip install -r charts/connect/tests/requirements.txt
+          make -C charts/connect test-render
+
       - name: Lint chart
         run: ct lint --config ct.yaml
 

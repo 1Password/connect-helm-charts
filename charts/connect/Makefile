@@ -23,7 +23,10 @@ YELLOW := \033[0;33m
 BLUE := \033[0;34m
 NC := \033[0m # No Color
 
-.PHONY: help test-e2e test-e2e-setup test-e2e-run cleanup-test-e2e check-deps revert-ci-files
+.PHONY: test-render help test-e2e test-e2e-setup test-e2e-run cleanup-test-e2e check-deps revert-ci-files
+
+test-render: ## Run credential-free Helm render tests (requires Python 3 and tests/requirements.txt)
+	python3 -m unittest discover -s tests -p 'test_*.py' -v
 
 test-e2e: check-deps test-e2e-setup test-e2e-run cleanup-test-e2e ## Run end-to-end tests (full workflow)
 
